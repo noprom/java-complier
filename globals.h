@@ -18,6 +18,15 @@
 #define TRUE 1
 #endif
 
+#define MAXRESERVED 8     /* MAXRESERVED = 保留字的数量 */
+
+typedef enum {
+  /* 特殊的token */
+  ENDFILE, ERROR,
+  /* 保留字 */
+
+}
+
 extern FILE* source;      /* 源代码文件 */
 extern FILE* listing;     /* 中间输出文件 */
 extern FILE* code;        /* 代码生成文件 */
