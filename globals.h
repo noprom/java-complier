@@ -5,22 +5,23 @@
 #ifndef _GLOBALS_H_
 #define  _GLOBALS_H_
 
+#include <fstream>
 #include <stdlib.h>
 #include <ctype.h>
+#include <map>
 #include <vector>
 #include <string>
 #include <cstdio>
 
-#ifndef FALSE
-#define FALSE 0
-#endif
+//#ifndef FALSE
+//#define FALSE 0
+//#endif
+//
+//#ifndef TRUE
+//#define TRUE 1
+//#endif
 
-#ifndef TRUE
-#define TRUE 1
-#endif
-
-#define MAXRESERVED 8     /* MAXRESERVED = 保留字的数量 */
-
+/* 定义单词类型 */
 typedef enum {
     /* 
      * 特殊的token
@@ -37,9 +38,9 @@ typedef enum {
     
     /**
      * 标志符: 0x104
-     * 数字,常量字符串
+     * 整型常量, 实型常量, 布尔常量, 字符串常量, 字符常量
      */
-    ID, NUM, STR,
+    ID, CONST_NUM, CONST_REAL, CONST_BOOL, CONST_STR, CONST_CHAR,
 
     /**
      * 关键字: 0x103
@@ -69,7 +70,44 @@ typedef enum {
     ASSIGN, ADD_ASSIGN, MINUS_ASSIGN, MUL_ASSIGN, DIV_ASSIGN, MOD_ASSIGN, AND_ASSIGN,
     XOR_ASSIGN, OR_ASSIGN, RIGHT_SHIFT_ASSIGN, LEFT_SHIFT_ASSIGN, UNSIGNED_RIGHT_SHIRT_ASSIGN,
     
+    /**
+     * 关系运算符号
+     * ?:   0x111
+     * ||:  0x112
+     * &&:  0x113
+     * | :  0x114
+     * ^ :  0x115
+     * & :  0x116
+     */
+    TRIPLE_CMP, OR, AND, OR_BIT, XOR, AND_BIT,
+    
+    /**
+     * 比较运算符|移位运算符
+     * == !=        : 0x117
+     * < > <= >=    : 0x118
+     * << >> >>>    : 0x119
+     */
+    EQU, NE, LT, GT, LE, GE, LEFT_SHIFT, RIGHT_SHIFT, UNSIGNED_RIGHT_SHIRT,
+    
+    /**
+     * 数值计算符号
+     * + -                      : 0x11a
+     * * / %                    : 0x11b
+     * ++ -- +(正) –(负) ! ~     : 0x11c
+     */
+    ADD, MINUS, MUL, DIV, MOD, INC, DEC, POSITIVE, NEGATIVE, EXCLAMATORY_MARK, NOT,
+    
+    /**
+     * 界限符
+     * [] () .                  : 0x11d
+     * ,                        : 0x120
+     * {}                       : 0x121
+     * ;                        : 0x122
+     */
+    BRACKET_ML, BRACKET_MR, BRACKET_SL, BRACKET_SR, BRACKET_LL, BRACKET_LR, DOT, COMMA, SEMICOLON
+    
 } TokenType;
+
 
 extern FILE* source;      /* 源代码文件 */
 extern FILE* listing;     /* 中间输出文件 */
