@@ -381,7 +381,6 @@ TokenType Lexer::getToken() {
                             ungetNextChar();
                         }
                     }
-                    return CONST_INT;
                 } else {
                     if (next == '.' || tolower(next) == 'e') {
                         tokenString.push_back(curChar);
@@ -392,8 +391,8 @@ TokenType Lexer::getToken() {
                     } else {
                         ungetNextChar();
                     }
-                    return CONST_INT;
                 }
+                return CONST_INT;
                 break;
             }
             /* 浮点型 */
@@ -725,12 +724,60 @@ TokenType Lexer::getToken() {
                 }
                 break;
             }
-            // TODO: GT
+            /* > */
+            case IN_GT: {
+                tokenString.push_back(curChar);
+                char next = getNextChar();
+                /* > */
+                if (isdigit(next) || isalpha(next)) {
+                    ungetNextChar();
+                    return GT;
+                /* >= */
+                } else if (next == '=') {
+                    tokenString.push_back(next);
+                    return GE;
+                /* >> */
+                } else if (next == '>') {
+                    tokenString.push_back(next);
+                    next = getNextChar();
+                    /* >>= */
+                    if (next == '=') {
+                        tokenString.push_back(next);
+                        return RIGHT_SHIFT_ASSIGN;
+                    /* >> */
+                    } else if (isdigit(next) || isalpha(next)) {
+                        ungetNextChar();
+                        return RIGHT_SHIFT;
+                    /* >>> */
+                    } else if (next == '>') {
+                        tokenString.push_back(next);
+                        next = getNextChar();
+                        /* >>>= */
+                        if (next == '=') {
+                            tokenString.push_back(next);
+                            return ZERO_FILL_RIGHT_SHIRT_ASSIGN;
+                        /* >>> */
+                        } else if (isdigit(next) || isalpha(next)) {
+                            ungetNextChar();
+                            return ZERO_FILL_RIGHT_SHIRT;
+                        } else {
+                            return TOKEN_ERROR;
+                        }
+                    } else {
+                        return TOKEN_ERROR;
+                    }
+                } else {
+                    return TOKEN_ERROR;
+                }
+                break;
+            }
             default:
+                return TOKEN_ERROR;
                 break;
         }
-        
-        
-
     }
+    return TOKEN_ERROR;
 }
+
+
+
