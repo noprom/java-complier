@@ -232,5 +232,9 @@ void Lexer::ungetNextChar() {
     }
 }
 
+/* 获得一个Token */
+DFAStateType Lexer::getToken() {
+    
+}
 
 

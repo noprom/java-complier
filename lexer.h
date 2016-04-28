@@ -46,6 +46,13 @@ protected:
      */
     Lexer(std::string fileName);
     
+    /**
+     * 获得单词的token
+     * 
+     * @return DFA中的状态
+     */
+    virtual DFAStateType getToken();
+    
     /* 关键字及其对应Token的关系 */
     std::map<TokenType, std::pair<std::string, std::string>> keyWords;
     
