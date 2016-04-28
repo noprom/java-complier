@@ -21,7 +21,7 @@
 //#define TRUE 1
 //#endif
 
-/* 定义单词类型 */
+/* 单词类型 */
 typedef enum {
     /* 
      * 特殊的token

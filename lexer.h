@@ -11,14 +11,41 @@
 
 #include "globals.h"
 
-/* 词法分析器的状态 */
+/* DFA的状态 */
 typedef enum {
     /**
-     * 开始, 结束, 读入标志符, 读入常量, 读入转义符号, 读入界限符
-     * 赋值运算符, 关系运算符, 比较运算符, 移位运算符, 计算运算符
+     * 开始, 结束, 读入标志符, 读入字符常量, 读入字符串常量, 读入数字, 读入转义符号, 读入界限符, 读入注释
+     * 读入+ - * / % & = < > | ! ^
      */
-    START, DONE, IN_ID, IN_CONST, IN_ESC, IN_DELIMETER,
-    IN_OP_ASSIGN, IN_OP_RELATION, IN_OP_CMP, IN_OP_SHIFT, IN_OP_CAL
+    START, DONE, IN_ID, IN_CONST_CHAR, IN_CONST_STR, IN_NUM, IN_ESC, IN_DELIMETER, IN_COMMENT,
+    IN_ADD, IN_MINUS, IN_MUL, IN_DIV, IN_MOD, IN_AND, IN_ASSIGN, IN_LT, IN_GT, IN_OR, IN_NOT, IN_XOR
+    
 } DFAStateType;
 
+/* 词法分析器类 */
+class Lexer {
+    
+public:
+    /* 程序错误标志 */
+    static int PROGRAM_ERROR;
+    
+protected:
+    /* 扫描到的行数 */
+    static int lineNumber;
+    
+    /* 扫描到某行的位置 */
+    static int linePos;
+    
+    /* 提取出来的单词 */
+    static std::string tokenString;
+    
+    /**
+     * 构造函数
+     *
+     * @fileName 文件名
+     */
+    Lexer(std::string fileName);
+    
+    
+};
 #endif
