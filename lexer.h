@@ -64,10 +64,13 @@ private:
     std::string lineBuf;
     
     /* DFA的状态 */
-    DFAStateType inState;
+    DFAStateType currentState;
     
     /* 单词属性及其对应Token的关系 */
     std::map<TokenType, std::pair<std::string, std::string>> tokenMap;
+    
+    /* 界限符与对应Token的关系 */
+    std::map<char, TokenType> delimeterMap;
     
     /**
      * 读取一行内容并存入lineBuf

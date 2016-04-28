@@ -190,6 +190,17 @@ Lexer::Lexer(std::string fileName) {
     tokenMap.insert(std::make_pair(BRACKET_LR, std::make_pair("}", "0x121")));
     tokenMap.insert(std::make_pair(SEMICOLON, std::make_pair(";", "0x122")));
     
+    delimeterMap.clear();
+    delimeterMap.insert(std::make_pair('[', BRACKET_ML));
+    delimeterMap.insert(std::make_pair(']', BRACKET_MR));
+    delimeterMap.insert(std::make_pair('(', BRACKET_SL));
+    delimeterMap.insert(std::make_pair(')', BRACKET_SR));
+    delimeterMap.insert(std::make_pair('.', DOT));
+    delimeterMap.insert(std::make_pair(',', COMMA));
+    delimeterMap.insert(std::make_pair('{', BRACKET_LL));
+    delimeterMap.insert(std::make_pair('}', BRACKET_LR));
+    delimeterMap.insert(std::make_pair(';', SEMICOLON));
+    
     /* 打开文件 */
     inFileStream.open(fileName.c_str());
     if (!inFileStream.is_open()) {
@@ -234,7 +245,16 @@ void Lexer::ungetNextChar() {
 
 /* 获得一个Token */
 DFAStateType Lexer::getToken() {
-    
+    Lexer::tokenString = "";
+    char curChar = getNextChar();
+    /* 空格 */
+    if (isspace(curChar)) {
+        return getToken();
+    } else if(curChar == '/') {
+        currentState = IN_COMMENT;
+    } else if (curChar == '~') {
+        return NOT_BIT;
+    } else if (curChar == '')
 }
 
 
