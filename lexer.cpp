@@ -216,7 +216,13 @@ void Lexer::getOneLine() {
 
 /* 获得下一个字符 */
 char Lexer::getNextChar() {
-    return '1';
+    if (linePos >= lineBuf.size()) {
+        lineNumber ++;
+        linePos = 0;
+        getOneLine();
+        return getNextChar();
+    }
+    return lineBuf[linePos++];
 }
 
 /* 退回一个字符 */

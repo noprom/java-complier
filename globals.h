@@ -104,10 +104,7 @@ typedef enum {
     
 } TokenType;
 
-
-extern FILE* source;          /* 源代码文件 */
 extern FILE* scanListing;     /* 词法分析中间输出结果 */
-extern int lineno;            /* 输出的源代码文件行数 */
 
 /**
  * TraceScan = 1则输出扫描结果
