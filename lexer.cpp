@@ -24,56 +24,56 @@ Lexer::Lexer(std::string fileName) {
      * 关键字: 0x103
      */
     keyWords.clear();
-    keyWords.insert(std::make_pair(ABSTRACT, std::make_pair("abstract", "0x103")));
-    keyWords.insert(std::make_pair(BOOLEAN, std::make_pair("boolean", "0x103")));
-    keyWords.insert(std::make_pair(BREAK, std::make_pair("break", "0x103")));
-    keyWords.insert(std::make_pair(BYTE, std::make_pair("byte", "0x103")));
-    keyWords.insert(std::make_pair(CASE, std::make_pair("case", "0x103")));
-    keyWords.insert(std::make_pair(CATCH, std::make_pair("catch", "0x103")));
-    keyWords.insert(std::make_pair(CHAR, std::make_pair("char", "0x103")));
-    keyWords.insert(std::make_pair(CLASS, std::make_pair("class", "0x103")));
-    keyWords.insert(std::make_pair(CONST, std::make_pair("const", "0x103")));
-    keyWords.insert(std::make_pair(CONTINUE, std::make_pair("continue", "0x103")));
-    keyWords.insert(std::make_pair(DEFAULT, std::make_pair("default", "0x103")));
-    keyWords.insert(std::make_pair(DO, std::make_pair("do", "0x103")));
-    keyWords.insert(std::make_pair(DOUBLE, std::make_pair("double", "0x103")));
-    keyWords.insert(std::make_pair(ELSE, std::make_pair("else", "0x103")));
-    keyWords.insert(std::make_pair(EXTENDS, std::make_pair("extends", "0x103")));
-    keyWords.insert(std::make_pair(JAVA_FALSE, std::make_pair("false", "0x103")));
-    keyWords.insert(std::make_pair(FINAL, std::make_pair("final", "0x103")));
-    keyWords.insert(std::make_pair(FINALLY, std::make_pair("finally", "0x103")));
-    keyWords.insert(std::make_pair(FLOAT, std::make_pair("float", "0x103")));
-    keyWords.insert(std::make_pair(FOR, std::make_pair("for", "0x103")));
-    keyWords.insert(std::make_pair(GOTO, std::make_pair("goto", "0x103")));
-    keyWords.insert(std::make_pair(IF, std::make_pair("if", "0x103")));
-    keyWords.insert(std::make_pair(IMPLEMENTES, std::make_pair("implements", "0x103")));
-    keyWords.insert(std::make_pair(IMPORT, std::make_pair("import", "0x103")));
-    keyWords.insert(std::make_pair(INSTANCEOF, std::make_pair("instanceof", "0x103")));
-    keyWords.insert(std::make_pair(INT, std::make_pair("int", "0x103")));
-    keyWords.insert(std::make_pair(INTERFACE, std::make_pair("interface", "0x103")));
-    keyWords.insert(std::make_pair(LONG, std::make_pair("long", "0x103")));
-    keyWords.insert(std::make_pair(NATIVE, std::make_pair("native", "0x103")));
-    keyWords.insert(std::make_pair(NEW, std::make_pair("new", "0x103")));
-    keyWords.insert(std::make_pair(JAVA_NULL, std::make_pair("null", "0x103")));
-    keyWords.insert(std::make_pair(PACKAGE, std::make_pair("package", "0x103")));
-    keyWords.insert(std::make_pair(PRIVATE, std::make_pair("private", "0x103")));
-    keyWords.insert(std::make_pair(PROTECTED, std::make_pair("protected", "0x103")));
-    keyWords.insert(std::make_pair(PUBLIC, std::make_pair("public", "0x103")));
-    keyWords.insert(std::make_pair(RETURN, std::make_pair("return", "0x103")));
-    keyWords.insert(std::make_pair(SHORT, std::make_pair("short", "0x103")));
-    keyWords.insert(std::make_pair(STATIC, std::make_pair("static", "0x103")));
-    keyWords.insert(std::make_pair(SUPER, std::make_pair("super", "0x103")));
-    keyWords.insert(std::make_pair(SWITCH, std::make_pair("switch", "0x103")));
-    keyWords.insert(std::make_pair(SYNCHRONIZED, std::make_pair("synchronized", "0x103")));
-    keyWords.insert(std::make_pair(THIS, std::make_pair("this", "0x103")));
-    keyWords.insert(std::make_pair(THROW, std::make_pair("throw", "0x103")));
-    keyWords.insert(std::make_pair(THROWS, std::make_pair("throws", "0x103")));
-    keyWords.insert(std::make_pair(TRANSIENT, std::make_pair("transient", "0x103")));
-    keyWords.insert(std::make_pair(JAVA_TRUE, std::make_pair("true", "0x103")));
-    keyWords.insert(std::make_pair(TRY, std::make_pair("try", "0x103")));
-    keyWords.insert(std::make_pair(VOID, std::make_pair("void", "0x103")));
-    keyWords.insert(std::make_pair(VOLATILE, std::make_pair("volatile", "0x103")));
-    keyWords.insert(std::make_pair(WHILE, std::make_pair("while", "0x103")));
+    keyWords.insert(std::make_pair("abstract", std::make_pair(ABSTRACT, "0x103")));
+    keyWords.insert(std::make_pair("boolean", std::make_pair(BOOLEAN, "0x103")));
+    keyWords.insert(std::make_pair("break", std::make_pair(BREAK, "0x103")));
+    keyWords.insert(std::make_pair("byte", std::make_pair(BYTE, "0x103")));
+    keyWords.insert(std::make_pair("case", std::make_pair(CASE, "0x103")));
+    keyWords.insert(std::make_pair("catch", std::make_pair(CATCH, "0x103")));
+    keyWords.insert(std::make_pair("char", std::make_pair(CHAR, "0x103")));
+    keyWords.insert(std::make_pair("class", std::make_pair(CLASS, "0x103")));
+    keyWords.insert(std::make_pair("const", std::make_pair(CONST, "0x103")));
+    keyWords.insert(std::make_pair("continue", std::make_pair(CONTINUE, "0x103")));
+    keyWords.insert(std::make_pair("default", std::make_pair(DEFAULT, "0x103")));
+    keyWords.insert(std::make_pair("do", std::make_pair(DO, "0x103")));
+    keyWords.insert(std::make_pair("double", std::make_pair(DOUBLE, "0x103")));
+    keyWords.insert(std::make_pair("else", std::make_pair(ELSE, "0x103")));
+    keyWords.insert(std::make_pair("extends", std::make_pair(EXTENDS, "0x103")));
+    keyWords.insert(std::make_pair("false", std::make_pair(JAVA_FALSE, "0x103")));
+    keyWords.insert(std::make_pair("final", std::make_pair(FINAL, "0x103")));
+    keyWords.insert(std::make_pair("finally", std::make_pair(FINALLY, "0x103")));
+    keyWords.insert(std::make_pair("float", std::make_pair(FLOAT, "0x103")));
+    keyWords.insert(std::make_pair("for", std::make_pair(FOR, "0x103")));
+    keyWords.insert(std::make_pair("goto", std::make_pair(GOTO, "0x103")));
+    keyWords.insert(std::make_pair("if", std::make_pair(IF, "0x103")));
+    keyWords.insert(std::make_pair("implements", std::make_pair(IMPLEMENTES, "0x103")));
+    keyWords.insert(std::make_pair("import", std::make_pair(IMPORT, "0x103")));
+    keyWords.insert(std::make_pair("instanceof", std::make_pair(INSTANCEOF, "0x103")));
+    keyWords.insert(std::make_pair("int", std::make_pair(INT, "0x103")));
+    keyWords.insert(std::make_pair("interface", std::make_pair(INTERFACE, "0x103")));
+    keyWords.insert(std::make_pair("long", std::make_pair(LONG, "0x103")));
+    keyWords.insert(std::make_pair("native", std::make_pair(NATIVE, "0x103")));
+    keyWords.insert(std::make_pair("new", std::make_pair(NEW, "0x103")));
+    keyWords.insert(std::make_pair("null", std::make_pair(JAVA_NULL, "0x103")));
+    keyWords.insert(std::make_pair("package", std::make_pair(PACKAGE, "0x103")));
+    keyWords.insert(std::make_pair("private", std::make_pair(PRIVATE, "0x103")));
+    keyWords.insert(std::make_pair("protected", std::make_pair(PROTECTED, "0x103")));
+    keyWords.insert(std::make_pair("public", std::make_pair(PUBLIC, "0x103")));
+    keyWords.insert(std::make_pair("return", std::make_pair(RETURN, "0x103")));
+    keyWords.insert(std::make_pair("short", std::make_pair(SHORT, "0x103")));
+    keyWords.insert(std::make_pair("static", std::make_pair(STATIC, "0x103")));
+    keyWords.insert(std::make_pair("super", std::make_pair(SUPER, "0x103")));
+    keyWords.insert(std::make_pair("switch", std::make_pair(SWITCH, "0x103")));
+    keyWords.insert(std::make_pair("synchronized", std::make_pair(SYNCHRONIZED, "0x103")));
+    keyWords.insert(std::make_pair("this", std::make_pair(THIS, "0x103")));
+    keyWords.insert(std::make_pair("throw", std::make_pair(THROW, "0x103")));
+    keyWords.insert(std::make_pair("throws", std::make_pair(THROWS, "0x103")));
+    keyWords.insert(std::make_pair("transient", std::make_pair(TRANSIENT, "0x103")));
+    keyWords.insert(std::make_pair("true", std::make_pair(JAVA_TRUE, "0x103")));
+    keyWords.insert(std::make_pair("try", std::make_pair(TRY, "0x103")));
+    keyWords.insert(std::make_pair("void", std::make_pair(VOID, "0x103")));
+    keyWords.insert(std::make_pair("volatile", std::make_pair(VOLATILE, "0x103")));
+    keyWords.insert(std::make_pair("while", std::make_pair(WHILE, "0x103")));
     
     /**
      * 初始化tokenMap
@@ -261,7 +261,7 @@ TokenType Lexer::getToken() {
     } else if (delimeterMap.find(curChar) != delimeterMap.end()) {
         return delimeterMap[curChar];
     /* 标识符 */
-    } else if (isalpha(curChar) || curChar == '_' || curChar == '$') {
+    } else if (isIdentifier(curChar)) {
         currentState = IN_ID;
     /* 单个字符, 单引号 */
     } else if (curChar == '\'') {
@@ -309,5 +309,209 @@ TokenType Lexer::getToken() {
         currentState = IN_XOR;
     }
     /* 2.分别对每一个状态进行处理 */
-    
+    while (currentState != DONE) {
+        switch (currentState) {
+            /* 处理单行以及多行注释 */
+            case IN_COMMENT: {
+                char next = getNextChar();
+                /* 单行注释 */
+                if (next == '/') {
+                    currentState = DONE;
+                    while (getNextChar() != '\n');
+                    return getToken();
+                    /* 多行注释 */
+                } else if (next == '*') {
+                    currentState = DONE;
+                    while (LEXER_ERROR == 0) {
+                        /* 过滤掉注释 */
+                        while (getNextChar() != '*' && LEXER_ERROR == 0);
+                        if (LEXER_ERROR == 1) {
+                            return TOKEN_ERROR;
+                        } else {
+                            if (getNextChar() == '/' && LEXER_ERROR == 0) {
+                                return getToken();
+                            }
+                        }
+                    }
+                    return TOKEN_ERROR;
+                }
+                /* 除号 */
+                if (next != '/') {
+                    currentState = IN_DIV;
+                    ungetNextChar();
+                }
+                break;
+            }
+            /* 处理标识符 */
+            case IN_ID: {
+                currentState = DONE;
+                while (isIdentifier(curChar) || isdigit(curChar)) {
+                    tokenString += curChar;
+                    curChar = getNextChar();
+                }
+                ungetNextChar();
+                /* 判断是否是保留字 */
+                if (keyWords.find(tokenString) != keyWords.end()) {
+                    return keyWords[tokenString].first;
+                }
+                break;
+            }
+            /* 数字 */
+            case IN_NUM: {
+                tokenString.push_back(curChar);
+                char next = getNextChar();
+                if (curChar == '0') {
+                    if (next == '.') {
+                        tokenString.push_back(next);
+                        currentState = IN_FLOAT;
+                    /* 16进制数字 */
+                    } else if (tolower(next) == 'x') {
+                        next = getNextChar();
+                        while (isdigit(next)) {
+                            tokenString.push_back(next);
+                            next = getNextChar();
+                        }
+                        if (next == '.' || tolower(next) == 'e') {
+                            tokenString.push_back(next);
+                            currentState = IN_FLOAT;
+                        } else if (next == 'L') {
+                            tokenString.push_back(next);
+                            currentState = DONE;
+                        } else {
+                            ungetNextChar();
+                        }
+                    }
+                    return CONST_INT;
+                } else {
+                    if (next == '.' || tolower(next) == 'e') {
+                        tokenString.push_back(curChar);
+                        currentState = IN_FLOAT;
+                    } else if (next == 'L') {
+                        tokenString.push_back(next);
+                        currentState = DONE;
+                    } else {
+                        ungetNextChar();
+                    }
+                    return CONST_INT;
+                }
+                break;
+            }
+            /* 浮点型 */
+            case IN_FLOAT: {
+                while (isdigit(curChar)) {
+                    tokenString.push_back(curChar);
+                    curChar = getNextChar();
+                }
+                if (tolower(curChar) != 'f') {
+                    ungetNextChar();
+                }
+                return CONST_FLOAT;
+                break;
+            }
+            /* 字符常量 */
+            case IN_CONST_CHAR: {
+                char next = getNextChar();
+                /* 单个字符 */
+                if (next != '\\' && next != '\'') {
+                    tokenString = next;
+                    next = getNextChar();
+                    if (next == '\'') {
+                        currentState = DONE;
+                        return CONST_CHAR;
+                    } else {
+                        return TOKEN_ERROR;
+                    }
+                /* 单个单引号 */
+                } else if (next == '\'') {
+                    currentState = DONE;
+                    return CONST_CHAR;
+                /* 单个反斜杠, 处理转义字符 */
+                } else if (next == '\\') {
+                    next = getNextChar();
+                    if (next == '\'') {
+                        tokenString.resize(tokenString.size() - 1);
+                        tokenString.append("\'");
+                    } else if (next == '\\') {
+                        tokenString.resize(tokenString.size() - 1);
+                        tokenString.append("\\");
+                    } else if (next == 'r') {
+                        tokenString.resize(tokenString.size() - 1);
+                        tokenString.append("\r");
+                    } else if (next == 'n') {
+                        tokenString.resize(tokenString.size() - 1);
+                        tokenString.append("\n");
+                    } else if (next == 'f') {
+                        tokenString.resize(tokenString.size() - 1);
+                        tokenString.append("\f");
+                    } else if (next == 't') {
+                        tokenString.resize(tokenString.size() - 1);
+                        tokenString.append("\t");
+                    } else if (next == 'b') {
+                        tokenString.resize(tokenString.size() - 1);
+                        tokenString.append("\b");
+                    } else if (next == 'u') {
+                        // TODO: \ddd,1-3位8进制字符ddd
+                    } else if (isdigit(next)) {
+                        // TODO: \uxxxx,1-4位16进制字符xxxx
+                    } else {
+                        tokenString.push_back(next);
+                    }
+                }
+                return CONST_CHAR;
+                break;
+            }
+            /* 字符常量 */
+            case IN_CONST_STR: {
+                char next = getNextChar();
+                bool convert = false;
+                while (next != '\n' && next != '"') {
+                    if (convert == false && next == '\\') {
+                        convert = true;
+                        tokenString.push_back(next);
+                    } else if (convert == true) {
+                        if (next == '\'') {
+                            tokenString.resize(tokenString.size() - 1);
+                            tokenString.append("\'");
+                        } else if (next == '\\') {
+                            tokenString.resize(tokenString.size() - 1);
+                            tokenString.append("\\");
+                        } else if (next == 'r') {
+                            tokenString.resize(tokenString.size() - 1);
+                            tokenString.append("\r");
+                        } else if (next == 'n') {
+                            tokenString.resize(tokenString.size() - 1);
+                            tokenString.append("\n");
+                        } else if (next == 'f') {
+                            tokenString.resize(tokenString.size() - 1);
+                            tokenString.append("\f");
+                        } else if (next == 't') {
+                            tokenString.resize(tokenString.size() - 1);
+                            tokenString.append("\t");
+                        } else if (next == 'b') {
+                            tokenString.resize(tokenString.size() - 1);
+                            tokenString.append("\b");
+                        } else if (next == 'u') {
+                            // TODO: \ddd,1-3位8进制字符ddd
+                        } else if (isdigit(next)) {
+                            // TODO: \uxxxx,1-4位16进制字符xxxx
+                        } else {
+                            tokenString.push_back(next);
+                        }
+                        convert = false;
+                    } else {
+                        tokenString.push_back(next);
+                    }
+                    next = getNextChar();
+                }
+                if (next == '\n') {
+                    return TOKEN_ERROR;
+                }
+                return CONST_STR;
+                break;
+            }
+            default:
+                break;
+        }
+
+    }
 }

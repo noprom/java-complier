@@ -10,14 +10,15 @@
 #define _LEXER_H
 
 #include "globals.h"
+#include "util.h"
 
 /* DFA的状态 */
 typedef enum {
     /**
-     * 开始, 结束, 读入标志符, 读入字符常量, 读入字符串常量, 读入数字, 读入转义符号, 读入界限符, 读入注释
+     * 开始, 结束, 读入标志符, 读入字符常量, 读入字符串常量, 读入数字, 读入浮点型, 读入转义符号, 读入界限符, 读入注释
      * 读入+ - * / % & = < > | ! ^
      */
-    START, DONE, IN_ID, IN_CONST_CHAR, IN_CONST_STR, IN_NUM, IN_ESC, IN_DELIMETER, IN_COMMENT,
+    START, DONE, IN_ID, IN_CONST_CHAR, IN_CONST_STR, IN_NUM, IN_FLOAT, IN_ESC, IN_DELIMETER, IN_COMMENT,
     IN_ADD, IN_MINUS, IN_MUL, IN_DIV, IN_MOD, IN_AND, IN_ASSIGN, IN_LT, IN_GT, IN_OR, IN_NOT, IN_XOR
     
 } DFAStateType;
@@ -53,8 +54,8 @@ protected:
      */
     virtual TokenType getToken();
     
-    /* 关键字及其对应Token的关系 */
-    std::map<TokenType, std::pair<std::string, std::string>> keyWords;
+    /* 单词属性及其对应Token的关系 */
+    std::map<TokenType, std::pair<std::string, std::string>> tokenMap;
     
 private:
     /* 输入文件流 */
@@ -66,8 +67,8 @@ private:
     /* DFA的状态 */
     DFAStateType currentState;
     
-    /* 单词属性及其对应Token的关系 */
-    std::map<TokenType, std::pair<std::string, std::string>> tokenMap;
+    /* 关键字及其对应Token的关系 */
+    std::map<std::string, std::pair<TokenType, std::string>> keyWords;
     
     /* 界限符与对应Token的关系 */
     std::map<char, TokenType> delimeterMap;
