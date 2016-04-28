@@ -135,7 +135,24 @@ Lexer::Lexer(std::string fileName) {
     tokenMap.insert(std::make_pair(OR_BIT, std::make_pair("|", "0x114")));
     tokenMap.insert(std::make_pair(XOR, std::make_pair("^", "0x115")));
     tokenMap.insert(std::make_pair(AND_BIT, std::make_pair("&", "0x116")));
+    
+    /**
+     * 比较运算符|移位运算符
+     * == !=        : 0x117
+     * < > <= >=    : 0x118
+     * << >> >>>    : 0x119
+     */
+    tokenMap.insert(std::make_pair(EQU, std::make_pair("==", "0x117")));
+    tokenMap.insert(std::make_pair(NE, std::make_pair("!=", "0x117")));
+    tokenMap.insert(std::make_pair(LT, std::make_pair("<", "0x118")));
+    tokenMap.insert(std::make_pair(GT, std::make_pair(">", "0x118")));
+    tokenMap.insert(std::make_pair(LE, std::make_pair("<=", "0x118")));
+    tokenMap.insert(std::make_pair(GE, std::make_pair(">=", "0x118")));
+    tokenMap.insert(std::make_pair(LEFT_SHIFT, std::make_pair("<<", "0x119")));
+    tokenMap.insert(std::make_pair(RIGHT_SHIFT, std::make_pair(">>", "0x119")));
+    tokenMap.insert(std::make_pair(ZERO_FILL_RIGHT_SHIRT, std::make_pair(">>>", "0x119")));
 }
+
 
 
 
