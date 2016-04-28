@@ -170,6 +170,22 @@ Lexer::Lexer(std::string fileName) {
     tokenMap.insert(std::make_pair(NOT, std::make_pair("!", "0x11c")));
     tokenMap.insert(std::make_pair(NOT_BIT, std::make_pair("~", "0x11c")));
     
+    /**
+     * 界限符
+     * [] () .                  : 0x11d
+     * ,                        : 0x120
+     * {}                       : 0x121
+     * ;                        : 0x122
+     */
+    tokenMap.insert(std::make_pair(BRACKET_ML, std::make_pair("[", "0x11d")));
+    tokenMap.insert(std::make_pair(BRACKET_MR, std::make_pair("]", "0x11d")));
+    tokenMap.insert(std::make_pair(BRACKET_SL, std::make_pair("(", "0x11d")));
+    tokenMap.insert(std::make_pair(BRACKET_SR, std::make_pair(")", "0x11d")));
+    tokenMap.insert(std::make_pair(DOT, std::make_pair(".", "0x11d")));
+    tokenMap.insert(std::make_pair(COMMA, std::make_pair(",", "0x120")));
+    tokenMap.insert(std::make_pair(BRACKET_LL, std::make_pair("{", "0x121")));
+    tokenMap.insert(std::make_pair(BRACKET_LR, std::make_pair("}", "0x121")));
+    tokenMap.insert(std::make_pair(SEMICOLON, std::make_pair(";", "0x122")));
 }
 
 
