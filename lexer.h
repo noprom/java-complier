@@ -26,8 +26,8 @@ typedef enum {
 class Lexer {
     
 public:
-    /* 程序错误标志 */
-    static int PROGRAM_ERROR;
+    /* 词法分析阶段程序错误标志 */
+    static int LEXER_ERROR;
     
 protected:
     /* 扫描到的行数 */
@@ -46,6 +46,41 @@ protected:
      */
     Lexer(std::string fileName);
     
+    /* 关键字及其对应Token的关系 */
+    std::map<TokenType, std::pair<std::string, std::string>> keyWords;
+    
+private:
+    /* 输入文件流 */
+    std::ifstream inFileStream;
+    
+    /* 读入的每一行字符流 */
+    std::string lineBuf;
+    
+    /* DFA的状态 */
+    DFAStateType inState;
+    
+    /* 单词属性及其对应Token的关系 */
+    std::map<TokenType, std::pair<std::string, std::string>> tokenMap;
+    
+    /**
+     * 读取一行内容并存入lineBuf
+     * @return void
+     */
+    void getOneLine();
+    
+    /**
+     * 获得下一个字符
+     *
+     * @return 下一个字符
+     */
+    char getNextChar();
+    
+    /**
+     * 回退一个字符
+     *
+     * @return void
+     */
+    void ungetNextChar();
     
 };
 #endif
