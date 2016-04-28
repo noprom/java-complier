@@ -104,7 +104,7 @@ typedef enum {
     
 } TokenType;
 //
-//extern FILE* scanListing;     /* 词法分析中间输出结果 */
+extern FILE* lexout;     /* 词法分析中间输出结果 */
 
 /**
  * TraceScan = 1则输出扫描结果

@@ -18,7 +18,7 @@ std::string Lexer::tokenString = "";
 /* 实现构造函数 */
 Lexer::Lexer(std::string fileName) {
     
-//    scanListing = stdout;
+    stdout = stdout;
     
     /** 
      * 初始化关键字
@@ -246,6 +246,13 @@ void Lexer::ungetNextChar() {
     if (linePos > 0) {
         linePos--;
     }
+}
+
+/* 打印token的信息 */
+void Lexer::printToken(TokenType token, std::string tokenString) {
+    std::string tokenName = tokenMap[token].first;
+    std::string tokenVal = tokenMap[token].second;
+    fprintf(stdout, "%s\t%s\t%s\n", tokenName.c_str(), tokenVal.c_str(), tokenString.c_str());
 }
 
 /* 获得一个Token */

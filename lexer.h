@@ -59,7 +59,6 @@ protected:
     
     /* 单词属性及其对应Token的关系 */
     std::map<TokenType, std::pair<std::string, std::string> > tokenMap;
-    
 private:
     /* 输入文件流 */
     std::ifstream inFileStream;
@@ -102,5 +101,12 @@ private:
      * @return void
      */
     void scanError();
+    
+    /**
+     * 打印token的信息
+     * @param token token类型
+     * @param tokenString token 保存字符串
+     */
+    void printToken(TokenType token, std::string tokenString);
 };
 #endif

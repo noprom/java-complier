@@ -17,4 +17,8 @@
  */
 bool isIdentifier(char c);
 
+///**
+// * 打印token的信息
+// */
+//void printToken(TokenType token, std::string tokenString);
 #endif
