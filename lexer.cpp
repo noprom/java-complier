@@ -509,9 +509,79 @@ TokenType Lexer::getToken() {
                 return CONST_STR;
                 break;
             }
+            /* + */
+            case IN_ADD: {
+                tokenString.push_back(curChar);
+                char next = getNextChar();
+                /* + */
+                if (isdigit(next) || isalpha(next)) {
+                    ungetNextChar();
+                    return ADD;
+                /* ++ */
+                } else if (next == '+') {
+                    tokenString.push_back(next);
+                    return INC;
+                /* += */
+                } else if (next == '=') {
+                    tokenString.push_back(next);
+                    return ADD_ASSIGN;
+                }
+                break;
+            }
+            /* - */
+            case IN_MINUS: {
+                tokenString.push_back(curChar);
+                char next = getNextChar();
+                /* - */
+                if (isdigit(next) || isalpha(next)) {
+                    ungetNextChar();
+                    return MINUS;
+                /* -- */
+                } else if (next == '-') {
+                    tokenString.push_back(next);
+                    return DEC;
+                /* -= */
+                } else if (next == '=') {
+                    tokenString.push_back(next);
+                    return MINUS_ASSIGN;
+                }
+                break;
+            }
+            /* * */
+            case IN_MUL: {
+                tokenString.push_back(curChar);
+                char next = getNextChar();
+                /* * */
+                if (isdigit(next) || isalpha(next)) {
+                    ungetNextChar();
+                    return MUL;
+                /* *= */
+                } else if (next == '=') {
+                    tokenString.push_back(next);
+                    return MUL_ASSIGN;
+                }
+                break;
+            }
+            /* / */
+            case IN_DIV: {
+                tokenString.push_back(curChar);
+                char next = getNextChar();
+                /* / */
+                if (isdigit(next) || isalpha(next)) {
+                    ungetNextChar();
+                    return DIV;
+                    /* /= */
+                } else if (next == '=') {
+                    tokenString.push_back(next);
+                    return DIV_ASSIGN;
+                }
+                break;
+            }
             default:
                 break;
         }
+        
+        
 
     }
 }
