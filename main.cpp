@@ -6,7 +6,9 @@
 //  Copyright © 2016 tyee.noprom@qq.com. All rights reserved.
 //
 
-#include <iostream>
+#include "globals.h"
+
+int TraceScan = 1;
 
 int main(int argc, const char * argv[]) {
     // insert code here...

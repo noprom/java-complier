@@ -16,6 +16,9 @@ std::string Lexer::tokenString = "";
 
 /* 实现构造函数 */
 Lexer::Lexer(std::string fileName) {
+    
+    scanListing = stdout;
+    
     /** 
      * 初始化关键字
      * 关键字: 0x103
@@ -186,8 +189,35 @@ Lexer::Lexer(std::string fileName) {
     tokenMap.insert(std::make_pair(BRACKET_LL, std::make_pair("{", "0x121")));
     tokenMap.insert(std::make_pair(BRACKET_LR, std::make_pair("}", "0x121")));
     tokenMap.insert(std::make_pair(SEMICOLON, std::make_pair(";", "0x122")));
+    
+    /* 打开文件 */
+    inFileStream.open(fileName.c_str());
+    if (!inFileStream.is_open()) {
+        std::cout << "can not open the file :" << fileName << std::endl;
+        scanError();
+    } else {
+        getOneLine();
+    }
 }
 
+/* 实现错误信息处理 */
+void Lexer::scanError() {
+    Lexer::LEXER_ERROR = 1;
+}
+
+/* 读入文件的一行并且存放到lineBuf中 */
+void Lexer::getOneLine() {
+    lineBuf = "";
+    if (!getline(inFileStream, lineBuf)) {
+        std::cout << "Error: file end with illegal ending" << std::endl;
+    }
+    lineBuf += "\n";
+}
+
+/* 获得下一个字符 */
+char Lexer::getNextChar() {
+    return '1';
+}
 
 
 

@@ -82,5 +82,11 @@ private:
      */
     void ungetNextChar();
     
+    /**
+     * 扫描错误
+     *
+     * @return void
+     */
+    void scanError();
 };
 #endif

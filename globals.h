@@ -5,13 +5,15 @@
 #ifndef _GLOBALS_H_
 #define  _GLOBALS_H_
 
+#include <cstdio>
+#include <cstdlib>
+#include <cctype>
+#include <cstring>
+#include <iostream>
 #include <fstream>
-#include <stdlib.h>
-#include <ctype.h>
 #include <map>
 #include <vector>
 #include <string>
-#include <cstdio>
 
 //#ifndef FALSE
 //#define FALSE 0
@@ -103,9 +105,13 @@ typedef enum {
 } TokenType;
 
 
-extern FILE* source;      /* 源代码文件 */
-extern FILE* listing;     /* 中间输出文件 */
+extern FILE* source;          /* 源代码文件 */
+extern FILE* scanListing;     /* 词法分析中间输出结果 */
+extern int lineno;            /* 输出的源代码文件行数 */
 
-extern int lineno;        /* 输出的源代码文件行数 */
+/**
+ * TraceScan = 1则输出扫描结果
+ */
+extern int TraceScan;
 
 #endif
