@@ -219,5 +219,12 @@ char Lexer::getNextChar() {
     return '1';
 }
 
+/* 退回一个字符 */
+void Lexer::ungetNextChar() {
+    if (linePos > 0) {
+        linePos--;
+    }
+}
+
 
 
