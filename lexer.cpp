@@ -252,7 +252,12 @@ void Lexer::ungetNextChar() {
 void Lexer::printToken(TokenType token, std::string tokenString) {
     std::string tokenName = tokenMap[token].first;
     std::string tokenVal = tokenMap[token].second;
-    fprintf(stdout, "%s\t%s\t%s\n", tokenName.c_str(), tokenVal.c_str(), tokenString.c_str());
+    if (keyWords.find(tokenString) != keyWords.end()) {
+        tokenName = "keywords";
+        tokenVal = keyWords[tokenString].second;
+    }
+
+    fprintf(stdout, "%s\t%s\t%s\n", tokenName.c_str(), tokenString.c_str(), tokenVal.c_str());
 }
 
 /* 获得一个Token */
@@ -278,6 +283,7 @@ TokenType Lexer::getToken() {
         //return NOT_BIT;
     /* 界限符 */
     } else if (delimeterMap.find(curChar) != delimeterMap.end()) {
+        tokenString.push_back(curChar);
         currentState = DONE;
         currentToken = delimeterMap[curChar];
         //return delimeterMap[curChar];
@@ -371,10 +377,12 @@ TokenType Lexer::getToken() {
                     curChar = getNextChar();
                 }
                 ungetNextChar();
-                /* 判断是否是保留字 */
+                /* 判断是否是关键字 */
                 if (keyWords.find(tokenString) != keyWords.end()) {
                     currentToken = keyWords[tokenString].first;
 //                    return keyWords[tokenString].first;
+                } else {
+                    currentToken = ID;
                 }
                 break;
             }
