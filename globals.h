@@ -62,7 +62,7 @@ typedef enum {
      * ^= |= >>= <<= >>>=
      */
     ASSIGN, ADD_ASSIGN, MINUS_ASSIGN, MUL_ASSIGN, DIV_ASSIGN, MOD_ASSIGN, AND_ASSIGN,
-    XOR_ASSIGN, OR_ASSIGN, RIGHT_SHIFT_ASSIGN, LEFT_SHIFT_ASSIGN, UNSIGNED_RIGHT_SHIRT_ASSIGN,
+    XOR_ASSIGN, OR_ASSIGN, RIGHT_SHIFT_ASSIGN, LEFT_SHIFT_ASSIGN, ZERO_FILL_RIGHT_SHIRT_ASSIGN,
     
     /**
      * 关系运算符号
@@ -81,7 +81,7 @@ typedef enum {
      * < > <= >=    : 0x118
      * << >> >>>    : 0x119
      */
-    EQU, NE, LT, GT, LE, GE, LEFT_SHIFT, RIGHT_SHIFT, UNSIGNED_RIGHT_SHIRT,
+    EQU, NE, LT, GT, LE, GE, LEFT_SHIFT, RIGHT_SHIFT, ZERO_FILL_RIGHT_SHIRT,
     
     /**
      * 数值计算符号

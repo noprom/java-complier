@@ -101,6 +101,40 @@ Lexer::Lexer(std::string fileName) {
     tokenMap.insert(std::make_pair(CONST_INT, std::make_pair("int const", "0x107")));
     tokenMap.insert(std::make_pair(CONST_FLOAT, std::make_pair("float const", "0x108")));
     tokenMap.insert(std::make_pair(CONST_STR, std::make_pair("string const", "0x109")));
+    
+    /**
+     * 赋值运算符号: 0x110
+     * = += -= *= /= %= &=
+     * ^= |= >>= <<= >>>=
+     */
+    tokenMap.insert(std::make_pair(ASSIGN, std::make_pair("=", "0x110")));
+    tokenMap.insert(std::make_pair(ADD_ASSIGN, std::make_pair("+=", "0x110")));
+    tokenMap.insert(std::make_pair(MINUS_ASSIGN, std::make_pair("-=", "0x110")));
+    tokenMap.insert(std::make_pair(MUL_ASSIGN, std::make_pair("*=", "0x110")));
+    tokenMap.insert(std::make_pair(DIV_ASSIGN, std::make_pair("/=", "0x110")));
+    tokenMap.insert(std::make_pair(MOD_ASSIGN, std::make_pair("%=", "0x110")));
+    tokenMap.insert(std::make_pair(AND_ASSIGN, std::make_pair("&=", "0x110")));
+    tokenMap.insert(std::make_pair(XOR_ASSIGN, std::make_pair("^=", "0x110")));
+    tokenMap.insert(std::make_pair(OR_ASSIGN, std::make_pair("|=", "0x110")));
+    tokenMap.insert(std::make_pair(RIGHT_SHIFT_ASSIGN, std::make_pair(">>=", "0x110")));
+    tokenMap.insert(std::make_pair(LEFT_SHIFT_ASSIGN, std::make_pair("<<=", "0x110")));
+    tokenMap.insert(std::make_pair(ZERO_FILL_RIGHT_SHIRT_ASSIGN, std::make_pair(">>>=", "0x110")));
+    
+    /**
+     * 关系运算符号
+     * ?:   0x111
+     * ||:  0x112
+     * &&:  0x113
+     * | :  0x114
+     * ^ :  0x115
+     * & :  0x116
+     */
+    tokenMap.insert(std::make_pair(TRIPLE_CMP, std::make_pair("?:", "0x111")));
+    tokenMap.insert(std::make_pair(OR, std::make_pair("||", "0x112")));
+    tokenMap.insert(std::make_pair(AND, std::make_pair("&&", "0x113")));
+    tokenMap.insert(std::make_pair(OR_BIT, std::make_pair("|", "0x114")));
+    tokenMap.insert(std::make_pair(XOR, std::make_pair("^", "0x115")));
+    tokenMap.insert(std::make_pair(AND_BIT, std::make_pair("&", "0x116")));
 }
 
 
