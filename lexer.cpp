@@ -151,6 +151,25 @@ Lexer::Lexer(std::string fileName) {
     tokenMap.insert(std::make_pair(LEFT_SHIFT, std::make_pair("<<", "0x119")));
     tokenMap.insert(std::make_pair(RIGHT_SHIFT, std::make_pair(">>", "0x119")));
     tokenMap.insert(std::make_pair(ZERO_FILL_RIGHT_SHIRT, std::make_pair(">>>", "0x119")));
+    
+    /**
+     * 数值计算符号
+     * + -                      : 0x11a
+     * * / %                    : 0x11b
+     * ++ -- +(正) –(负) ! ~     : 0x11c
+     */
+    tokenMap.insert(std::make_pair(ADD, std::make_pair("+", "0x11a")));
+    tokenMap.insert(std::make_pair(MINUS, std::make_pair("-", "0x11a")));
+    tokenMap.insert(std::make_pair(MUL, std::make_pair("*", "0x11b")));
+    tokenMap.insert(std::make_pair(DIV, std::make_pair("/", "0x11b")));
+    tokenMap.insert(std::make_pair(MOD, std::make_pair("%", "0x11b")));
+    tokenMap.insert(std::make_pair(INC, std::make_pair("++", "0x11c")));
+    tokenMap.insert(std::make_pair(DEC, std::make_pair("--", "0x11c")));
+    tokenMap.insert(std::make_pair(POSITIVE, std::make_pair("+", "0x11c")));
+    tokenMap.insert(std::make_pair(NEGATIVE, std::make_pair("-", "0x11c")));
+    tokenMap.insert(std::make_pair(NOT, std::make_pair("!", "0x11c")));
+    tokenMap.insert(std::make_pair(NOT_BIT, std::make_pair("~", "0x11c")));
+    
 }
 
 

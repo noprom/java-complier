@@ -89,7 +89,7 @@ typedef enum {
      * * / %                    : 0x11b
      * ++ -- +(正) –(负) ! ~     : 0x11c
      */
-    ADD, MINUS, MUL, DIV, MOD, INC, DEC, POSITIVE, NEGATIVE, EXCLAMATORY_MARK, NOT,
+    ADD, MINUS, MUL, DIV, MOD, INC, DEC, POSITIVE, NEGATIVE, NOT, NOT_BIT,
     
     /**
      * 界限符
