@@ -21,6 +21,7 @@
 
 /* 输出扫描结果 */
 int TraceScan = 1;
+int TraceSource = 0;
 
 int main(int argc, const char * argv[]) {
 

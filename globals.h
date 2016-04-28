@@ -103,11 +103,16 @@ typedef enum {
     BRACKET_ML, BRACKET_MR, BRACKET_SL, BRACKET_SR, BRACKET_LL, BRACKET_LR, DOT, COMMA, SEMICOLON
     
 } TokenType;
-//
-extern FILE* lexout;     /* 词法分析中间输出结果 */
+
+
+/**
+ * TraceSource = 1则输出源代码
+ */
+extern int TraceSource;
 
 /**
  * TraceScan = 1则输出扫描结果
  */
 extern int TraceScan;
+
 #endif

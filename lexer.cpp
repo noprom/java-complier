@@ -226,7 +226,11 @@ void Lexer::getOneLine() {
     }
 //    if (!EOF_flag) {
         lineBuf += "\n";
-        std::cout << lineNumber << ":" << lineBuf << std::endl;
+    if (TraceSource) {
+        if (TraceSource)
+            printf("%4d: %s\n", lineNumber, lineBuf.c_str());
+//        std::cout << lineNumber << ":" << lineBuf << std::endl;
+    }
 //    }
 }
 
@@ -257,7 +261,7 @@ void Lexer::printToken(TokenType token, std::string tokenString) {
         tokenVal = keyWords[tokenString].second;
     }
 
-    fprintf(stdout, "%s\t%s\t%s\n", tokenName.c_str(), tokenString.c_str(), tokenVal.c_str());
+    printf("%15s \t %15s \t %10s\n", tokenName.c_str(), tokenString.c_str(), tokenVal.c_str());
 }
 
 /* 获得一个Token */
@@ -920,7 +924,12 @@ TokenType Lexer::getToken() {
         }
     }
     if (TraceScan) {
-        fprintf(stdout, "\t%d: ", lineNumber);
+        if (TraceSource) {
+            printf("\t%d: ", lineNumber);
+        } else {
+            printf("%d: ", lineNumber);
+        }
+//        fprintf(stdout, "\t%d: ", lineNumber);
         printToken(currentToken, tokenString);
     }
     return TOKEN_ERROR;
