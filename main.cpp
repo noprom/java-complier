@@ -8,10 +8,37 @@
 
 #include "globals.h"
 
+/* 
+ * NO_PARSE = TRUE
+ * 则只是一个词法分析器
+ */
+#define NO_PARSE 1
+
+#include "util.h"
+#if NO_PARSE
+#include "lexer.h"
+#endif
+
+/* 输出扫描结果 */
 int TraceScan = 1;
 
 int main(int argc, const char * argv[]) {
-    // insert code here...
-    std::cout << "Hello, World!\n";
+    
+    std::string fileName;
+    std::cout << "argc = " << argc << ", argv[0] = " << argv[0] << std::endl;
+    
+    if (argc != 1) {
+        std::cout << "Usage: lexer <filename>" << std::endl;
+        exit(1);
+    }
+    
+    /* 开始词法分析 */
+    if (NO_PARSE) {
+        Lexer lexer = Lexer(fileName);
+        TokenType token = lexer.getToken();
+        while (token != ENDFILE) {
+            token = lexer.getToken();
+        }
+    }
     return 0;
 }

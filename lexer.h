@@ -30,16 +30,6 @@ public:
     /* 词法分析阶段程序错误标志 */
     static int LEXER_ERROR;
     
-protected:
-    /* 扫描到的行数 */
-    static int lineNumber;
-    
-    /* 扫描到某行的位置 */
-    static int linePos;
-    
-    /* 提取出来的单词 */
-    static std::string tokenString;
-    
     /**
      * 构造函数
      *
@@ -49,10 +39,20 @@ protected:
     
     /**
      * 获得单词的token
-     * 
+     *
      * @return token状态
      */
     virtual TokenType getToken();
+    
+protected:
+    /* 扫描到的行数 */
+    static int lineNumber;
+    
+    /* 扫描到某行的位置 */
+    static int linePos;
+    
+    /* 提取出来的单词 */
+    static std::string tokenString;
     
     /* 单词属性及其对应Token的关系 */
     std::map<TokenType, std::pair<std::string, std::string>> tokenMap;

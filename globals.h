@@ -110,5 +110,4 @@ extern FILE* scanListing;     /* 词法分析中间输出结果 */
  * TraceScan = 1则输出扫描结果
  */
 extern int TraceScan;
-
 #endif
