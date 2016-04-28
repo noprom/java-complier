@@ -21,9 +21,9 @@ lex.o: lexer.cpp lexer.h
 	$(CC) $(CFLAGS) -c lexer.cpp
 
 clean:
-	-rm lexer
-	-rm $(OBJS)
+    -rm lexer
+    -rm $(OBJS)
 
 copy:
-    cp /Users/noprom/Library/Developer/Xcode/DerivedData/java_complier-grsucjvjbdtzhffoxnvborkpifbf/Build/Products/Debug/java_complier /Users/noprom/Documents/Dev/C++/Complier/java_complier/java_complier/
+#cp /Users/noprom/Library/Developer/Xcode/DerivedData/java_complier-grsucjvjbdtzhffoxnvborkpifbf/Build/Products/Debug/java_complier /Users/noprom/Documents/Dev/C++/Complier/java_complier/java_complier/
 all: lexer

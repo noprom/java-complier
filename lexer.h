@@ -30,6 +30,9 @@ public:
     /* 词法分析阶段程序错误标志 */
     static int LEXER_ERROR;
     
+    /* EOF结束标志 */
+    static int EOF_flag;
+    
     /**
      * 构造函数
      *

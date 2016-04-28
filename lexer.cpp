@@ -10,6 +10,7 @@
 
 /* 初始化词法分析器里面的静态变量 */
 int Lexer::LEXER_ERROR = 0;
+int Lexer::EOF_flag = 0;
 int Lexer::lineNumber = 1;
 int Lexer::linePos = 0;
 std::string Lexer::tokenString = "";
@@ -220,9 +221,13 @@ void Lexer::scanError() {
 void Lexer::getOneLine() {
     lineBuf = "";
     if (!getline(inFileStream, lineBuf)) {
-        std::cout << "Error: file end with illegal ending" << std::endl;
+        EOF_flag = 1;
+//        std::cout << "Error: file end with illegal ending" << std::endl;
     }
-    lineBuf += "\n";
+//    if (!EOF_flag) {
+        lineBuf += "\n";
+        std::cout << lineNumber << ":" << lineBuf << std::endl;
+//    }
 }
 
 /* 获得下一个字符 */
@@ -247,6 +252,9 @@ void Lexer::ungetNextChar() {
 TokenType Lexer::getToken() {
     Lexer::tokenString = "";
     char curChar = getNextChar();
+    if (EOF_flag) {
+        return ENDFILE;
+    }
     /* 1.首先获得第一个状态 */
     /* 空格 */
     if (isspace(curChar)) {

@@ -23,12 +23,15 @@
 int TraceScan = 1;
 
 int main(int argc, const char * argv[]) {
-    
+
+    std::string fileName;
     if (argc != 2) {
-        std::cout << "Usage: lexer <filename>" << std::endl;
-        exit(1);
+        fileName = "./App.java";
+//        std::cout << "Usage: lexer <filename>" << std::endl;
+//        exit(1);
+    } else {
+        fileName = argv[1];
     }
-    std::string fileName = argv[1];
     
     /* 开始词法分析 */
     if (NO_PARSE) {
