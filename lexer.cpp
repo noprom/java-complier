@@ -17,7 +17,7 @@ std::string Lexer::tokenString = "";
 /* 实现构造函数 */
 Lexer::Lexer(std::string fileName) {
     
-    scanListing = stdout;
+//    scanListing = stdout;
     
     /** 
      * 初始化关键字

@@ -24,13 +24,11 @@ int TraceScan = 1;
 
 int main(int argc, const char * argv[]) {
     
-    std::string fileName;
-    std::cout << "argc = " << argc << ", argv[0] = " << argv[0] << std::endl;
-    
-    if (argc != 1) {
+    if (argc != 2) {
         std::cout << "Usage: lexer <filename>" << std::endl;
         exit(1);
     }
+    std::string fileName = argv[1];
     
     /* 开始词法分析 */
     if (NO_PARSE) {

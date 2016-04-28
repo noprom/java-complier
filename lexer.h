@@ -55,7 +55,7 @@ protected:
     static std::string tokenString;
     
     /* 单词属性及其对应Token的关系 */
-    std::map<TokenType, std::pair<std::string, std::string>> tokenMap;
+    std::map<TokenType, std::pair<std::string, std::string> > tokenMap;
     
 private:
     /* 输入文件流 */
@@ -68,7 +68,7 @@ private:
     DFAStateType currentState;
     
     /* 关键字及其对应Token的关系 */
-    std::map<std::string, std::pair<TokenType, std::string>> keyWords;
+    std::map<std::string, std::pair<TokenType, std::string> > keyWords;
     
     /* 界限符与对应Token的关系 */
     std::map<char, TokenType> delimeterMap;
