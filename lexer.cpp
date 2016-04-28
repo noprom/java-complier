@@ -244,17 +244,70 @@ void Lexer::ungetNextChar() {
 }
 
 /* 获得一个Token */
-DFAStateType Lexer::getToken() {
+TokenType Lexer::getToken() {
     Lexer::tokenString = "";
     char curChar = getNextChar();
+    /* 1.首先获得第一个状态 */
     /* 空格 */
     if (isspace(curChar)) {
         return getToken();
+    /* 注释 */
     } else if(curChar == '/') {
         currentState = IN_COMMENT;
+    /* 位取反 */
     } else if (curChar == '~') {
         return NOT_BIT;
-    } else if (curChar == '')
+    /* 界限符 */
+    } else if (delimeterMap.find(curChar) != delimeterMap.end()) {
+        return delimeterMap[curChar];
+    /* 标识符 */
+    } else if (isalpha(curChar) || curChar == '_' || curChar == '$') {
+        currentState = IN_ID;
+    /* 单个字符, 单引号 */
+    } else if (curChar == '\'') {
+        currentState = IN_CONST_CHAR;
+    /* 单个字符串, 双引号 */
+    } else if (curChar == '"') {
+        currentState = IN_CONST_STR;
+    /* 数字 */
+    } else if (isdigit(curChar)) {
+        currentState = IN_NUM;
+    /* + */
+    } else if (curChar == '+') {
+        currentState = IN_ADD;
+    /* - */
+    } else if (curChar == '-') {
+        currentState = IN_MINUS;
+    /* * */
+    } else if (curChar == '*') {
+        currentState = IN_MUL;
+    /* /,此种情况已经合并在//中 */
+    } else if (curChar == '/') {
+    /* % */
+    } else if (curChar == '%') {
+        currentState = IN_MOD;
+    /* & */
+    } else if (curChar == '&') {
+        currentState = IN_AND;
+    /* = */
+    } else if (curChar == '=') {
+        currentState = IN_ASSIGN;
+    /* < */
+    } else if (curChar == '<') {
+        currentState = IN_LT;
+    /* > */
+    } else if (curChar == '>') {
+        currentState = IN_GT;
+    /* | */
+    } else if (curChar == '|') {
+        currentState = IN_OR;
+    /* ! */
+    } else if (curChar == '!') {
+        currentState = IN_NOT;
+    /* ^ */
+    } else if (curChar == '^') {
+        currentState = IN_XOR;
+    }
+    /* 2.分别对每一个状态进行处理 */
+    
 }
-
-
