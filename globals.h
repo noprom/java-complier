@@ -23,32 +23,26 @@
 
 /* 单词类型 */
 typedef enum {
-    /* 
-     * 特殊的token
-     * 文件结束、
+    /*
+     * 文件结束
      * 错误的单词: 0x100
+     * 注释:      0x101
+     * 空格:      0x102
      */
-    ENDFILE, ERROR,
-    
-    /**
-     * 注释: 0x101
-     * 空格: 0x102
-     */
-    COMMENT, SPACE,
+    ENDFILE, TOKEN_ERROR, COMMENT, SPACE,
     
     /**
      * 标志符: 0x104
-     * 整型常量, 实型常量, 布尔常量, 字符串常量, 字符常量
-     */
-    ID, CONST_NUM, CONST_REAL, CONST_BOOL, CONST_STR, CONST_CHAR,
-
-    /**
-     * 关键字: 0x103
      * 布尔型: 0x105
      * 字符型: 0x106
      * 整型:   0x107
      * 浮点型: 0x108
      * 字符串: 0x109
+     */
+    ID, CONST_BOOL, CONST_CHAR, CONST_INT, CONST_FLOAT, CONST_STR,
+
+    /**
+     * 关键字: 0x103
      *
      * abstract, boolean, break, byte, case, catch, char, class, const, continue,
      * default, do, double, else, extends, false, final, finally, float, for, goto,

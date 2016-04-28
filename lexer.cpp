@@ -16,14 +16,9 @@ std::string Lexer::tokenString = "";
 
 /* 实现构造函数 */
 Lexer::Lexer(std::string fileName) {
-    /* 初始化关键字 */
     /** 
+     * 初始化关键字
      * 关键字: 0x103
-     * 布尔型: 0x105
-     * 字符型: 0x106
-     * 整型:   0x107
-     * 浮点型: 0x108
-     * 字符串: 0x109
      */
     keyWords.clear();
     keyWords.insert(std::make_pair(ABSTRACT, std::make_pair("abstract", "0x103")));
@@ -76,6 +71,36 @@ Lexer::Lexer(std::string fileName) {
     keyWords.insert(std::make_pair(VOID, std::make_pair("void", "0x103")));
     keyWords.insert(std::make_pair(VOLATILE, std::make_pair("volatile", "0x103")));
     keyWords.insert(std::make_pair(WHILE, std::make_pair("while", "0x103")));
+    
+    /**
+     * 初始化tokenMap
+     */
+    tokenMap.clear();
+    tokenMap.insert(std::make_pair(ENDFILE, std::make_pair("end of file", "0x000")));
+    
+    /**
+     * 错误的单词: 0x100
+     * 注释:      0x101
+     * 空格:      0x102
+     */
+    tokenMap.insert(std::make_pair(TOKEN_ERROR, std::make_pair("token error", "0x100")));
+    tokenMap.insert(std::make_pair(COMMENT, std::make_pair("comment", "0x101")));
+    tokenMap.insert(std::make_pair(SPACE, std::make_pair("white space", "0x102")));
+    
+    /**
+     * 标志符: 0x104
+     * 布尔型: 0x105
+     * 字符型: 0x106
+     * 整型:   0x107
+     * 浮点型: 0x108
+     * 字符串: 0x109
+     */
+    tokenMap.insert(std::make_pair(ID, std::make_pair("identifier", "0x104")));
+    tokenMap.insert(std::make_pair(CONST_BOOL, std::make_pair("bool const", "0x105")));
+    tokenMap.insert(std::make_pair(CONST_CHAR, std::make_pair("char const", "0x106")));
+    tokenMap.insert(std::make_pair(CONST_INT, std::make_pair("int const", "0x107")));
+    tokenMap.insert(std::make_pair(CONST_FLOAT, std::make_pair("float const", "0x108")));
+    tokenMap.insert(std::make_pair(CONST_STR, std::make_pair("string const", "0x109")));
 }
 
 
