@@ -525,6 +525,8 @@ TokenType Lexer::getToken() {
                 } else if (next == '=') {
                     tokenString.push_back(next);
                     return ADD_ASSIGN;
+                } else {
+                    return TOKEN_ERROR;
                 }
                 break;
             }
@@ -544,6 +546,8 @@ TokenType Lexer::getToken() {
                 } else if (next == '=') {
                     tokenString.push_back(next);
                     return MINUS_ASSIGN;
+                } else {
+                    return TOKEN_ERROR;
                 }
                 break;
             }
@@ -559,6 +563,8 @@ TokenType Lexer::getToken() {
                 } else if (next == '=') {
                     tokenString.push_back(next);
                     return MUL_ASSIGN;
+                } else {
+                    return TOKEN_ERROR;
                 }
                 break;
             }
@@ -574,9 +580,152 @@ TokenType Lexer::getToken() {
                 } else if (next == '=') {
                     tokenString.push_back(next);
                     return DIV_ASSIGN;
+                } else {
+                    return TOKEN_ERROR;
                 }
                 break;
             }
+            /* % */
+            case IN_MOD: {
+                tokenString.push_back(curChar);
+                char next = getNextChar();
+                /* % */
+                if (isdigit(next) || isalpha(next)) {
+                    ungetNextChar();
+                    return MOD;
+                    /* %= */
+                } else if (next == '=') {
+                    tokenString.push_back(next);
+                    return MOD_ASSIGN;
+                } else {
+                    return TOKEN_ERROR;
+                }
+                break;
+            }
+            /* & */
+            case IN_AND: {
+                tokenString.push_back(curChar);
+                char next = getNextChar();
+                /* & */
+                if (isdigit(next) || isalpha(next)) {
+                    ungetNextChar();
+                    return AND_BIT;
+                /* && */
+                } else if (next == '&') {
+                    tokenString.push_back(next);
+                    return AND;
+                /* &= */
+                } else if (next == '=') {
+                    tokenString.push_back(next);
+                    return AND_ASSIGN;
+                } else {
+                    return TOKEN_ERROR;
+                }
+                break;
+            }
+            /* = */
+            case IN_ASSIGN: {
+                tokenString.push_back(curChar);
+                char next = getNextChar();
+                /* = */
+                if (isdigit(next) || isalpha(next)) {
+                    ungetNextChar();
+                    return ASSIGN;
+                /* == */
+                } else if (next == '=') {
+                    tokenString.push_back(next);
+                    return EQU;
+                } else {
+                    return TOKEN_ERROR;
+                }
+                break;
+            }
+            /* | */
+            case IN_OR: {
+                tokenString.push_back(curChar);
+                char next = getNextChar();
+                /* | */
+                if (isdigit(next) || isalpha(next)) {
+                    ungetNextChar();
+                    return OR_BIT;
+                /* || */
+                } else if (next == '|') {
+                    tokenString.push_back(next);
+                    return OR;
+                /* |= */
+                } else if (next == '=') {
+                    tokenString.push_back(next);
+                    return OR_ASSIGN;
+                } else {
+                    return TOKEN_ERROR;
+                }
+                break;
+            }
+            /* ! */
+            case IN_NOT: {
+                tokenString.push_back(curChar);
+                char next = getNextChar();
+                /* ! */
+                if (isdigit(next) || isalpha(next)) {
+                    ungetNextChar();
+                    return NOT;
+                /* != */
+                } else if (next == '=') {
+                    tokenString.push_back(next);
+                    return NE;
+                } else {
+                    return TOKEN_ERROR;
+                }
+                break;
+            }
+            /* ^ */
+            case IN_XOR: {
+                tokenString.push_back(curChar);
+                char next = getNextChar();
+                /* ^ */
+                if (isdigit(next) || isalpha(next)) {
+                    ungetNextChar();
+                    return XOR;
+                /* ^= */
+                } else if (next == '=') {
+                    tokenString.push_back(next);
+                    return XOR_ASSIGN;
+                } else {
+                    return TOKEN_ERROR;
+                }
+                break;
+            }
+            /* < */
+            case IN_LT: {
+                tokenString.push_back(curChar);
+                char next = getNextChar();
+                /* < */
+                if (isdigit(next) || isalpha(next)) {
+                    ungetNextChar();
+                    return LT;
+                /* <= */
+                } else if (next == '=') {
+                    tokenString.push_back(next);
+                    return LE;
+                /* << */
+                } else if (next == '<') {
+                    tokenString.push_back(next);
+                    next = getNextChar();
+                    if (next == '=') {
+                        tokenString.push_back(next);
+                        return LEFT_SHIFT_ASSIGN;
+                    } else if (isdigit(next) || isalpha(next)) {
+                        ungetNextChar();
+                        return LEFT_SHIFT;
+                    } else {
+                        return TOKEN_ERROR;
+                    }
+                } else {
+                    return TOKEN_ERROR;
+                }
+                break;
+            }
+            // TODO: GT
             default:
                 break;
         }
