@@ -156,6 +156,12 @@ private:
      */
     Token createToken(TokenType type, std::string tokenString);
     
-    
+    /**
+     * 获得一个token的类型名称
+     *
+     * @param type token 类型
+     * @param tokenString token的值
+     */
+    std::string getTokenTypeName(TokenType type, std::string tokenString);
 };
 #endif

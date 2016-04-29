@@ -295,12 +295,51 @@ void Lexer::printToken(TokenType token, std::string tokenString) {
 //    ofstream << tokenName.c_str() << "|" << tokenString.c_str() << "|" << tokenVal.c_str() << std::endl;
 }
 
+/* 获得token的类型名称 */
+std::string Lexer::getTokenTypeName(TokenType type, std::string tokenString) {
+    std::string typeName = "";
+    /* 1.是否是关键字 */
+    if (keyWords.find(tokenString) != keyWords.end()) {
+        typeName = "keywords";
+    /* 2.是否是界限符 */
+    } else if (delimeterMap.find(tokenString[0]) != delimeterMap.end()) {
+        typeName = "delimeter";
+    /* 3.是否是标识符 */
+    } else if (type == ID) {
+        typeName = "identifier";
+    } else {
+        switch (type) {
+            /* 4.是否是常量 */
+            case CONST_INT:
+                typeName = "int const";
+                break;
+            case CONST_FLOAT:
+                typeName = "float const";
+                break;
+            case CONST_BOOL:
+                typeName = "bool const";
+                break;
+            case CONST_CHAR:
+                typeName = "char const";
+                break;
+            case CONST_STR:
+                typeName = "string const";
+                break;
+            /* 5.否则默认位运算符 */
+            default:
+                typeName = "operator";
+                break;
+        }
+    }
+    return typeName;
+}
+
 /* 创建一个新的token */
 Token Lexer::createToken(TokenType type, std::string tokenString) {
     Token *token = new Token;
     token->lineNumber = lineNumber;
     token->type = type;
-    token->typeName = tokenString;
+    token->typeName = getTokenTypeName(type, tokenString);
     token->value = tokenString;
     token->attr = "";
     return *token;
