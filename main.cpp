@@ -34,6 +34,9 @@ int main(int argc, const char * argv[]) {
         fileName = argv[1];
     }
     
+    /* 写入文件 */
+//    freopen ("scanner_output.txt", "w", stdout);
+    
     /* 开始词法分析 */
     if (NO_PARSE) {
         Lexer lexer = Lexer(fileName);

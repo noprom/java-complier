@@ -33,12 +33,21 @@ public:
     /* EOF结束标志 */
     static int EOF_flag;
     
+    /* 输出文件流 */
+//    static std::ofstream ofstream;
+    
     /**
      * 构造函数
      *
      * @fileName 文件名
      */
     Lexer(std::string fileName);
+    
+    /**
+     * 析构函数
+     * 释放某些成员变量
+     */
+//    ~Lexer();
     
     /**
      * 获得单词的token
@@ -61,7 +70,7 @@ protected:
     std::map<TokenType, std::pair<std::string, std::string> > tokenMap;
 private:
     /* 输入文件流 */
-    std::ifstream inFileStream;
+    std::ifstream ifstream;
     
     /* 读入的每一行字符流 */
     std::string lineBuf;

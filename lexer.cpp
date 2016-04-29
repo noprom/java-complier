@@ -203,14 +203,25 @@ Lexer::Lexer(std::string fileName) {
     delimeterMap.insert(std::make_pair(';', SEMICOLON));
     
     /* 打开文件 */
-    inFileStream.open(fileName.c_str());
-    if (!inFileStream.is_open()) {
-        std::cout << "can not open the file :" << fileName << std::endl;
+    ifstream.open(fileName.c_str());
+    if (!ifstream.is_open()) {
+        printf("can not open the file : %s\n", fileName.c_str());
         scanError();
     } else {
         getOneLine();
     }
+    
+    /* 打开写入文件 */
+//    ofstream.open("scanner_output.txt");
+//    if (!ofstream.is_open()) {
+//        printf("can not write the file\n");
+//    }
 }
+
+/* 析构函数释放成员变量 */
+//Lexer::~Lexer() {
+//    ofstream.close();
+//}
 
 /* 实现错误信息处理 */
 void Lexer::scanError() {
@@ -220,10 +231,14 @@ void Lexer::scanError() {
 /* 读入文件的一行并且存放到lineBuf中 */
 void Lexer::getOneLine() {
     lineBuf = "";
-    if (!getline(inFileStream, lineBuf)) {
+    if (!ifstream.eof()) {
+        if (!getline(ifstream, lineBuf)) {
+            std::cout << "Error: file end with illegal ending" << std::endl;
+        }
+    } else {
         EOF_flag = 1;
-//        std::cout << "Error: file end with illegal ending" << std::endl;
     }
+    
 //    if (!EOF_flag) {
         lineBuf += "\n";
     if (TraceSource) {
@@ -262,6 +277,8 @@ void Lexer::printToken(TokenType token, std::string tokenString) {
     }
 
     printf("%15s \t %15s \t %10s\n", tokenName.c_str(), tokenString.c_str(), tokenVal.c_str());
+    /* 写入文件 */
+//    ofstream << tokenName.c_str() << "|" << tokenString.c_str() << "|" << tokenVal.c_str() << std::endl;
 }
 
 /* 获得一个Token */
@@ -925,9 +942,9 @@ TokenType Lexer::getToken() {
     }
     if (TraceScan) {
         if (TraceSource) {
-            printf("\t%d: ", lineNumber);
+            printf("\t4%d: ", lineNumber);
         } else {
-            printf("%d: ", lineNumber);
+            printf("%4d: ", lineNumber);
         }
 //        fprintf(stdout, "\t%d: ", lineNumber);
         printToken(currentToken, tokenString);
