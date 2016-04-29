@@ -8,6 +8,8 @@
 
 #include "lexer.h"
 
+#define KEYWORDS_ID "0x103"
+
 /* 初始化词法分析器里面的静态变量 */
 int Lexer::LEXER_ERROR = 0;
 int Lexer::EOF_flag = 0;
@@ -29,56 +31,56 @@ Lexer::Lexer(std::string fileName) {
      * 关键字: 0x103
      */
     keyWords.clear();
-    keyWords.insert(std::make_pair("abstract", std::make_pair(ABSTRACT, "0x103")));
-    keyWords.insert(std::make_pair("boolean", std::make_pair(BOOLEAN, "0x103")));
-    keyWords.insert(std::make_pair("break", std::make_pair(BREAK, "0x103")));
-    keyWords.insert(std::make_pair("byte", std::make_pair(BYTE, "0x103")));
-    keyWords.insert(std::make_pair("case", std::make_pair(CASE, "0x103")));
-    keyWords.insert(std::make_pair("catch", std::make_pair(CATCH, "0x103")));
-    keyWords.insert(std::make_pair("char", std::make_pair(CHAR, "0x103")));
-    keyWords.insert(std::make_pair("class", std::make_pair(CLASS, "0x103")));
-    keyWords.insert(std::make_pair("const", std::make_pair(CONST, "0x103")));
-    keyWords.insert(std::make_pair("continue", std::make_pair(CONTINUE, "0x103")));
-    keyWords.insert(std::make_pair("default", std::make_pair(DEFAULT, "0x103")));
-    keyWords.insert(std::make_pair("do", std::make_pair(DO, "0x103")));
-    keyWords.insert(std::make_pair("double", std::make_pair(DOUBLE, "0x103")));
-    keyWords.insert(std::make_pair("else", std::make_pair(ELSE, "0x103")));
-    keyWords.insert(std::make_pair("extends", std::make_pair(EXTENDS, "0x103")));
-    keyWords.insert(std::make_pair("false", std::make_pair(JAVA_FALSE, "0x103")));
-    keyWords.insert(std::make_pair("final", std::make_pair(FINAL, "0x103")));
-    keyWords.insert(std::make_pair("finally", std::make_pair(FINALLY, "0x103")));
-    keyWords.insert(std::make_pair("float", std::make_pair(FLOAT, "0x103")));
-    keyWords.insert(std::make_pair("for", std::make_pair(FOR, "0x103")));
-    keyWords.insert(std::make_pair("goto", std::make_pair(GOTO, "0x103")));
-    keyWords.insert(std::make_pair("if", std::make_pair(IF, "0x103")));
-    keyWords.insert(std::make_pair("implements", std::make_pair(IMPLEMENTES, "0x103")));
-    keyWords.insert(std::make_pair("import", std::make_pair(IMPORT, "0x103")));
-    keyWords.insert(std::make_pair("instanceof", std::make_pair(INSTANCEOF, "0x103")));
-    keyWords.insert(std::make_pair("int", std::make_pair(INT, "0x103")));
-    keyWords.insert(std::make_pair("interface", std::make_pair(INTERFACE, "0x103")));
-    keyWords.insert(std::make_pair("long", std::make_pair(LONG, "0x103")));
-    keyWords.insert(std::make_pair("native", std::make_pair(NATIVE, "0x103")));
-    keyWords.insert(std::make_pair("new", std::make_pair(NEW, "0x103")));
-    keyWords.insert(std::make_pair("null", std::make_pair(JAVA_NULL, "0x103")));
-    keyWords.insert(std::make_pair("package", std::make_pair(PACKAGE, "0x103")));
-    keyWords.insert(std::make_pair("private", std::make_pair(PRIVATE, "0x103")));
-    keyWords.insert(std::make_pair("protected", std::make_pair(PROTECTED, "0x103")));
-    keyWords.insert(std::make_pair("public", std::make_pair(PUBLIC, "0x103")));
-    keyWords.insert(std::make_pair("return", std::make_pair(RETURN, "0x103")));
-    keyWords.insert(std::make_pair("short", std::make_pair(SHORT, "0x103")));
-    keyWords.insert(std::make_pair("static", std::make_pair(STATIC, "0x103")));
-    keyWords.insert(std::make_pair("super", std::make_pair(SUPER, "0x103")));
-    keyWords.insert(std::make_pair("switch", std::make_pair(SWITCH, "0x103")));
-    keyWords.insert(std::make_pair("synchronized", std::make_pair(SYNCHRONIZED, "0x103")));
-    keyWords.insert(std::make_pair("this", std::make_pair(THIS, "0x103")));
-    keyWords.insert(std::make_pair("throw", std::make_pair(THROW, "0x103")));
-    keyWords.insert(std::make_pair("throws", std::make_pair(THROWS, "0x103")));
-    keyWords.insert(std::make_pair("transient", std::make_pair(TRANSIENT, "0x103")));
-    keyWords.insert(std::make_pair("true", std::make_pair(JAVA_TRUE, "0x103")));
-    keyWords.insert(std::make_pair("try", std::make_pair(TRY, "0x103")));
-    keyWords.insert(std::make_pair("void", std::make_pair(VOID, "0x103")));
-    keyWords.insert(std::make_pair("volatile", std::make_pair(VOLATILE, "0x103")));
-    keyWords.insert(std::make_pair("while", std::make_pair(WHILE, "0x103")));
+    keyWords.insert(std::make_pair("abstract", std::make_pair(ABSTRACT, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("boolean", std::make_pair(BOOLEAN, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("break", std::make_pair(BREAK, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("byte", std::make_pair(BYTE, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("case", std::make_pair(CASE, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("catch", std::make_pair(CATCH, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("char", std::make_pair(CHAR, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("class", std::make_pair(CLASS, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("const", std::make_pair(CONST, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("continue", std::make_pair(CONTINUE, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("default", std::make_pair(DEFAULT, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("do", std::make_pair(DO, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("double", std::make_pair(DOUBLE, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("else", std::make_pair(ELSE, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("extends", std::make_pair(EXTENDS, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("false", std::make_pair(JAVA_FALSE, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("final", std::make_pair(FINAL, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("finally", std::make_pair(FINALLY, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("float", std::make_pair(FLOAT, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("for", std::make_pair(FOR, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("goto", std::make_pair(GOTO, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("if", std::make_pair(IF, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("implements", std::make_pair(IMPLEMENTES, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("import", std::make_pair(IMPORT, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("instanceof", std::make_pair(INSTANCEOF, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("int", std::make_pair(INT, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("interface", std::make_pair(INTERFACE, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("long", std::make_pair(LONG, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("native", std::make_pair(NATIVE, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("new", std::make_pair(NEW, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("null", std::make_pair(JAVA_NULL, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("package", std::make_pair(PACKAGE, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("private", std::make_pair(PRIVATE, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("protected", std::make_pair(PROTECTED, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("public", std::make_pair(PUBLIC, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("return", std::make_pair(RETURN, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("short", std::make_pair(SHORT, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("static", std::make_pair(STATIC, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("super", std::make_pair(SUPER, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("switch", std::make_pair(SWITCH, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("synchronized", std::make_pair(SYNCHRONIZED, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("this", std::make_pair(THIS, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("throw", std::make_pair(THROW, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("throws", std::make_pair(THROWS, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("transient", std::make_pair(TRANSIENT, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("true", std::make_pair(JAVA_TRUE, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("try", std::make_pair(TRY, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("void", std::make_pair(VOID, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("volatile", std::make_pair(VOLATILE, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("while", std::make_pair(WHILE, KEYWORDS_ID)));
     
     /**
      * 初始化tokenMap
@@ -341,7 +343,13 @@ Token Lexer::createToken(TokenType type, std::string tokenString) {
     token->type = type;
     token->typeName = getTokenTypeName(type, tokenString);
     token->value = tokenString;
-    token->attr = "";
+    /* 获得关键字属性 */
+    if (keyWords.find(tokenString) != keyWords.end()) {
+        token->attr = KEYWORDS_ID;
+    } else {
+        token->attr = tokenMap[type].second;
+    }
+
     return *token;
 }
 
