@@ -23,6 +23,20 @@ typedef enum {
     
 } DFAStateType;
 
+/* Token的信息 */
+typedef struct {
+    /* token所在行号 */
+    int lineNumber;
+    /* token类型名称 */
+    std::string typeName;
+    /* token类型 */
+    TokenType type;
+    /* token的值 */
+    std::string value;
+    /* token属性字 */
+    std::string attr;
+} Token;
+
 /* 词法分析器类 */
 class Lexer {
     
@@ -127,9 +141,21 @@ private:
     
     /**
      * 打印token的信息
+     *
      * @param token token类型
      * @param tokenString token 保存字符串
      */
     void printToken(TokenType token, std::string tokenString);
+    
+    /**
+     * 创建一个token
+     * 
+     * @param type token类型
+     * @param tokenString token 保存的字符串
+     * @return 新的token
+     */
+    Token createToken(TokenType type, std::string tokenString);
+    
+    
 };
 #endif

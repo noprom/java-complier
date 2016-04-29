@@ -237,7 +237,6 @@ void Lexer::getOneLine() {
     /* 初始化每行统计变量 */
     lineBuf = "";
     
-    
     if (!ifstream.eof()) {
         if (!getline(ifstream, lineBuf)) {
             std::cout << "Error: file end with illegal ending" << std::endl;
@@ -259,6 +258,9 @@ void Lexer::getOneLine() {
 /* 获得下一个字符 */
 char Lexer::getNextChar() {
     if (linePos >= lineBuf.size()) {
+        /* 保存统计结果 */
+        lineTokenSumMap.insert(std::make_pair(lineNumber, lineTokenNum));
+        /* 重新开始下一行 */
         lineNumber ++;
         lineTokenNum = 0;
         linePos = 0;
@@ -284,13 +286,24 @@ void Lexer::printToken(TokenType token, std::string tokenString) {
         tokenID = keyWords[tokenString].second;
     }
     
-    // 调试输出到控制台
+    /* 调试输出到控制台 */
     printf("%15s \t %15s \t %10s\n", tokenName.c_str(), tokenString.c_str(), tokenID.c_str());
     /* 统计进map */
     tokenListMap.insert(std::make_pair(tokenName, std::make_pair(tokenString, tokenID)));
     
     /* 写入文件 */
 //    ofstream << tokenName.c_str() << "|" << tokenString.c_str() << "|" << tokenVal.c_str() << std::endl;
+}
+
+/* 创建一个新的token */
+Token Lexer::createToken(TokenType type, std::string tokenString) {
+    Token *token = new Token;
+    token->lineNumber = lineNumber;
+    token->type = type;
+    token->typeName = tokenString;
+    token->value = tokenString;
+    token->attr = "";
+    return *token;
 }
 
 /* 获得一个Token */
@@ -960,6 +973,10 @@ TokenType Lexer::getToken() {
         }
         printToken(currentToken, tokenString);
     }
+    /* 保存token的信息 */
+    Token *token = new Token;
+    // TODO init token
+    
     /* 累加总单词个数 */
     TOKEN_NUM++;
     /* 累加每行单词个数 */

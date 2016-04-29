@@ -45,6 +45,14 @@ int main(int argc, const char * argv[]) {
             token = lexer.getToken();
         }
         
+        /* 输出统计结果 */
+        printf("Total tokens: %d\n", lexer.TOKEN_NUM);
+        for (std::map<int, int>::iterator it = lexer.lineTokenSumMap.begin();
+             it != lexer.lineTokenSumMap.end(); ++it) {
+            std::pair<int, int> pair = *it;
+            printf("%5d:\t%5d\t tokens\n", pair.first, pair.second);
+        }
+        
         /* 输出扫描结果 */
 //        for (std::map<std::string, std::pair<std::string, std::string> >::iterator it = lexer.tokenListMap.begin();
 //             it != lexer.tokenListMap.end(); ++it) {
