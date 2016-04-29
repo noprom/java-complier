@@ -22,9 +22,9 @@ std::string Lexer::tokenString = "";
 /* 实现构造函数 */
 Lexer::Lexer(std::string fileName) {
     
-    /* 清空用于统计的map */
-    tokenListMap.clear();
+    /* 清空用于统计的容器 */
     lineTokenSumMap.clear();
+    tokenList.clear();
     
     /** 
      * 初始化关键字
@@ -290,8 +290,6 @@ void Lexer::printToken(TokenType token, std::string tokenString) {
     
     /* 调试输出到控制台 */
     printf("%15s \t %15s \t %10s\n", tokenName.c_str(), tokenString.c_str(), tokenID.c_str());
-    /* 统计进map */
-    tokenListMap.insert(std::make_pair(tokenName, std::make_pair(tokenString, tokenID)));
     
     /* 写入文件 */
 //    ofstream << tokenName.c_str() << "|" << tokenString.c_str() << "|" << tokenVal.c_str() << std::endl;
@@ -349,7 +347,6 @@ Token Lexer::createToken(TokenType type, std::string tokenString) {
     } else {
         token->attr = tokenMap[type].second;
     }
-
     return *token;
 }
 
@@ -1012,6 +1009,7 @@ TokenType Lexer::getToken() {
                 break;
         }
     }
+    /* 输出状态转化完毕之后的结果 */
     if (TraceScan) {
         if (TraceSource) {
             printf("\t4%d: ", lineNumber);
@@ -1021,8 +1019,8 @@ TokenType Lexer::getToken() {
         printToken(currentToken, tokenString);
     }
     /* 保存token的信息 */
-    Token *token = new Token;
-    // TODO init token
+    Token token = createToken(currentToken, tokenString);
+    tokenList.push_back(token);
     
     /* 累加总单词个数 */
     TOKEN_NUM++;

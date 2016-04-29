@@ -51,12 +51,10 @@ public:
     static int TOKEN_NUM;
     
     /* 每行单词个数统计 */
-    //static
     std::map<int, int> lineTokenSumMap;
     
     /* 扫描出的所有单词 */
-    //static
-    std::map<std::string, std::pair<std::string, std::string> > tokenListMap;
+    std::vector<Token> tokenList;
 
     /**
      * 构造函数

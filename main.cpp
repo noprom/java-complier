@@ -20,7 +20,7 @@
 #endif
 
 /* 输出扫描结果 */
-int TraceScan = 1;
+int TraceScan = 0;
 int TraceSource = 0;
 
 int main(int argc, const char * argv[]) {
@@ -34,11 +34,8 @@ int main(int argc, const char * argv[]) {
         fileName = argv[1];
     }
     
-    /* 写入文件 */
-//    freopen ("scanner_output.txt", "w", stdout);
-    
-    /* 开始词法分析 */
     if (NO_PARSE) {
+        /* 开始词法分析 */
         Lexer lexer = Lexer(fileName);
         TokenType token = lexer.getToken();
         while (token != ENDFILE) {
@@ -53,12 +50,19 @@ int main(int argc, const char * argv[]) {
             printf("%5d:\t%5d\t tokens\n", pair.first, pair.second);
         }
         
+        /* 输出提示字符串 */
+        printf("\n\n");
+        printf("+++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
+        printf("+                      Scan Result                  +\n");
+        printf("+++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
+        printf("\n\n");
+        
         /* 输出扫描结果 */
-//        for (std::map<std::string, std::pair<std::string, std::string> >::iterator it = lexer.tokenListMap.begin();
-//             it != lexer.tokenListMap.end(); ++it) {
-//            std::pair<std::string, std::pair<std::string, std::string> > pair = *it;
-//            printf("%15s \t %15s \t %10s\n", pair.first.c_str(), pair.second.first.c_str(), pair.second.second.c_str());
-//        }
+        for (std::vector<Token>::iterator it = lexer.tokenList.begin();
+             it != lexer.tokenList.end(); ++it) {
+            Token token = *it;
+            printf("%4d: %15s \t %15s \t %10s\n", token.lineNumber, token.value.c_str(), token.typeName.c_str(), token.attr.c_str());
+        }
     }
     return 0;
 }
