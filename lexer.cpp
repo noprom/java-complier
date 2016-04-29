@@ -327,7 +327,11 @@ std::string Lexer::getTokenTypeName(TokenType type, std::string tokenString) {
                 break;
             /* 5.否则默认位运算符 */
             default:
-                typeName = "operator";
+                if (type != TOKEN_ERROR) {
+                    typeName = "operator";
+                } else {
+                    typeName = "token error";
+                }
                 break;
         }
     }

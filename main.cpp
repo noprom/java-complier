@@ -47,7 +47,11 @@ int main(int argc, const char * argv[]) {
         for (std::map<int, int>::iterator it = lexer.lineTokenSumMap.begin();
              it != lexer.lineTokenSumMap.end(); ++it) {
             std::pair<int, int> pair = *it;
-            printf("%5d:\t%5d\t tokens\n", pair.first, pair.second);
+            if (pair.second > 1) {
+                printf("%5d:%5d\t tokens\n", pair.first, pair.second);
+            } else {
+                printf("%5d:%5d\t token\n", pair.first, pair.second);
+            }
         }
         
         /* 输出提示字符串 */
