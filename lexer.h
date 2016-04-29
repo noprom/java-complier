@@ -67,12 +67,6 @@ public:
     Lexer(std::string fileName);
     
     /**
-     * 析构函数
-     * 释放某些成员变量
-     */
-//    ~Lexer();
-    
-    /**
      * 获得单词的token
      *
      * @return token状态

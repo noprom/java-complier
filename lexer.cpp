@@ -216,18 +216,7 @@ Lexer::Lexer(std::string fileName) {
     } else {
         getOneLine();
     }
-    
-    /* 打开写入文件 */
-//    ofstream.open("scanner_output.txt");
-//    if (!ofstream.is_open()) {
-//        printf("can not write the file\n");
-//    }
 }
-
-/* 析构函数释放成员变量 */
-//Lexer::~Lexer() {
-//    ofstream.close();
-//}
 
 /* 实现错误信息处理 */
 void Lexer::scanError() {
