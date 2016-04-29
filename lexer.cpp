@@ -361,13 +361,11 @@ TokenType Lexer::getToken() {
     } else if (curChar == '~') {
         currentState = DONE;
         currentToken = NOT_BIT;
-        //return NOT_BIT;
     /* 界限符 */
     } else if (delimeterMap.find(curChar) != delimeterMap.end()) {
         tokenString.push_back(curChar);
         currentState = DONE;
         currentToken = delimeterMap[curChar];
-        //return delimeterMap[curChar];
     /* 标识符 */
     } else if (isIdentifier(curChar)) {
         currentState = IN_ID;
@@ -461,7 +459,6 @@ TokenType Lexer::getToken() {
                 /* 判断是否是关键字 */
                 if (keyWords.find(tokenString) != keyWords.end()) {
                     currentToken = keyWords[tokenString].first;
-//                    return keyWords[tokenString].first;
                 } else {
                     currentToken = ID;
                 }
