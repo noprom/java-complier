@@ -248,14 +248,11 @@ void Lexer::getOneLine() {
         EOF_flag = 1;
     }
     
-//    if (!EOF_flag) {
-        lineBuf += "\n";
+    lineBuf += "\n";
     if (TraceSource) {
         if (TraceSource)
             printf("%4d: %s\n", lineNumber, lineBuf.c_str());
-//        std::cout << lineNumber << ":" << lineBuf << std::endl;
     }
-//    }
 }
 
 /* 获得下一个字符 */
@@ -291,9 +288,6 @@ void Lexer::printToken(TokenType token, std::string tokenString) {
     
     /* 调试输出到控制台 */
     printf("%15s \t %15s \t %10s\n", tokenName.c_str(), tokenString.c_str(), tokenID.c_str());
-    
-    /* 写入文件 */
-//    ofstream << tokenName.c_str() << "|" << tokenString.c_str() << "|" << tokenVal.c_str() << std::endl;
 }
 
 /* 获得token的类型名称 */
@@ -522,7 +516,6 @@ TokenType Lexer::getToken() {
                 }
                 currentState = DONE;
                 currentToken = CONST_INT;
-//                return CONST_INT;
                 break;
             }
             /* 浮点型 */
@@ -536,7 +529,6 @@ TokenType Lexer::getToken() {
                 }
                 currentState = DONE;
                 currentToken = CONST_FLOAT;
-//                return CONST_FLOAT;
                 break;
             }
             /* 字符常量 */
@@ -549,16 +541,13 @@ TokenType Lexer::getToken() {
                     if (next == '\'') {
                         currentState = DONE;
                         currentToken = CONST_CHAR;
-//                        return CONST_CHAR;
                     } else {
                         currentToken = TOKEN_ERROR;
-//                        return TOKEN_ERROR;
                     }
                 /* 单个单引号 */
                 } else if (next == '\'') {
                     currentState = DONE;
                     currentToken = CONST_CHAR;
-//                    return CONST_CHAR;
                 /* 单个反斜杠, 处理转义字符 */
                 } else if (next == '\\') {
                     next = getNextChar();
@@ -593,7 +582,6 @@ TokenType Lexer::getToken() {
                 }
                 currentState = DONE;
                 currentToken = CONST_CHAR;
-//                return CONST_CHAR;
                 break;
             }
             /* 字符常量 */
@@ -642,11 +630,9 @@ TokenType Lexer::getToken() {
                 if (next == '\n') {
                     currentState = DONE;
                     currentToken = TOKEN_ERROR;
-//                    return TOKEN_ERROR;
                 }
                 currentState = DONE;
                 currentToken = CONST_STR;
-//                return CONST_STR;
                 break;
             }
             /* + */
@@ -658,23 +644,19 @@ TokenType Lexer::getToken() {
                     ungetNextChar();
                     currentState = DONE;
                     currentToken = ADD;
-//                    return ADD;
                 /* ++ */
                 } else if (next == '+') {
                     tokenString.push_back(next);
                     currentState = DONE;
                     currentToken = INC;
-//                    return INC;
                 /* += */
                 } else if (next == '=') {
                     tokenString.push_back(next);
                     currentState = DONE;
                     currentToken = ADD_ASSIGN;
-//                    return ADD_ASSIGN;
                 } else {
                     currentState = DONE;
                     currentToken = TOKEN_ERROR;
-//                    return TOKEN_ERROR;
                 }
                 break;
             }
@@ -687,23 +669,19 @@ TokenType Lexer::getToken() {
                     ungetNextChar();
                     currentState = DONE;
                     currentToken = MINUS;
-//                    return MINUS;
                 /* -- */
                 } else if (next == '-') {
                     tokenString.push_back(next);
                     currentState = DONE;
                     currentToken = DEC;
-//                    return DEC;
                 /* -= */
                 } else if (next == '=') {
                     tokenString.push_back(next);
                     currentState = DONE;
                     currentToken = MINUS_ASSIGN;
-//                    return MINUS_ASSIGN;
                 } else {
                     currentState = DONE;
                     currentToken = TOKEN_ERROR;
-//                    return TOKEN_ERROR;
                 }
                 break;
             }
@@ -716,17 +694,14 @@ TokenType Lexer::getToken() {
                     ungetNextChar();
                     currentState = DONE;
                     currentToken = MUL;
-//                    return MUL;
                 /* *= */
                 } else if (next == '=') {
                     tokenString.push_back(next);
                     currentState = DONE;
                     currentToken = MUL_ASSIGN;
-//                    return MUL_ASSIGN;
                 } else {
                     currentState = DONE;
                     currentToken = TOKEN_ERROR;
-//                    return TOKEN_ERROR;
                 }
                 break;
             }
@@ -739,17 +714,14 @@ TokenType Lexer::getToken() {
                     ungetNextChar();
                     currentState = DONE;
                     currentToken = DIV;
-//                    return DIV;
-                    /* /= */
+                /* /= */
                 } else if (next == '=') {
                     tokenString.push_back(next);
                     currentState = DONE;
                     currentToken = DIV_ASSIGN;
-//                    return DIV_ASSIGN;
                 } else {
                     currentState = DONE;
                     currentToken = TOKEN_ERROR;
-//                    return TOKEN_ERROR;
                 }
                 break;
             }
@@ -762,17 +734,14 @@ TokenType Lexer::getToken() {
                     ungetNextChar();
                     currentState = DONE;
                     currentToken = MOD;
-//                    return MOD;
-                    /* %= */
+                /* %= */
                 } else if (next == '=') {
                     tokenString.push_back(next);
                     currentState = DONE;
                     currentToken = MOD_ASSIGN;
-//                    return MOD_ASSIGN;
                 } else {
                     currentState = DONE;
                     currentToken = TOKEN_ERROR;
-//                    return TOKEN_ERROR;
                 }
                 break;
             }
@@ -785,23 +754,19 @@ TokenType Lexer::getToken() {
                     ungetNextChar();
                     currentState = DONE;
                     currentToken = AND_BIT;
-//                    return AND_BIT;
                 /* && */
                 } else if (next == '&') {
                     tokenString.push_back(next);
                     currentState = DONE;
                     currentToken = AND;
-//                    return AND;
                 /* &= */
                 } else if (next == '=') {
                     tokenString.push_back(next);
                     currentState = DONE;
                     currentToken = AND_ASSIGN;
-//                    return AND_ASSIGN;
                 } else {
                     currentState = DONE;
                     currentToken = TOKEN_ERROR;
-//                    return TOKEN_ERROR;
                 }
                 break;
             }
@@ -814,17 +779,14 @@ TokenType Lexer::getToken() {
                     ungetNextChar();
                     currentState = DONE;
                     currentToken = ASSIGN;
-//                    return ASSIGN;
                 /* == */
                 } else if (next == '=') {
                     tokenString.push_back(next);
                     currentState = DONE;
                     currentToken = EQU;
-//                    return EQU;
                 } else {
                     currentState = DONE;
                     currentToken = TOKEN_ERROR;
-//                    return TOKEN_ERROR;
                 }
                 break;
             }
@@ -837,23 +799,19 @@ TokenType Lexer::getToken() {
                     ungetNextChar();
                     currentState = DONE;
                     currentToken = OR_BIT;
-//                    return OR_BIT;
                 /* || */
                 } else if (next == '|') {
                     tokenString.push_back(next);
                     currentState = DONE;
                     currentToken = OR;
-//                    return OR;
                 /* |= */
                 } else if (next == '=') {
                     tokenString.push_back(next);
                     currentState = DONE;
                     currentToken = OR_ASSIGN;
-//                    return OR_ASSIGN;
                 } else {
                     currentState = DONE;
                     currentToken = TOKEN_ERROR;
-//                    return TOKEN_ERROR;
                 }
                 break;
             }
@@ -866,17 +824,14 @@ TokenType Lexer::getToken() {
                     ungetNextChar();
                     currentState = DONE;
                     currentToken = NOT;
-//                    return NOT;
                 /* != */
                 } else if (next == '=') {
                     tokenString.push_back(next);
                     currentState = DONE;
                     currentToken = NE;
-//                    return NE;
                 } else {
                     currentState = DONE;
                     currentToken = TOKEN_ERROR;
-//                    return TOKEN_ERROR;
                 }
                 break;
             }
@@ -889,17 +844,14 @@ TokenType Lexer::getToken() {
                     ungetNextChar();
                     currentState = DONE;
                     currentToken = XOR;
-//                    return XOR;
                 /* ^= */
                 } else if (next == '=') {
                     tokenString.push_back(next);
                     currentState = DONE;
                     currentToken = XOR_ASSIGN;
-//                    return XOR_ASSIGN;
                 } else {
                     currentState = DONE;
                     currentToken = TOKEN_ERROR;
-//                    return TOKEN_ERROR;
                 }
                 break;
             }
@@ -912,13 +864,11 @@ TokenType Lexer::getToken() {
                     ungetNextChar();
                     currentState = DONE;
                     currentToken = LT;
-//                    return LT;
                 /* <= */
                 } else if (next == '=') {
                     tokenString.push_back(next);
                     currentState = DONE;
                     currentToken = LE;
-//                    return LE;
                 /* << */
                 } else if (next == '<') {
                     tokenString.push_back(next);
@@ -927,21 +877,17 @@ TokenType Lexer::getToken() {
                         tokenString.push_back(next);
                         currentState = DONE;
                         currentToken = LEFT_SHIFT_ASSIGN;
-//                        return LEFT_SHIFT_ASSIGN;
                     } else if (isdigit(next) || isalpha(next)) {
                         ungetNextChar();
                         currentState = DONE;
                         currentToken = LEFT_SHIFT;
-//                        return LEFT_SHIFT;
                     } else {
                         currentState = DONE;
                         currentToken = TOKEN_ERROR;
-//                        return TOKEN_ERROR;
                     }
                 } else {
                     currentState = DONE;
                     currentToken = TOKEN_ERROR;
-//                    return TOKEN_ERROR;
                 }
                 break;
             }
@@ -954,13 +900,11 @@ TokenType Lexer::getToken() {
                     ungetNextChar();
                     currentState = DONE;
                     currentToken = GT;
-//                    return GT;
                 /* >= */
                 } else if (next == '=') {
                     tokenString.push_back(next);
                     currentState = DONE;
                     currentToken = GE;
-//                    return GE;
                 /* >> */
                 } else if (next == '>') {
                     tokenString.push_back(next);
@@ -970,13 +914,11 @@ TokenType Lexer::getToken() {
                         tokenString.push_back(next);
                         currentState = DONE;
                         currentToken = RIGHT_SHIFT_ASSIGN;
-//                        return RIGHT_SHIFT_ASSIGN;
                     /* >> */
                     } else if (isdigit(next) || isalpha(next)) {
                         ungetNextChar();
                         currentState = DONE;
                         currentToken = RIGHT_SHIFT;
-//                        return RIGHT_SHIFT;
                     /* >>> */
                     } else if (next == '>') {
                         tokenString.push_back(next);
@@ -986,34 +928,28 @@ TokenType Lexer::getToken() {
                             tokenString.push_back(next);
                             currentState = DONE;
                             currentToken = ZERO_FILL_RIGHT_SHIRT_ASSIGN;
-//                            return ZERO_FILL_RIGHT_SHIRT_ASSIGN;
                         /* >>> */
                         } else if (isdigit(next) || isalpha(next)) {
                             ungetNextChar();
                             currentState = DONE;
                             currentToken = ZERO_FILL_RIGHT_SHIRT;
-//                            return ZERO_FILL_RIGHT_SHIRT;
                         } else {
                             currentState = DONE;
                             currentToken = TOKEN_ERROR;
-//                            return TOKEN_ERROR;
                         }
                     } else {
                         currentState = DONE;
                         currentToken = TOKEN_ERROR;
-//                        return TOKEN_ERROR;
                     }
                 } else {
                     currentState = DONE;
                     currentToken = TOKEN_ERROR;
-//                    return TOKEN_ERROR;
                 }
                 break;
             }
             default:
                 currentState = DONE;
                 currentToken = TOKEN_ERROR;
-//                return TOKEN_ERROR;
                 break;
         }
     }
