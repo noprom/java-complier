@@ -11,14 +11,18 @@
 /* 初始化词法分析器里面的静态变量 */
 int Lexer::LEXER_ERROR = 0;
 int Lexer::EOF_flag = 0;
+int Lexer::TOKEN_NUM = 0;
 int Lexer::lineNumber = 1;
+int Lexer::lineTokenNum = 0;
 int Lexer::linePos = 0;
 std::string Lexer::tokenString = "";
 
 /* 实现构造函数 */
 Lexer::Lexer(std::string fileName) {
     
-    stdout = stdout;
+    /* 清空用于统计的map */
+    tokenListMap.clear();
+    lineTokenSumMap.clear();
     
     /** 
      * 初始化关键字
@@ -230,7 +234,10 @@ void Lexer::scanError() {
 
 /* 读入文件的一行并且存放到lineBuf中 */
 void Lexer::getOneLine() {
+    /* 初始化每行统计变量 */
     lineBuf = "";
+    
+    
     if (!ifstream.eof()) {
         if (!getline(ifstream, lineBuf)) {
             std::cout << "Error: file end with illegal ending" << std::endl;
@@ -253,6 +260,7 @@ void Lexer::getOneLine() {
 char Lexer::getNextChar() {
     if (linePos >= lineBuf.size()) {
         lineNumber ++;
+        lineTokenNum = 0;
         linePos = 0;
         getOneLine();
         return getNextChar();
@@ -270,13 +278,17 @@ void Lexer::ungetNextChar() {
 /* 打印token的信息 */
 void Lexer::printToken(TokenType token, std::string tokenString) {
     std::string tokenName = tokenMap[token].first;
-    std::string tokenVal = tokenMap[token].second;
+    std::string tokenID = tokenMap[token].second;
     if (keyWords.find(tokenString) != keyWords.end()) {
         tokenName = "keywords";
-        tokenVal = keyWords[tokenString].second;
+        tokenID = keyWords[tokenString].second;
     }
-
-    printf("%15s \t %15s \t %10s\n", tokenName.c_str(), tokenString.c_str(), tokenVal.c_str());
+    
+    // 调试输出到控制台
+    printf("%15s \t %15s \t %10s\n", tokenName.c_str(), tokenString.c_str(), tokenID.c_str());
+    /* 统计进map */
+    tokenListMap.insert(std::make_pair(tokenName, std::make_pair(tokenString, tokenID)));
+    
     /* 写入文件 */
 //    ofstream << tokenName.c_str() << "|" << tokenString.c_str() << "|" << tokenVal.c_str() << std::endl;
 }
@@ -946,8 +958,11 @@ TokenType Lexer::getToken() {
         } else {
             printf("%4d: ", lineNumber);
         }
-//        fprintf(stdout, "\t%d: ", lineNumber);
         printToken(currentToken, tokenString);
     }
+    /* 累加总单词个数 */
+    TOKEN_NUM++;
+    /* 累加每行单词个数 */
+    lineTokenNum++;
     return TOKEN_ERROR;
 }

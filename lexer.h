@@ -33,9 +33,17 @@ public:
     /* EOF结束标志 */
     static int EOF_flag;
     
-    /* 输出文件流 */
-//    static std::ofstream ofstream;
+    /* 总单词个数 */
+    static int TOKEN_NUM;
     
+    /* 每行单词个数统计 */
+    //static
+    std::map<int, int> lineTokenSumMap;
+    
+    /* 扫描出的所有单词 */
+    //static
+    std::map<std::string, std::pair<std::string, std::string> > tokenListMap;
+
     /**
      * 构造函数
      *
@@ -63,6 +71,9 @@ protected:
     /* 扫描到某行的位置 */
     static int linePos;
     
+    /* 每行单词的个数 */
+    static int lineTokenNum;
+    
     /* 提取出来的单词 */
     static std::string tokenString;
     
@@ -71,6 +82,9 @@ protected:
 private:
     /* 输入文件流 */
     std::ifstream ifstream;
+    
+    /* 输出文件流 */
+    std::ofstream ofstream;
     
     /* 读入的每一行字符流 */
     std::string lineBuf;

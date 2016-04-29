@@ -44,6 +44,13 @@ int main(int argc, const char * argv[]) {
         while (token != ENDFILE) {
             token = lexer.getToken();
         }
+        
+        /* 输出扫描结果 */
+//        for (std::map<std::string, std::pair<std::string, std::string> >::iterator it = lexer.tokenListMap.begin();
+//             it != lexer.tokenListMap.end(); ++it) {
+//            std::pair<std::string, std::pair<std::string, std::string> > pair = *it;
+//            printf("%15s \t %15s \t %10s\n", pair.first.c_str(), pair.second.first.c_str(), pair.second.second.c_str());
+//        }
     }
     return 0;
 }
