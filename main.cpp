@@ -24,14 +24,16 @@ int TraceScan = 0;
 int TraceSource = 0;
 
 int main(int argc, const char * argv[]) {
-
-    std::string fileName;
-    if (argc != 2) {
-        fileName = "App.java";
-//        std::cout << "Usage: lexer <filename>" << std::endl;
-//        exit(1);
-    } else {
+    
+    std::string fileName = "/Users/noprom/Documents/Dev/C++/Complier/java_complier/java_complier/App.java";
+    std::string outFileName = "/Users/noprom/Documents/Dev/C++/Complier/java_complier/java_complier/scanner_output.txt";
+    
+    if (argc > 2) {
         fileName = argv[1];
+        outFileName = argv[2];
+    } else {
+//        std::cout << "Usage: lexer <input filename> <output filename>" << std::endl;
+//        exit(1);
     }
     
     if (NO_PARSE) {
@@ -44,15 +46,21 @@ int main(int argc, const char * argv[]) {
         /* 关闭文件 */
         lexer.ifstream.close();
         
+        /* 输出到文件 */
+        FILE *fp = fopen(outFileName.c_str(), "w");
+        
         /* 输出统计结果 */
         printf("Total tokens: %d\n", lexer.TOKEN_NUM);
+        fprintf(fp, "Total tokens: %d\n", lexer.TOKEN_NUM);
         for (std::map<int, int>::iterator it = lexer.lineTokenSumMap.begin();
              it != lexer.lineTokenSumMap.end(); ++it) {
             std::pair<int, int> pair = *it;
             if (pair.second > 1) {
                 printf("%5d:%5d\t tokens\n", pair.first, pair.second);
+                fprintf(fp, "%5d:%5d\t tokens\n", pair.first, pair.second);
             } else {
                 printf("%5d:%5d\t token\n", pair.first, pair.second);
+                fprintf(fp, "%5d:%5d\t token\n", pair.first, pair.second);
             }
         }
         
@@ -68,7 +76,10 @@ int main(int argc, const char * argv[]) {
              it != lexer.tokenList.end(); ++it) {
             Token token = *it;
             printf("%4d: %15s \t %15s \t %10s\n", token.lineNumber, token.value.c_str(), token.typeName.c_str(), token.attr.c_str());
+            fprintf(fp, "%4d: %15s \t %15s \t %10s\n", token.lineNumber, token.value.c_str(), token.typeName.c_str(), token.attr.c_str());
         }
+        
+        fclose(fp);
     }
     return 0;
 }
