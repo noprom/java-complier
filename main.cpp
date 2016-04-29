@@ -27,7 +27,7 @@ int main(int argc, const char * argv[]) {
 
     std::string fileName;
     if (argc != 2) {
-        fileName = "./App.java";
+        fileName = "App.java";
 //        std::cout << "Usage: lexer <filename>" << std::endl;
 //        exit(1);
     } else {
@@ -41,6 +41,8 @@ int main(int argc, const char * argv[]) {
         while (token != ENDFILE) {
             token = lexer.getToken();
         }
+        /* 关闭文件 */
+        lexer.ifstream.close();
         
         /* 输出统计结果 */
         printf("Total tokens: %d\n", lexer.TOKEN_NUM);

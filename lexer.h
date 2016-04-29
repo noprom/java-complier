@@ -50,6 +50,9 @@ public:
     /* 总单词个数 */
     static int TOKEN_NUM;
     
+    /* 输入文件流 */
+    std::ifstream ifstream;
+    
     /* 每行单词个数统计 */
     std::map<int, int> lineTokenSumMap;
     
@@ -92,8 +95,6 @@ protected:
     /* 单词属性及其对应Token的关系 */
     std::map<TokenType, std::pair<std::string, std::string> > tokenMap;
 private:
-    /* 输入文件流 */
-    std::ifstream ifstream;
     
     /* 输出文件流 */
     std::ofstream ofstream;

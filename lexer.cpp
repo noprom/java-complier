@@ -242,6 +242,7 @@ void Lexer::getOneLine() {
     if (!ifstream.eof()) {
         if (!getline(ifstream, lineBuf)) {
             std::cout << "Error: file end with illegal ending" << std::endl;
+            Lexer::LEXER_ERROR = 1;
         }
     } else {
         EOF_flag = 1;
@@ -356,6 +357,9 @@ Token Lexer::createToken(TokenType type, std::string tokenString) {
 
 /* 获得一个Token */
 TokenType Lexer::getToken() {
+    if (Lexer::LEXER_ERROR == 1) {
+        return ENDFILE;
+    }
     Lexer::tokenString = "";
     char curChar = getNextChar();
     TokenType currentToken = TOKEN_ERROR;
@@ -806,7 +810,7 @@ TokenType Lexer::getToken() {
                 tokenString.push_back(curChar);
                 char next = getNextChar();
                 /* = */
-                if (isdigit(next) || isalpha(next)) {
+                if (isdigit(next) || isalpha(next) || isspace(next)) {
                     ungetNextChar();
                     currentState = DONE;
                     currentToken = ASSIGN;
