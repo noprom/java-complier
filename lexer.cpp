@@ -908,7 +908,7 @@ TokenType Lexer::getToken() {
                 tokenString.push_back(curChar);
                 char next = getNextChar();
                 /* < */
-                if (isdigit(next) || isalpha(next)) {
+                if (isdigit(next) || isalpha(next) || isspace(next)) {
                     ungetNextChar();
                     currentState = DONE;
                     currentToken = LT;
