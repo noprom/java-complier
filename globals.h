@@ -15,14 +15,6 @@
 #include <vector>
 #include <string>
 
-//#ifndef FALSE
-//#define FALSE 0
-//#endif
-//
-//#ifndef TRUE
-//#define TRUE 1
-//#endif
-
 /* 单词类型 */
 typedef enum {
     /*

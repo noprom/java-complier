@@ -129,6 +129,13 @@ public class App {
         num >>>= 2;
     }
     
+    /**
+     * 测试错误
+     */
+    public void testErr() {
+        int 32a = #223eda;
+    }
+    
     public void A1() {
         System.out.println("In A1");
         A2();

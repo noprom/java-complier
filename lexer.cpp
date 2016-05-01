@@ -25,6 +25,7 @@ Lexer::Lexer(std::string fileName) {
     /* 清空用于统计的容器 */
     lineTokenSumMap.clear();
     tokenList.clear();
+    errList.clear();
     
     /** 
      * 初始化关键字
@@ -338,6 +339,16 @@ Token Lexer::createToken(TokenType type, std::string tokenString) {
         token->attr = tokenMap[type].second;
     }
     return *token;
+}
+
+/* 创建一个token出错的错误信息 */
+TokenErrorInfo Lexer::createTokenErrorInfo(std::string errorToken) {
+    TokenErrorInfo *err = new TokenErrorInfo;
+    err->lineNumber = lineNumber;
+    err->errorPos = linePos;
+    err->lineBuf = lineBuf;
+    err->errorToken = errorToken;
+    return *err;
 }
 
 /* 获得一个Token */
@@ -1147,7 +1158,12 @@ TokenType Lexer::getToken() {
     /* 保存token的信息 */
     Token token = createToken(currentToken, tokenString);
     tokenList.push_back(token);
-    
+    /* 统计错误信息 */
+    if (currentToken == TOKEN_ERROR) {
+        TokenErrorInfo err = createTokenErrorInfo(tokenString);
+        errList.push_back(err);
+        getOneLine();
+    }
     /* 累加总单词个数 */
     TOKEN_NUM++;
     /* 累加每行单词个数 */

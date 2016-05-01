@@ -38,6 +38,18 @@ typedef struct {
     std::string attr;
 } Token;
 
+/* 保存token的错误信息 */
+typedef struct {
+    /* 错误所在行号 */
+    int lineNumber;
+    /* 错误的位置 */
+    int errorPos;
+    /* 该行内容 */
+    std::string lineBuf;
+    /* 错误的单词 */
+    std::string errorToken;
+} TokenErrorInfo;
+
 /* 词法分析器类 */
 class Lexer {
     
@@ -59,7 +71,10 @@ public:
     
     /* 扫描出的所有单词 */
     std::vector<Token> tokenList;
-
+    
+    /* 错误信息列表 */
+    std::vector<TokenErrorInfo> errList;
+    
     /**
      * 构造函数
      *
@@ -149,6 +164,14 @@ private:
      * @return 新的token
      */
     Token createToken(TokenType type, std::string tokenString);
+    
+    /**
+     * 创建一个token出错的错误信息
+     *
+     * @param errorToken 错误的单词
+     * @return 错误信息节点
+     */
+    TokenErrorInfo createTokenErrorInfo(std::string errorToken);
     
     /**
      * 获得一个token的类型名称

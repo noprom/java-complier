@@ -79,6 +79,16 @@ int main(int argc, const char * argv[]) {
             fprintf(fp, "%4d: %15s \t %15s \t %10s\n", token.lineNumber, token.value.c_str(), token.typeName.c_str(), token.attr.c_str());
         }
         
+        /* 输出错误信息列表 */
+        for (std::vector<TokenErrorInfo>::iterator it = lexer.errList.begin();
+             it != lexer.errList.end(); ++it) {
+            TokenErrorInfo err = *it;
+            printf("Error line: %4d, %s", err.lineNumber, err.lineBuf.c_str());
+            printf("Error position: %d, error token: %s\n", err.errorPos, err.errorToken.c_str());
+            fprintf(fp, "%4d: %s", err.lineNumber, err.lineBuf.c_str());
+            fprintf(fp, "\t: Error position: %d, error token: %s\n", err.errorPos, err.errorToken.c_str());
+        }
+        
         fclose(fp);
     }
     return 0;
