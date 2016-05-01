@@ -21,4 +21,9 @@ bool isIdentifier(char c);
  * 判断字符是否是数值运算符
  */
 bool isArithmeticOp(char c);
+
+/**
+ * 判断字符是否是转义字符
+ */
+bool isESC(char c);
 #endif

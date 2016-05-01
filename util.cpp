@@ -18,7 +18,17 @@ bool isIdentifier(char c) {
 
 /* 判断字符是否是数值运算符 */
 bool isArithmeticOp(char c) {
-    if (c == '+' || c == '-' || c == '*' || c == '/' || c == '&' || c == '|' || c == '^') {
+    if (c == '+' || c == '-' || c == '*' || c == '/' ||
+        c == '&' || c == '|' || c == '^') {
+        return true;
+    }
+    return false;
+}
+
+/* 判断字符是否是转义字符 */
+bool isESC(char c) {
+    if (c == '\'' || c == '\\' || c == 'r' || c == 'n' ||
+        c == 'f' || c == 't' || c == 'b' || c == 'u') {
         return true;
     }
     return false;
