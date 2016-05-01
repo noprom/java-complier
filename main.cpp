@@ -85,8 +85,8 @@ int main(int argc, const char * argv[]) {
             TokenErrorInfo err = *it;
             printf("Error line: %4d, %s", err.lineNumber, err.lineBuf.c_str());
             printf("Error position: %d, error token: %s\n", err.errorPos, err.errorToken.c_str());
-            fprintf(fp, "%4d: %s", err.lineNumber, err.lineBuf.c_str());
-            fprintf(fp, "\t: Error position: %d, error token: %s\n", err.errorPos, err.errorToken.c_str());
+            fprintf(fp, "Error line: %4d, %s", err.lineNumber, err.lineBuf.c_str());
+            fprintf(fp, "Error position: %d, error token: %s\n", err.errorPos, err.errorToken.c_str());
         }
         
         fclose(fp);

@@ -734,5 +734,5 @@ Total tokens: 578
  154:               ; 	       delimeter 	      0x122
  155:               } 	       delimeter 	      0x121
  156:               } 	       delimeter 	      0x121
- 136:         int 32a = #223eda;
-	: Error position: 15, error token: 32
+Error line:  136,         int 32a = #223eda;
+Error position: 15, error token: 32
