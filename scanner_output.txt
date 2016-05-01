@@ -1,4 +1,4 @@
-Total tokens: 206
+Total tokens: 216
     1:    5	 tokens
     2:    0	 token
     3:    7	 tokens
@@ -46,29 +46,33 @@ Total tokens: 206
    45:    0	 token
    46:    5	 tokens
    47:    4	 tokens
-   48:    1	 token
+   48:    0	 token
    49:    0	 token
-   50:    6	 tokens
-   51:    9	 tokens
-   52:    4	 tokens
-   53:    1	 token
-   54:    0	 token
-   55:    6	 tokens
-   56:   15	 tokens
-   57:    9	 tokens
-   58:    1	 token
-   59:    1	 token
-   60:    0	 token
-   61:    6	 tokens
-   62:    0	 token
+   50:    5	 tokens
+   51:    5	 tokens
+   52:    1	 token
+   53:    0	 token
+   54:    6	 tokens
+   55:    9	 tokens
+   56:    4	 tokens
+   57:    1	 token
+   58:    0	 token
+   59:    6	 tokens
+   60:   15	 tokens
+   61:    9	 tokens
+   62:    1	 token
    63:    1	 token
    64:    0	 token
-   65:   13	 tokens
-   66:    8	 tokens
-   67:    6	 tokens
-   68:    6	 tokens
-   69:    1	 token
-   70:    1	 token
+   65:    6	 tokens
+   66:    0	 token
+   67:    1	 token
+   68:    0	 token
+   69:   13	 tokens
+   70:    8	 tokens
+   71:    6	 tokens
+   72:    6	 tokens
+   73:    1	 token
+   74:    1	 token
    1:         package 	        keywords 	      0x103
    1:         aspectj 	      identifier 	      0x104
    1:               . 	       delimeter 	      0x11d
@@ -180,98 +184,108 @@ Total tokens: 206
   47:               = 	        operator 	      0x110
   47:           false 	        keywords 	      0x103
   47:               ; 	       delimeter 	      0x122
-  48:               } 	       delimeter 	      0x121
-  50:          public 	        keywords 	      0x103
-  50:            void 	        keywords 	      0x103
-  50:              A1 	      identifier 	      0x104
-  50:               ( 	       delimeter 	      0x11d
-  50:               ) 	       delimeter 	      0x11d
-  50:               { 	       delimeter 	      0x121
-  51:          System 	      identifier 	      0x104
-  51:               . 	       delimeter 	      0x11d
-  51:             out 	      identifier 	      0x104
-  51:               . 	       delimeter 	      0x11d
-  51:         println 	      identifier 	      0x104
-  51:               ( 	       delimeter 	      0x11d
-  51:           In A1 	    string const 	      0x109
-  51:               ) 	       delimeter 	      0x11d
+  50:          String 	      identifier 	      0x104
+  50:             str 	      identifier 	      0x104
+  50:               = 	        operator 	      0x110
+  50:       A string. 	    string const 	      0x109
+  50:               ; 	       delimeter 	      0x122
+  51:            char 	        keywords 	      0x103
+  51:              ch 	      identifier 	      0x104
+  51:               = 	        operator 	      0x110
+  51:               A 	      char const 	      0x106
   51:               ; 	       delimeter 	      0x122
-  52:              A2 	      identifier 	      0x104
-  52:               ( 	       delimeter 	      0x11d
-  52:               ) 	       delimeter 	      0x11d
-  52:               ; 	       delimeter 	      0x122
-  53:               } 	       delimeter 	      0x121
-  55:          public 	        keywords 	      0x103
-  55:            void 	        keywords 	      0x103
-  55:              A2 	      identifier 	      0x104
+  52:               } 	       delimeter 	      0x121
+  54:          public 	        keywords 	      0x103
+  54:            void 	        keywords 	      0x103
+  54:              A1 	      identifier 	      0x104
+  54:               ( 	       delimeter 	      0x11d
+  54:               ) 	       delimeter 	      0x11d
+  54:               { 	       delimeter 	      0x121
+  55:          System 	      identifier 	      0x104
+  55:               . 	       delimeter 	      0x11d
+  55:             out 	      identifier 	      0x104
+  55:               . 	       delimeter 	      0x11d
+  55:         println 	      identifier 	      0x104
   55:               ( 	       delimeter 	      0x11d
+  55:           In A1 	    string const 	      0x109
   55:               ) 	       delimeter 	      0x11d
-  55:               { 	       delimeter 	      0x121
-  56:             for 	        keywords 	      0x103
+  55:               ; 	       delimeter 	      0x122
+  56:              A2 	      identifier 	      0x104
   56:               ( 	       delimeter 	      0x11d
-  56:             int 	        keywords 	      0x103
-  56:               i 	      identifier 	      0x104
-  56:               = 	        operator 	      0x110
-  56:               0 	       int const 	      0x107
-  56:               ; 	       delimeter 	      0x122
-  56:               i 	      identifier 	      0x104
-  56:               < 	        operator 	      0x118
-  56:              10 	       int const 	      0x107
-  56:               ; 	       delimeter 	      0x122
-  56:               i 	      identifier 	      0x104
-  56:              ++ 	        operator 	      0x11c
   56:               ) 	       delimeter 	      0x11d
-  56:               { 	       delimeter 	      0x121
-  57:          System 	      identifier 	      0x104
-  57:               . 	       delimeter 	      0x11d
-  57:             out 	      identifier 	      0x104
-  57:               . 	       delimeter 	      0x11d
-  57:         println 	      identifier 	      0x104
-  57:               ( 	       delimeter 	      0x11d
-  57:           In A2 	    string const 	      0x109
-  57:               ) 	       delimeter 	      0x11d
-  57:               ; 	       delimeter 	      0x122
-  58:               } 	       delimeter 	      0x121
-  59:               } 	       delimeter 	      0x121
-  61:          public 	        keywords 	      0x103
-  61:            void 	        keywords 	      0x103
-  61:              A3 	      identifier 	      0x104
+  56:               ; 	       delimeter 	      0x122
+  57:               } 	       delimeter 	      0x121
+  59:          public 	        keywords 	      0x103
+  59:            void 	        keywords 	      0x103
+  59:              A2 	      identifier 	      0x104
+  59:               ( 	       delimeter 	      0x11d
+  59:               ) 	       delimeter 	      0x11d
+  59:               { 	       delimeter 	      0x121
+  60:             for 	        keywords 	      0x103
+  60:               ( 	       delimeter 	      0x11d
+  60:             int 	        keywords 	      0x103
+  60:               i 	      identifier 	      0x104
+  60:               = 	        operator 	      0x110
+  60:               0 	       int const 	      0x107
+  60:               ; 	       delimeter 	      0x122
+  60:               i 	      identifier 	      0x104
+  60:               < 	        operator 	      0x118
+  60:              10 	       int const 	      0x107
+  60:               ; 	       delimeter 	      0x122
+  60:               i 	      identifier 	      0x104
+  60:              ++ 	        operator 	      0x11c
+  60:               ) 	       delimeter 	      0x11d
+  60:               { 	       delimeter 	      0x121
+  61:          System 	      identifier 	      0x104
+  61:               . 	       delimeter 	      0x11d
+  61:             out 	      identifier 	      0x104
+  61:               . 	       delimeter 	      0x11d
+  61:         println 	      identifier 	      0x104
   61:               ( 	       delimeter 	      0x11d
+  61:           In A2 	    string const 	      0x109
   61:               ) 	       delimeter 	      0x11d
-  61:               { 	       delimeter 	      0x121
+  61:               ; 	       delimeter 	      0x122
+  62:               } 	       delimeter 	      0x121
   63:               } 	       delimeter 	      0x121
   65:          public 	        keywords 	      0x103
-  65:          static 	        keywords 	      0x103
   65:            void 	        keywords 	      0x103
-  65:            main 	      identifier 	      0x104
+  65:              A3 	      identifier 	      0x104
   65:               ( 	       delimeter 	      0x11d
-  65:          String 	      identifier 	      0x104
-  65:               [ 	       delimeter 	      0x11d
-  65:               ] 	       delimeter 	      0x11d
-  65:            args 	      identifier 	      0x104
   65:               ) 	       delimeter 	      0x11d
-  65:          throws 	        keywords 	      0x103
-  65:     IOException 	      identifier 	      0x104
   65:               { 	       delimeter 	      0x121
-  66:             App 	      identifier 	      0x104
-  66:             app 	      identifier 	      0x104
-  66:               = 	        operator 	      0x110
-  66:             new 	        keywords 	      0x103
-  66:             App 	      identifier 	      0x104
-  66:               ( 	       delimeter 	      0x11d
-  66:               ) 	       delimeter 	      0x11d
-  66:               ; 	       delimeter 	      0x122
-  67:             app 	      identifier 	      0x104
-  67:               . 	       delimeter 	      0x11d
-  67:  testIdentifier 	      identifier 	      0x104
-  67:               ( 	       delimeter 	      0x11d
-  67:               ) 	       delimeter 	      0x11d
-  67:               ; 	       delimeter 	      0x122
-  68:             app 	      identifier 	      0x104
-  68:               . 	       delimeter 	      0x11d
-  68:       testConst 	      identifier 	      0x104
-  68:               ( 	       delimeter 	      0x11d
-  68:               ) 	       delimeter 	      0x11d
-  68:               ; 	       delimeter 	      0x122
-  69:               } 	       delimeter 	      0x121
-  70:               } 	       delimeter 	      0x121
+  67:               } 	       delimeter 	      0x121
+  69:          public 	        keywords 	      0x103
+  69:          static 	        keywords 	      0x103
+  69:            void 	        keywords 	      0x103
+  69:            main 	      identifier 	      0x104
+  69:               ( 	       delimeter 	      0x11d
+  69:          String 	      identifier 	      0x104
+  69:               [ 	       delimeter 	      0x11d
+  69:               ] 	       delimeter 	      0x11d
+  69:            args 	      identifier 	      0x104
+  69:               ) 	       delimeter 	      0x11d
+  69:          throws 	        keywords 	      0x103
+  69:     IOException 	      identifier 	      0x104
+  69:               { 	       delimeter 	      0x121
+  70:             App 	      identifier 	      0x104
+  70:             app 	      identifier 	      0x104
+  70:               = 	        operator 	      0x110
+  70:             new 	        keywords 	      0x103
+  70:             App 	      identifier 	      0x104
+  70:               ( 	       delimeter 	      0x11d
+  70:               ) 	       delimeter 	      0x11d
+  70:               ; 	       delimeter 	      0x122
+  71:             app 	      identifier 	      0x104
+  71:               . 	       delimeter 	      0x11d
+  71:  testIdentifier 	      identifier 	      0x104
+  71:               ( 	       delimeter 	      0x11d
+  71:               ) 	       delimeter 	      0x11d
+  71:               ; 	       delimeter 	      0x122
+  72:             app 	      identifier 	      0x104
+  72:               . 	       delimeter 	      0x11d
+  72:       testConst 	      identifier 	      0x104
+  72:               ( 	       delimeter 	      0x11d
+  72:               ) 	       delimeter 	      0x11d
+  72:               ; 	       delimeter 	      0x122
+  73:               } 	       delimeter 	      0x121
+  74:               } 	       delimeter 	      0x121

@@ -45,6 +45,10 @@ public class App {
         // 3.布尔常量
         boolean flag = true;
         flag = false;
+        
+        // 4.字符串常量
+        String str = "A string.";
+        char ch = 'A';
     }
     
     public void A1() {
