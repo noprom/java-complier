@@ -12,25 +12,30 @@ import java.io.IOException;
  */
 public class App {
 
+    /**
+     * 测试标识符
+     */
+    public void identifier() {
+        int numA = 100;
+        int $numB = 200;
+        bool _false = false;
+    }
+    
     public void A1() {
         System.out.println("In A1");
         A2();
     }
 
     public void A2() {
-        System.out.println("In A2");
-    }
-
-    public void A3() {
-        System.out.println("In A3");
-    }
-
-    public void A4() {
         for (int i = 0; i < 10; i++) {
-            System.out.println("In A4");
+            System.out.println("In A2");
         }
     }
 
+    public void A3() {
+        /* 测试 */
+    }
+    
     public static void main(String[] args) throws IOException {
        App app = new App();
        app.A1();
