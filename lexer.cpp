@@ -751,10 +751,38 @@ TokenType Lexer::getToken() {
                         } else if (next == 'b') {
                             tokenString.resize(tokenString.size() - 1);
                             tokenString.append("\b");
-                        } else if (next == 'u') {
-                            // TODO: \ddd,1-3位8进制字符ddd
+                        /* \ddd,1-3位8进制字符ddd */
                         } else if (isdigit(next)) {
-                            // TODO: \uxxxx,1-4位16进制字符xxxx
+                            tokenString.push_back(next);
+                            int cnt = 0;
+                            next = getNextChar();
+                            while (isdigit(next)) {
+                                tokenString.push_back(next);
+                                next = getNextChar();
+                                cnt ++;
+                            }
+                            ungetNextChar();
+                            if (cnt > 3) {
+                                currentState = DONE;
+                                currentToken = TOKEN_ERROR;
+                                break;
+                            }
+                        /* \uxxxx,1-4位16进制字符xxxx */
+                        } else if (next == 'u') {
+                            tokenString.push_back(next);
+                            next = getNextChar();
+                            int cnt = 0;
+                            while (isdigit(next)) {
+                                tokenString.push_back(next);
+                                next = getNextChar();
+                                cnt ++;
+                            }
+                            ungetNextChar();
+                            if (cnt > 4) {
+                                currentState = DONE;
+                                currentToken = TOKEN_ERROR;
+                                break;
+                            }
                         } else {
                             tokenString.push_back(next);
                         }

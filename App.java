@@ -33,7 +33,7 @@ public class App {
         long numC = 123L;
         
         // 2.实型常量
-        float numD = 1.23;
+        double numD = 1.23;
         numD = 0.123;
         numD = .123;
         numD = 123.;
@@ -64,6 +64,8 @@ public class App {
         str = "aaa\f";
         str = "aaa\t";
         str = "aaa\b";
+        str = "bbb\123";
+        str = "ccc\u1234";
     }
     
     public void A1() {
