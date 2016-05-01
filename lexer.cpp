@@ -109,6 +109,8 @@ Lexer::Lexer(std::string fileName) {
     tokenMap.insert(std::make_pair(CONST_BOOL, std::make_pair("bool const", "0x105")));
     tokenMap.insert(std::make_pair(CONST_CHAR, std::make_pair("char const", "0x106")));
     tokenMap.insert(std::make_pair(CONST_INT, std::make_pair("int const", "0x107")));
+    tokenMap.insert(std::make_pair(CONST_INT8, std::make_pair("int8 const", "0x107")));
+    tokenMap.insert(std::make_pair(CONST_INT16, std::make_pair("int16 const", "0x107")));
     tokenMap.insert(std::make_pair(CONST_FLOAT, std::make_pair("float const", "0x108")));
     tokenMap.insert(std::make_pair(CONST_STR, std::make_pair("string const", "0x109")));
     
@@ -377,7 +379,7 @@ TokenType Lexer::getToken() {
         currentState = IN_CONST_STR;
     /* 数字 */
     } else if (isdigit(curChar)) {
-        currentState = IN_NUM;
+        currentState = IN_INT;
     /* + */
     } else if (curChar == '+') {
         currentState = IN_ADD;
@@ -465,43 +467,101 @@ TokenType Lexer::getToken() {
                 break;
             }
             /* 数字 */
-            case IN_NUM: {
+            case IN_INT: {
                 tokenString.push_back(curChar);
                 char next = getNextChar();
                 if (curChar == '0') {
+                    /* 0开头的浮点数 */
                     if (next == '.') {
                         tokenString.push_back(next);
                         currentState = IN_FLOAT;
+                        break;
+                    /* 8进制数字 */
+                    } else if (next >=0 && next <= 7) {
+                        tokenString.push_back(next);
+                        currentState = IN_INT8;
+                        break;
                     /* 16进制数字 */
                     } else if (tolower(next) == 'x') {
+                        tokenString.push_back(next);
                         next = getNextChar();
-                        while (isdigit(next)) {
+                        if (isdigit(next) || (tolower(next) >= 'a' && tolower(next) <= 'f')) {
                             tokenString.push_back(next);
-                            next = getNextChar();
-                        }
-                        if (next == '.' || tolower(next) == 'e') {
-                            tokenString.push_back(next);
-                            currentState = IN_FLOAT;
-                        } else if (next == 'L') {
-                            tokenString.push_back(next);
-                            currentState = DONE;
+                            currentState = IN_INT16;
+                            break;
                         } else {
-                            ungetNextChar();
+                            currentState = DONE;
+                            currentToken = TOKEN_ERROR;
+                            break;
                         }
+                    /* 纯粹就是数字0 */
+                    } else if (isspace(next) || tolower(next) == 'l') {
+                        currentState = DONE;
+                        currentToken = CONST_INT;
+                        if (tolower(next) == 'l') {
+                            tokenString.push_back(next);
+                        }
+                        break;
+                    /* 后面接上合法的运算符号 */
+                    } else if (next == ';' || next == '+' || next == '-' || next == '*' ||
+                               next == '/' || next == '&' || next == '|' || next == '^') {
+                        currentState = DONE;
+                        currentToken = CONST_INT;
+                        ungetNextChar();
+                        break;
+                    /* 否则出现词法错误 */
+                    } else {
+                        currentState = DONE;
+                        currentToken = TOKEN_ERROR;
+                        break;
                     }
                 } else {
-                    if (next == '.' || tolower(next) == 'e') {
-                        tokenString.push_back(curChar);
-                        currentState = IN_FLOAT;
-                    } else if (next == 'L') {
+                    /* 10进制数字 */
+                    while (isdigit(next)) {
                         tokenString.push_back(next);
+                        next = getNextChar();
+                    }
+                    /* 10进制浮点数 */
+                    if (next == '.') {
+                        tokenString.push_back(next);
+                        currentState = IN_FLOAT;
+                        break;
+                    /* 10进制整数long型 */
+                    } else if (isspace(next) || tolower(next) == 'l') {
                         currentState = DONE;
-                    } else {
+                        currentToken = CONST_INT;
+                        if (tolower(next) == 'l') {
+                            tokenString.push_back(next);
+                        }
+                        break;
+                    /* 10进制科学技术法表示 */
+                    } else if (tolower(next) == 'e') {
+                        tokenString.push_back(next);
+                        next = getNextChar();
+                        if (isdigit(next)) {
+                            tokenString.push_back(next);
+                            currentState = IN_FLOAT;
+                            break;
+                        } else {
+                            tokenString.pop_back();
+                            currentState = DONE;
+                            currentToken = TOKEN_ERROR;
+                            break;
+                        }
+                    /* 后面接上合法的运算符号 */
+                    } else if (next == ';' || next == '+' || next == '-' || next == '*' ||
+                             next == '/' || next == '&' || next == '|' || next == '^') {
+                        currentState = DONE;
+                        currentToken = CONST_INT;
                         ungetNextChar();
+                        break;
+                    /* 否则出现词法错误 */
+                    } else {
+                        currentState = DONE;
+                        currentToken = TOKEN_ERROR;
+                        break;
                     }
                 }
-                currentState = DONE;
-                currentToken = CONST_INT;
                 break;
             }
             /* 浮点型 */
@@ -570,7 +630,7 @@ TokenType Lexer::getToken() {
                 currentToken = CONST_CHAR;
                 break;
             }
-            /* 字符常量 */
+            /* 字符串常量 */
             case IN_CONST_STR: {
                 char next = getNextChar();
                 bool convert = false;

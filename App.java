@@ -15,10 +15,27 @@ public class App {
     /**
      * 测试标识符
      */
-    public void identifier() {
+    public void testIdentifier() {
         int numA = 100;
         int $numB = 200;
         bool _false = false;
+    }
+    
+    /**
+     * 测试常量
+     */
+    public void testConst() {
+        // 1.整型常量
+        int numA = 123;
+        numA = 0;
+        numA = -456;
+        numA = - 123;
+        
+        int numB = 0123;
+        numB = 0x123;
+        numB = -0X12;
+        
+        int numC = 123L;
     }
     
     public void A1() {
