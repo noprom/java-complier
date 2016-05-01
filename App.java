@@ -48,7 +48,22 @@ public class App {
         
         // 4.字符串常量
         String str = "A string.";
+        
+        // 5.字符常量
         char ch = 'A';
+    }
+    
+    /**
+     * 测试转移字符
+     */
+    public void testESC() {
+        String str = "aaa\'";
+        str = "aaa\\";
+        str = "aaa\r";
+        str = "aaa\n";
+        str = "aaa\f";
+        str = "aaa\t";
+        str = "aaa\b";
     }
     
     public void A1() {
@@ -60,10 +75,6 @@ public class App {
         for (int i = 0; i < 10; i++) {
             System.out.println("In A2");
         }
-    }
-    
-    public void A3() {
-        /* 测试 */
     }
     
     public static void main(String[] args) throws IOException {
