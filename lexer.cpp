@@ -654,12 +654,15 @@ TokenType Lexer::getToken() {
             }
             /* 浮点型 */
             case IN_FLOAT: {
-                while (isdigit(curChar)) {
-                    tokenString.push_back(curChar);
-                    curChar = getNextChar();
+                char next = getNextChar();
+                while (isdigit(next)) {
+                    tokenString.push_back(next);
+                    next = getNextChar();
                 }
-                if (tolower(curChar) != 'f') {
+                if (tolower(next) != 'f') {
                     ungetNextChar();
+                } else {
+                    tokenString.push_back(next);
                 }
                 currentState = DONE;
                 currentToken = CONST_FLOAT;

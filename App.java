@@ -31,6 +31,16 @@ public class App {
         numB = 0x123;
         
         long numC = 123L;
+        
+        // 2.实型常量
+        float numD = 1.23;
+        numD = 0.123;
+        numD = .123;
+        numD = 123.;
+        numD = 123.0;
+        double numE = 123e3;
+        numE = 123E3;
+        numE = 12.3F;
     }
     
     public void A1() {
