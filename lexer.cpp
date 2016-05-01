@@ -477,7 +477,7 @@ TokenType Lexer::getToken() {
                         currentState = IN_FLOAT;
                         break;
                     /* 8进制数字 */
-                    } else if (next >=0 && next <= 7) {
+                    } else if (next >= '0' && next <= '7') {
                         tokenString.push_back(next);
                         currentState = IN_INT8;
                         break;
@@ -562,6 +562,77 @@ TokenType Lexer::getToken() {
                         break;
                     }
                 }
+                break;
+            }
+            /* 8进制数字 */
+            case IN_INT8: {
+                char next = getNextChar();
+                while (isdigit(next) && next <= '7') {
+                    tokenString.push_back(next);
+                    next = getNextChar();
+                }
+                /* 8进制小数 */
+                if (next == '.') {
+                    tokenString.push_back(next);
+                    next = getNextChar();
+                    /* 8进制小数,科学计数法 */
+                    if (tolower(next) == 'e') {
+                        tokenString.push_back(next);
+                        next = getNextChar();
+                        if (isdigit(next)) {
+                            tokenString.push_back(next);
+                            currentState = IN_FLOAT;
+                            break;
+                        } else {
+                            tokenString.pop_back();
+                            currentState = DONE;
+                            currentToken = TOKEN_ERROR;
+                            break;
+                        }
+                    /* 普通8进制小数 */
+                    } else if (isspace(next)) {
+                        currentState = DONE;
+                        currentToken = CONST_FLOAT;
+                        break;
+                    } else if (isdigit(next)) {
+                        tokenString.push_back(next);
+                        currentState = IN_FLOAT;
+                        break;
+                    /* 后面接上合法的运算符号 */
+                    } else if (next == ';' || next == '+' || next == '-' || next == '*' ||
+                               next == '/' || next == '&' || next == '|' || next == '^') {
+                        currentState = DONE;
+                        currentToken = CONST_FLOAT;
+                        ungetNextChar();
+                        break;
+                    /* 否则出现词法错误 */
+                    } else {
+                        currentState = DONE;
+                        currentToken = TOKEN_ERROR;
+                        break;
+                    }
+                /* 8进制整数 */
+                } else if (isspace(next)) {
+                    currentState = DONE;
+                    currentToken = CONST_INT8;
+                    break;
+                /* 后面接上合法的运算符号 */
+                } else if (next == ';' || next == '+' || next == '-' || next == '*' ||
+                           next == '/' || next == '&' || next == '|' || next == '^') {
+                    currentState = DONE;
+                    currentToken = CONST_INT8;
+                    ungetNextChar();
+                    break;
+                /* 否则出现词法错误 */
+                } else {
+                    currentState = DONE;
+                    currentToken = TOKEN_ERROR;
+                    break;
+                }
+                break;
+            }
+            /* 16进制数字 */
+            case IN_INT16: {
                 break;
             }
             /* 浮点型 */
