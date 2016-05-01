@@ -630,7 +630,7 @@ TokenType Lexer::getToken() {
             /* 16进制数字 */
             case IN_INT16: {
                 char next = getNextChar();
-                while (isdigit(next) || tolower(next) <= 'f') {
+                while (isdigit(next) || ('a' <= tolower(next) && tolower(next) <= 'f')) {
                     tokenString.push_back(next);
                     next = getNextChar();
                 }

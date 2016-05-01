@@ -1,4 +1,4 @@
-Total tokens: 161
+Total tokens: 162
     1:    5	 tokens
     2:    0	 token
     3:    7	 tokens
@@ -29,9 +29,9 @@ Total tokens: 161
    28:    4	 tokens
    29:    0	 token
    30:    5	 tokens
-   31:    2	 tokens
+   31:    4	 tokens
    32:    0	 token
-   33:    6	 tokens
+   33:    5	 tokens
    34:    1	 token
    35:    0	 token
    36:    6	 tokens
@@ -115,10 +115,9 @@ Total tokens: 161
   30:               ; 	       delimeter 	      0x122
   31:            numB 	      identifier 	      0x104
   31:               = 	        operator 	      0x110
-  33: 0x123;
-        
-         	     token error 	      0x100
-  33:             ong 	      identifier 	      0x104
+  31:           0x123 	        operator 	      0x107
+  31:               ; 	       delimeter 	      0x122
+  33:            long 	        keywords 	      0x103
   33:            numC 	      identifier 	      0x104
   33:               = 	        operator 	      0x110
   33:            123L 	       int const 	      0x107
