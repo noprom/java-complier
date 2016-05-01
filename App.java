@@ -68,6 +68,67 @@ public class App {
         str = "ccc\u1234";
     }
     
+    /**
+     * 测试运算符
+     */
+    public void testOp() {
+        int num = 1;
+        num += 2;
+        num = num + 100;
+        num &= 2;
+        num = 1 & 200;
+        num = ~num;
+        num = num | 20;
+        num = num ^ 3;
+        --num;
+        num /= 5;
+        num = num / 100;
+        if (num == 3) {
+            System.out.println("num = 3");
+        }
+        if (num > 3) {
+            System.out.println("num > 3");
+        }
+        if (num >= 3) {
+            System.out.println("num >= 3");
+        }
+        num++;
+        num = num << 2;
+        num <<= 3;
+        if (num < 3) {
+            System.out.println("num < 3");
+        }
+        if (num <= 3) {
+            System.out.println("num <= 3");
+        }
+        num = num & 1;
+        num = num | 1;
+        num = num ^ 2;
+        num = 200 % 3;
+        num %= 5;
+        num = 5 * 6;
+        num *= 20;
+        num = !num;
+        num ^= 3;
+        if (num != 5) {
+            System.out.println("num != 5");
+        }
+        num |= 2;
+        num = 3 >> 2;
+        num >>= 2;
+        if (num > 0 && num <= 9) {
+            System.out.println("num > 0 and num <= 9 ");
+        }
+        boolean flag = false;
+        if (num > 5 || flag == true) {
+            System.out.println("Hello world!");
+        }
+        num -= 100;
+        num = 100 - num;
+        num = num >>> 2;
+        num >>>= 2;
+    }
+    
     public void A1() {
         System.out.println("In A1");
         A2();
@@ -83,5 +144,7 @@ public class App {
         App app = new App();
         app.testIdentifier();
         app.testConst();
+        app.testESC();
+        app.testOp();
     }
 }
