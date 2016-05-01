@@ -6,7 +6,7 @@ import java.io.IOException;
  * 测试应用程序
  * <p/>
  * Author: Noprom <tyee.noprom@qq.com>
- * Date: 16/3/4 下午4:38.
+ * Number: 1120132046
  */
 public class App {
     
@@ -41,6 +41,10 @@ public class App {
         double numE = 123e3;
         numE = 123E3;
         numE = 12.3F;
+        
+        // 3.布尔常量
+        boolean flag = true;
+        flag = false;
     }
     
     public void A1() {
