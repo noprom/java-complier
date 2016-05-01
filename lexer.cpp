@@ -503,8 +503,7 @@ TokenType Lexer::getToken() {
                         }
                         break;
                     /* 后面接上合法的运算符号 */
-                    } else if (next == ';' || next == '+' || next == '-' || next == '*' ||
-                               next == '/' || next == '&' || next == '|' || next == '^') {
+                    } else if (next == ';' || isArithmeticOp(next)) {
                         currentState = DONE;
                         currentToken = CONST_INT;
                         ungetNextChar();
@@ -549,8 +548,7 @@ TokenType Lexer::getToken() {
                             break;
                         }
                     /* 后面接上合法的运算符号 */
-                    } else if (next == ';' || next == '+' || next == '-' || next == '*' ||
-                             next == '/' || next == '&' || next == '|' || next == '^') {
+                    } else if (next == ';' || isArithmeticOp(next)) {
                         currentState = DONE;
                         currentToken = CONST_INT;
                         ungetNextChar();
@@ -599,8 +597,7 @@ TokenType Lexer::getToken() {
                         currentState = IN_FLOAT;
                         break;
                     /* 后面接上合法的运算符号 */
-                    } else if (next == ';' || next == '+' || next == '-' || next == '*' ||
-                               next == '/' || next == '&' || next == '|' || next == '^') {
+                    } else if (next == ';' || isArithmeticOp(next)) {
                         currentState = DONE;
                         currentToken = CONST_FLOAT;
                         ungetNextChar();
@@ -617,8 +614,7 @@ TokenType Lexer::getToken() {
                     currentToken = CONST_INT8;
                     break;
                 /* 后面接上合法的运算符号 */
-                } else if (next == ';' || next == '+' || next == '-' || next == '*' ||
-                           next == '/' || next == '&' || next == '|' || next == '^') {
+                } else if (next == ';' || isArithmeticOp(next)) {
                     currentState = DONE;
                     currentToken = CONST_INT8;
                     ungetNextChar();
