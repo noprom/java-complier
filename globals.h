@@ -41,7 +41,7 @@ typedef enum {
      * 浮点型: 0x108
      * 字符串: 0x109
      */
-    ID, CONST_BOOL, CONST_CHAR, CONST_INT, CONST_FLOAT, CONST_STR,
+    ID, CONST_BOOL, CONST_CHAR, CONST_INT, CONST_FLOAT, CONST_STR, CONST_INT8, CONST_INT16,
 
     /**
      * 关键字: 0x103
