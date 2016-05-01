@@ -361,6 +361,7 @@ TokenType Lexer::getToken() {
         currentState = IN_COMMENT;
     /* 位取反 */
     } else if (curChar == '~') {
+        tokenString.push_back(curChar);
         currentState = DONE;
         currentToken = NOT_BIT;
     /* 界限符 */
@@ -503,7 +504,7 @@ TokenType Lexer::getToken() {
                         }
                         break;
                     /* 后面接上合法的运算符号 */
-                    } else if (next == ';' || isArithmeticOp(next)) {
+                    } else if (next == ';' || next == ']' || next == ')' || isArithmeticOp(next)) {
                         currentState = DONE;
                         currentToken = CONST_INT;
                         ungetNextChar();
@@ -548,7 +549,7 @@ TokenType Lexer::getToken() {
                             break;
                         }
                     /* 后面接上合法的运算符号 */
-                    } else if (next == ';' || isArithmeticOp(next)) {
+                    } else if (next == ';' || next == ']' || next == ')' || isArithmeticOp(next)) {
                         currentState = DONE;
                         currentToken = CONST_INT;
                         ungetNextChar();
@@ -597,7 +598,7 @@ TokenType Lexer::getToken() {
                         currentState = IN_FLOAT;
                         break;
                     /* 后面接上合法的运算符号 */
-                    } else if (next == ';' || isArithmeticOp(next)) {
+                    } else if (next == ';' || next == ']' || next == ')' || isArithmeticOp(next)) {
                         currentState = DONE;
                         currentToken = CONST_FLOAT;
                         ungetNextChar();
@@ -614,7 +615,7 @@ TokenType Lexer::getToken() {
                     currentToken = CONST_INT8;
                     break;
                 /* 后面接上合法的运算符号 */
-                } else if (next == ';' || isArithmeticOp(next)) {
+                } else if (next == ';' || next == ']' || next == ')' || isArithmeticOp(next)) {
                     currentState = DONE;
                     currentToken = CONST_INT8;
                     ungetNextChar();
@@ -639,7 +640,7 @@ TokenType Lexer::getToken() {
                     currentState = DONE;
                     currentToken = CONST_INT16;
                     break;
-                } else if (next == ';' || isArithmeticOp(next)) {
+                } else if (next == ';' || next == ']' || next == ')' || isArithmeticOp(next)) {
                     currentState = DONE;
                     currentToken = CONST_INT16;
                     ungetNextChar();
@@ -821,7 +822,7 @@ TokenType Lexer::getToken() {
                 tokenString.push_back(curChar);
                 char next = getNextChar();
                 /* + */
-                if (isdigit(next) || isalpha(next)) {
+                if (isdigit(next) || isalpha(next) || isspace(next)) {
                     ungetNextChar();
                     currentState = DONE;
                     currentToken = ADD;
@@ -846,7 +847,7 @@ TokenType Lexer::getToken() {
                 tokenString.push_back(curChar);
                 char next = getNextChar();
                 /* 减号 */
-                if (isdigit(next) || isalpha(next)) {
+                if (isdigit(next) || isalpha(next) || isspace(next)) {
                     ungetNextChar();
                     currentState = DONE;
                     currentToken = MINUS;
@@ -871,7 +872,7 @@ TokenType Lexer::getToken() {
                 tokenString.push_back(curChar);
                 char next = getNextChar();
                 /* * */
-                if (isdigit(next) || isalpha(next)) {
+                if (isdigit(next) || isalpha(next) || isspace(next)) {
                     ungetNextChar();
                     currentState = DONE;
                     currentToken = MUL;
@@ -891,7 +892,7 @@ TokenType Lexer::getToken() {
                 tokenString.push_back(curChar);
                 char next = getNextChar();
                 /* / */
-                if (isdigit(next) || isalpha(next)) {
+                if (isdigit(next) || isalpha(next) || isspace(next)) {
                     ungetNextChar();
                     currentState = DONE;
                     currentToken = DIV;
@@ -911,7 +912,7 @@ TokenType Lexer::getToken() {
                 tokenString.push_back(curChar);
                 char next = getNextChar();
                 /* % */
-                if (isdigit(next) || isalpha(next)) {
+                if (isdigit(next) || isalpha(next) || isspace(next)) {
                     ungetNextChar();
                     currentState = DONE;
                     currentToken = MOD;
@@ -931,7 +932,7 @@ TokenType Lexer::getToken() {
                 tokenString.push_back(curChar);
                 char next = getNextChar();
                 /* & */
-                if (isdigit(next) || isalpha(next)) {
+                if (isdigit(next) || isalpha(next) || isspace(next)) {
                     ungetNextChar();
                     currentState = DONE;
                     currentToken = AND_BIT;
@@ -976,7 +977,7 @@ TokenType Lexer::getToken() {
                 tokenString.push_back(curChar);
                 char next = getNextChar();
                 /* | */
-                if (isdigit(next) || isalpha(next)) {
+                if (isdigit(next) || isalpha(next) || isspace(next)) {
                     ungetNextChar();
                     currentState = DONE;
                     currentToken = OR_BIT;
@@ -1001,7 +1002,7 @@ TokenType Lexer::getToken() {
                 tokenString.push_back(curChar);
                 char next = getNextChar();
                 /* ! */
-                if (isdigit(next) || isalpha(next)) {
+                if (isdigit(next) || isalpha(next) || isspace(next)) {
                     ungetNextChar();
                     currentState = DONE;
                     currentToken = NOT;
@@ -1021,7 +1022,7 @@ TokenType Lexer::getToken() {
                 tokenString.push_back(curChar);
                 char next = getNextChar();
                 /* ^ */
-                if (isdigit(next) || isalpha(next)) {
+                if (isdigit(next) || isalpha(next) || isspace(next)) {
                     ungetNextChar();
                     currentState = DONE;
                     currentToken = XOR;
@@ -1058,7 +1059,7 @@ TokenType Lexer::getToken() {
                         tokenString.push_back(next);
                         currentState = DONE;
                         currentToken = LEFT_SHIFT_ASSIGN;
-                    } else if (isdigit(next) || isalpha(next)) {
+                    } else if (isdigit(next) || isalpha(next) || isspace(next)) {
                         ungetNextChar();
                         currentState = DONE;
                         currentToken = LEFT_SHIFT;
@@ -1077,7 +1078,7 @@ TokenType Lexer::getToken() {
                 tokenString.push_back(curChar);
                 char next = getNextChar();
                 /* > */
-                if (isdigit(next) || isalpha(next)) {
+                if (isdigit(next) || isalpha(next) || isspace(next)) {
                     ungetNextChar();
                     currentState = DONE;
                     currentToken = GT;
@@ -1096,7 +1097,7 @@ TokenType Lexer::getToken() {
                         currentState = DONE;
                         currentToken = RIGHT_SHIFT_ASSIGN;
                     /* >> */
-                    } else if (isdigit(next) || isalpha(next)) {
+                    } else if (isdigit(next) || isalpha(next) || isspace(next)) {
                         ungetNextChar();
                         currentState = DONE;
                         currentToken = RIGHT_SHIFT;
@@ -1110,7 +1111,7 @@ TokenType Lexer::getToken() {
                             currentState = DONE;
                             currentToken = ZERO_FILL_RIGHT_SHIRT_ASSIGN;
                         /* >>> */
-                        } else if (isdigit(next) || isalpha(next)) {
+                        } else if (isdigit(next) || isalpha(next) || isspace(next)) {
                             ungetNextChar();
                             currentState = DONE;
                             currentToken = ZERO_FILL_RIGHT_SHIRT;
