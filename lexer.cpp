@@ -629,6 +629,27 @@ TokenType Lexer::getToken() {
             }
             /* 16进制数字 */
             case IN_INT16: {
+                char next = getNextChar();
+                while (isdigit(next) || tolower(next) <= 'f') {
+                    tokenString.push_back(next);
+                    next = getNextChar();
+                }
+                /* 纯粹16进制数字 */
+                if (isspace(next)) {
+                    currentState = DONE;
+                    currentToken = CONST_INT16;
+                    break;
+                } else if (next == ';' || isArithmeticOp(next)) {
+                    currentState = DONE;
+                    currentToken = CONST_INT16;
+                    ungetNextChar();
+                    break;
+                /* 否则出现词法错误 */
+                } else {
+                    currentState = DONE;
+                    currentToken = TOKEN_ERROR;
+                    break;
+                }
                 break;
             }
             /* 浮点型 */
