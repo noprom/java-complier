@@ -769,6 +769,22 @@ TokenType Lexer::getToken() {
                 currentToken = CONST_STR;
                 break;
             }
+            /* 负数 */
+            case IN_NEGATIVE: {
+                tokenString.push_back('-');
+                char next = getNextChar();
+                while (isspace(next)) {
+                    next = getNextChar();
+                }
+                if (isdigit(next)) {
+                    tokenString.push_back(next);
+                    currentState = IN_INT;
+                } else {
+                    currentState = DONE;
+                    currentToken = TOKEN_ERROR;
+                }
+                break;
+            }
             /* + */
             case IN_ADD: {
                 tokenString.push_back(curChar);
@@ -798,7 +814,7 @@ TokenType Lexer::getToken() {
             case IN_MINUS: {
                 tokenString.push_back(curChar);
                 char next = getNextChar();
-                /* - */
+                /* 减号 */
                 if (isdigit(next) || isalpha(next)) {
                     ungetNextChar();
                     currentState = DONE;

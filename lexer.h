@@ -17,9 +17,10 @@ typedef enum {
     /**
      * 开始, 结束, 读入标志符, 读入字符常量, 读入字符串常量, 读入整型, 读入8进制数, 读入16进制数, 读入浮点型, 读入转义符号, 读入界限符, 读入注释
      * 读入+ - * / % & = < > | ! ^
+     * 读入负数
      */
     START, DONE, IN_ID, IN_CONST_CHAR, IN_CONST_STR, IN_INT, IN_INT8, IN_INT16, IN_FLOAT, IN_ESC, IN_DELIMETER, IN_COMMENT,
-    IN_ADD, IN_MINUS, IN_MUL, IN_DIV, IN_MOD, IN_AND, IN_ASSIGN, IN_LT, IN_GT, IN_OR, IN_NOT, IN_XOR
+    IN_ADD, IN_MINUS, IN_MUL, IN_DIV, IN_MOD, IN_AND, IN_ASSIGN, IN_LT, IN_GT, IN_OR, IN_NOT, IN_XOR, IN_NEGATIVE
     
 } DFAStateType;
 
