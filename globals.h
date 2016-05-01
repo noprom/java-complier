@@ -1,7 +1,11 @@
-/****************************************************/
-/* File: globals.h                                  */
-/* 全局变量的声明,必须在其他文件之前引入                  */
-/****************************************************/
+//
+//  globals.h
+//  java_complier
+//
+//  Created by noprom on 4/22/16.
+//  Copyright © 2016 tyee.noprom@qq.com. All rights reserved.
+//
+
 #ifndef _GLOBALS_H_
 #define  _GLOBALS_H_
 
