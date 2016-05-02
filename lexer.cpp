@@ -1162,11 +1162,10 @@ TokenType Lexer::getToken() {
     if (currentToken == TOKEN_ERROR) {
         TokenErrorInfo err = createTokenErrorInfo(tokenString);
         errList.push_back(err);
-        getOneLine();
     }
     /* 累加总单词个数 */
     TOKEN_NUM++;
     /* 累加每行单词个数 */
     lineTokenNum++;
-    return TOKEN_ERROR;
+    return currentToken;
 }

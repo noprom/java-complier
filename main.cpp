@@ -25,8 +25,8 @@ int TraceSource = 0;
 
 int main(int argc, const char * argv[]) {
     
-    std::string fileName = "/Users/noprom/Documents/Dev/C++/Complier/java_complier/java_complier/App.java";
-    std::string outFileName = "/Users/noprom/Documents/Dev/C++/Complier/java_complier/java_complier/scanner_output.txt";
+    std::string fileName = "/Users/noprom/Documents/Dev/C++/Complier/java_complier_v0.1/java_complier/App.java";
+    std::string outFileName = "/Users/noprom/Documents/Dev/C++/Complier/java_complier_v0.1/java_complier/scanner_output.txt";
     
     if (argc > 2) {
         fileName = argv[1];

@@ -6,6 +6,8 @@ import java.io.IOException;
  * 测试应用程序
  * <p/>
  * Author: Noprom <tyee.noprom@qq.com>
+ * Name:  王韬懿
+ * Class: 08111302
  * Number: 1120132046
  */
 public class App {
@@ -54,7 +56,7 @@ public class App {
     }
     
     /**
-     * 测试转移字符
+     * 测试转义字符
      */
     public void testESC() {
         String str = "aaa\'";
