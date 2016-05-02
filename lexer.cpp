@@ -1,11 +1,11 @@
-//
+﻿//
 //  lexer.cpp
 //  java_complier
 //
 //  Created by noprom on 4/27/16.
 //  Copyright © 2016 tyee.noprom@qq.com. All rights reserved.
 //
-
+#define _CRT_SECURE_NO_WARNINGS
 #include "lexer.h"
 
 #define KEYWORDS_ID "0x103"
@@ -20,7 +20,9 @@ int Lexer::linePos = 0;
 std::string Lexer::tokenString = "";
 
 /* 实现构造函数 */
-Lexer::Lexer(std::string fileName) {
+Lexer::Lexer(std::string fileName)
+{
+	ifs = new std::ifstream(fileName);
     
     /* 清空用于统计的容器 */
     lineTokenSumMap.clear();
@@ -212,13 +214,30 @@ Lexer::Lexer(std::string fileName) {
     delimeterMap.insert(std::make_pair(';', SEMICOLON));
     
     /* 打开文件 */
-    ifstream.open(fileName.c_str());
-    if (!ifstream.is_open()) {
-        printf("can not open the file : %s\n", fileName.c_str());
-        scanError();
-    } else {
-        getOneLine();
-    }
+	if ((inFile = fopen(fileName.c_str(), "r")) == NULL) {
+		printf("can not open the file : %s\n", fileName.c_str());
+		exit(1);
+	} else {
+		getOneLine();
+	}
+   // if (!ifs->is_open()) {
+   //     printf("can not open the file : %s\n", fileName.c_str());
+   //	exit(1);
+   //     scanError();
+   // } else {
+   //     getOneLine();
+   // }
+}
+
+Lexer::~Lexer(){
+	try{
+		delete ifs;
+	}
+	catch (std::exception e){
+		//TODO error case
+		return;
+	}
+	return;
 }
 
 /* 实现错误信息处理 */
@@ -230,20 +249,26 @@ void Lexer::scanError() {
 void Lexer::getOneLine() {
     /* 初始化每行统计变量 */
     lineBuf = "";
+	char line[2048];
+	if (!feof(inFile)) {
+		fgets(line, 2048, inFile);
+		lineBuf = line;
+	} else {
+		EOF_flag = 1;
+	}
+	
+//    if (!ifs->eof()) {
+//        if (!getline(*ifs, lineBuf)) {
+//            std::cout << "Error: file end with illegal ending" << std::endl;
+//            Lexer::LEXER_ERROR = 1;
+//        }
+//    } else {
+//       EOF_flag = 1;
+//    }
     
-    if (!ifstream.eof()) {
-        if (!getline(ifstream, lineBuf)) {
-            std::cout << "Error: file end with illegal ending" << std::endl;
-            Lexer::LEXER_ERROR = 1;
-        }
-    } else {
-        EOF_flag = 1;
-    }
-    
-    lineBuf += "\n";
+  //  lineBuf += "\n";
     if (TraceSource) {
-        if (TraceSource)
-            printf("%4d: %s\n", lineNumber, lineBuf.c_str());
+		printf("%4d: %s\n", lineNumber, lineBuf.c_str());
     }
 }
 
@@ -365,7 +390,7 @@ TokenType Lexer::getToken() {
     }
     /* 1.首先获得第一个状态 */
     /* 空格 */
-    if (isspace(curChar)) {
+    if (curChar == ' ') {
         return getToken();
     /* 注释 */
     } else if(curChar == '/') {
@@ -390,7 +415,7 @@ TokenType Lexer::getToken() {
     } else if (curChar == '"') {
         currentState = IN_CONST_STR;
     /* 数字 */
-    } else if (isdigit(curChar)) {
+    } else if (idDigit(curChar)) {
         currentState = IN_INT;
     /* + */
     } else if (curChar == '+') {
@@ -465,7 +490,7 @@ TokenType Lexer::getToken() {
             /* 处理标识符 */
             case IN_ID: {
                 currentState = DONE;
-                while (isIdentifier(curChar) || isdigit(curChar)) {
+                while (isIdentifier(curChar) || idDigit(curChar)) {
                     tokenString += curChar;
                     curChar = getNextChar();
                 }
@@ -497,7 +522,7 @@ TokenType Lexer::getToken() {
                     } else if (tolower(next) == 'x') {
                         tokenString.push_back(next);
                         next = getNextChar();
-                        if (isdigit(next) || (tolower(next) >= 'a' && tolower(next) <= 'f')) {
+                        if (idDigit(next) || (tolower(next) >= 'a' && tolower(next) <= 'f')) {
                             tokenString.push_back(next);
                             currentState = IN_INT16;
                             break;
@@ -528,7 +553,7 @@ TokenType Lexer::getToken() {
                     }
                 } else {
                     /* 10进制数字 */
-                    while (isdigit(next)) {
+                    while (idDigit(next)) {
                         tokenString.push_back(next);
                         next = getNextChar();
                     }
@@ -549,7 +574,7 @@ TokenType Lexer::getToken() {
                     } else if (tolower(next) == 'e') {
                         tokenString.push_back(next);
                         next = getNextChar();
-                        if (isdigit(next)) {
+                        if (idDigit(next)) {
                             tokenString.push_back(next);
                             currentState = IN_FLOAT;
                             break;
@@ -577,7 +602,7 @@ TokenType Lexer::getToken() {
             /* 8进制数字 */
             case IN_INT8: {
                 char next = getNextChar();
-                while (isdigit(next) && next <= '7') {
+                while (idDigit(next) && next <= '7') {
                     tokenString.push_back(next);
                     next = getNextChar();
                 }
@@ -589,7 +614,7 @@ TokenType Lexer::getToken() {
                     if (tolower(next) == 'e') {
                         tokenString.push_back(next);
                         next = getNextChar();
-                        if (isdigit(next)) {
+                        if (idDigit(next)) {
                             tokenString.push_back(next);
                             currentState = IN_FLOAT;
                             break;
@@ -604,7 +629,7 @@ TokenType Lexer::getToken() {
                         currentState = DONE;
                         currentToken = CONST_FLOAT;
                         break;
-                    } else if (isdigit(next)) {
+                    } else if (idDigit(next)) {
                         tokenString.push_back(next);
                         currentState = IN_FLOAT;
                         break;
@@ -642,7 +667,7 @@ TokenType Lexer::getToken() {
             /* 16进制数字 */
             case IN_INT16: {
                 char next = getNextChar();
-                while (isdigit(next) || ('a' <= tolower(next) && tolower(next) <= 'f')) {
+                while (idDigit(next) || ('a' <= tolower(next) && tolower(next) <= 'f')) {
                     tokenString.push_back(next);
                     next = getNextChar();
                 }
@@ -667,7 +692,7 @@ TokenType Lexer::getToken() {
             /* 浮点型 */
             case IN_FLOAT: {
                 char next = getNextChar();
-                while (isdigit(next)) {
+                while (idDigit(next)) {
                     tokenString.push_back(next);
                     next = getNextChar();
                 }
@@ -723,7 +748,7 @@ TokenType Lexer::getToken() {
                         tokenString.append("\b");
                     } else if (next == 'u') {
                         // TODO: \ddd,1-3位8进制字符ddd
-                    } else if (isdigit(next)) {
+                    } else if (idDigit(next)) {
                         // TODO: \uxxxx,1-4位16进制字符xxxx
                     } else {
                         tokenString.push_back(next);
@@ -764,11 +789,11 @@ TokenType Lexer::getToken() {
                             tokenString.resize(tokenString.size() - 1);
                             tokenString.append("\b");
                         /* \ddd,1-3位8进制字符ddd */
-                        } else if (isdigit(next)) {
+                        } else if (idDigit(next)) {
                             tokenString.push_back(next);
                             int cnt = 0;
                             next = getNextChar();
-                            while (isdigit(next)) {
+                            while (idDigit(next)) {
                                 tokenString.push_back(next);
                                 next = getNextChar();
                                 cnt ++;
@@ -784,7 +809,7 @@ TokenType Lexer::getToken() {
                             tokenString.push_back(next);
                             next = getNextChar();
                             int cnt = 0;
-                            while (isdigit(next)) {
+                            while (idDigit(next)) {
                                 tokenString.push_back(next);
                                 next = getNextChar();
                                 cnt ++;
@@ -819,7 +844,7 @@ TokenType Lexer::getToken() {
                 while (isspace(next)) {
                     next = getNextChar();
                 }
-                if (isdigit(next)) {
+                if (idDigit(next)) {
                     tokenString.push_back(next);
                     currentState = IN_INT;
                 } else {
@@ -833,7 +858,7 @@ TokenType Lexer::getToken() {
                 tokenString.push_back(curChar);
                 char next = getNextChar();
                 /* + */
-                if (isdigit(next) || isalpha(next) || isspace(next)) {
+                if (idDigit(next) || isAlpha(next) || isspace(next)) {
                     ungetNextChar();
                     currentState = DONE;
                     currentToken = ADD;
@@ -858,7 +883,7 @@ TokenType Lexer::getToken() {
                 tokenString.push_back(curChar);
                 char next = getNextChar();
                 /* 减号 */
-                if (isdigit(next) || isalpha(next) || isspace(next)) {
+                if (idDigit(next) || isAlpha(next) || isspace(next)) {
                     ungetNextChar();
                     currentState = DONE;
                     currentToken = MINUS;
@@ -883,7 +908,7 @@ TokenType Lexer::getToken() {
                 tokenString.push_back(curChar);
                 char next = getNextChar();
                 /* * */
-                if (isdigit(next) || isalpha(next) || isspace(next)) {
+                if (idDigit(next) || isAlpha(next) || isspace(next)) {
                     ungetNextChar();
                     currentState = DONE;
                     currentToken = MUL;
@@ -903,7 +928,7 @@ TokenType Lexer::getToken() {
                 tokenString.push_back(curChar);
                 char next = getNextChar();
                 /* / */
-                if (isdigit(next) || isalpha(next) || isspace(next)) {
+                if (idDigit(next) || isAlpha(next) || isspace(next)) {
                     ungetNextChar();
                     currentState = DONE;
                     currentToken = DIV;
@@ -923,7 +948,7 @@ TokenType Lexer::getToken() {
                 tokenString.push_back(curChar);
                 char next = getNextChar();
                 /* % */
-                if (isdigit(next) || isalpha(next) || isspace(next)) {
+                if (idDigit(next) || isAlpha(next) || isspace(next)) {
                     ungetNextChar();
                     currentState = DONE;
                     currentToken = MOD;
@@ -943,7 +968,7 @@ TokenType Lexer::getToken() {
                 tokenString.push_back(curChar);
                 char next = getNextChar();
                 /* & */
-                if (isdigit(next) || isalpha(next) || isspace(next)) {
+                if (idDigit(next) || isAlpha(next) || isspace(next)) {
                     ungetNextChar();
                     currentState = DONE;
                     currentToken = AND_BIT;
@@ -968,7 +993,7 @@ TokenType Lexer::getToken() {
                 tokenString.push_back(curChar);
                 char next = getNextChar();
                 /* = */
-                if (isdigit(next) || isalpha(next) || isspace(next)) {
+                if (idDigit(next) || isAlpha(next) || isspace(next)) {
                     ungetNextChar();
                     currentState = DONE;
                     currentToken = ASSIGN;
@@ -988,7 +1013,7 @@ TokenType Lexer::getToken() {
                 tokenString.push_back(curChar);
                 char next = getNextChar();
                 /* | */
-                if (isdigit(next) || isalpha(next) || isspace(next)) {
+                if (idDigit(next) || isAlpha(next) || isspace(next)) {
                     ungetNextChar();
                     currentState = DONE;
                     currentToken = OR_BIT;
@@ -1013,7 +1038,7 @@ TokenType Lexer::getToken() {
                 tokenString.push_back(curChar);
                 char next = getNextChar();
                 /* ! */
-                if (isdigit(next) || isalpha(next) || isspace(next)) {
+                if (idDigit(next) || isAlpha(next) || isspace(next)) {
                     ungetNextChar();
                     currentState = DONE;
                     currentToken = NOT;
@@ -1033,7 +1058,7 @@ TokenType Lexer::getToken() {
                 tokenString.push_back(curChar);
                 char next = getNextChar();
                 /* ^ */
-                if (isdigit(next) || isalpha(next) || isspace(next)) {
+                if (idDigit(next) || isAlpha(next) || isspace(next)) {
                     ungetNextChar();
                     currentState = DONE;
                     currentToken = XOR;
@@ -1053,7 +1078,7 @@ TokenType Lexer::getToken() {
                 tokenString.push_back(curChar);
                 char next = getNextChar();
                 /* < */
-                if (isdigit(next) || isalpha(next) || isspace(next)) {
+                if (idDigit(next) || isAlpha(next) || isspace(next)) {
                     ungetNextChar();
                     currentState = DONE;
                     currentToken = LT;
@@ -1070,7 +1095,7 @@ TokenType Lexer::getToken() {
                         tokenString.push_back(next);
                         currentState = DONE;
                         currentToken = LEFT_SHIFT_ASSIGN;
-                    } else if (isdigit(next) || isalpha(next) || isspace(next)) {
+                    } else if (idDigit(next) || isAlpha(next) || isspace(next)) {
                         ungetNextChar();
                         currentState = DONE;
                         currentToken = LEFT_SHIFT;
@@ -1089,7 +1114,7 @@ TokenType Lexer::getToken() {
                 tokenString.push_back(curChar);
                 char next = getNextChar();
                 /* > */
-                if (isdigit(next) || isalpha(next) || isspace(next)) {
+                if (idDigit(next) || isAlpha(next) || isspace(next)) {
                     ungetNextChar();
                     currentState = DONE;
                     currentToken = GT;
@@ -1108,7 +1133,7 @@ TokenType Lexer::getToken() {
                         currentState = DONE;
                         currentToken = RIGHT_SHIFT_ASSIGN;
                     /* >> */
-                    } else if (isdigit(next) || isalpha(next) || isspace(next)) {
+                    } else if (idDigit(next) || isAlpha(next) || isspace(next)) {
                         ungetNextChar();
                         currentState = DONE;
                         currentToken = RIGHT_SHIFT;
@@ -1122,7 +1147,7 @@ TokenType Lexer::getToken() {
                             currentState = DONE;
                             currentToken = ZERO_FILL_RIGHT_SHIRT_ASSIGN;
                         /* >>> */
-                        } else if (isdigit(next) || isalpha(next) || isspace(next)) {
+                        } else if (idDigit(next) || isAlpha(next) || isspace(next)) {
                             ungetNextChar();
                             currentState = DONE;
                             currentToken = ZERO_FILL_RIGHT_SHIRT;
@@ -1168,5 +1193,5 @@ TokenType Lexer::getToken() {
     TOKEN_NUM++;
     /* 累加每行单词个数 */
     lineTokenNum++;
-    return TOKEN_ERROR;
+	return currentToken;
 }

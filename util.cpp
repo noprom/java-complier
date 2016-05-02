@@ -1,4 +1,4 @@
-//
+﻿//
 //  util.cpp
 //  java_complier
 //
@@ -8,9 +8,25 @@
 
 #include "util.h"
 
+/* 判断字符是否是字母 */
+bool isAlpha(char c) {
+	if (tolower(c) >= 'a' && tolower(c) <= 'z') {
+		return true;
+	}
+	return false;
+}
+
+/* 判断字符是否是数字 */
+bool idDigit(char c) {
+	if (c >= '0' && c <= '9') {
+		return true;
+	}
+	return false;
+}
+
 /* 判断否个字符是否是标识符 */
 bool isIdentifier(char c) {
-    if (isalpha(c) || c == '_' || c == '$') {
+	if (isAlpha(c) || c == '_' || c == '$') {
         return true;
     }
     return false;

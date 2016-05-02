@@ -1,13 +1,13 @@
-//
+﻿//
 //  main.cpp
 //  java_complier
 //
 //  Created by noprom on 4/27/16.
 //  Copyright © 2016 tyee.noprom@qq.com. All rights reserved.
 //
-
-#include "globals.h"
 #define _CRT_SECURE_NO_WARNINGS
+#include "globals.h"
+
 /* 
  * NO_PARSE = TRUE
  * 则只是一个词法分析器
@@ -25,16 +25,11 @@ int TraceSource = 0;
 
 int main(int argc, const char * argv[]) {
     
-    std::string fileName = "/Users/noprom/Documents/Dev/C++/Complier/java_complier/java_complier/App.java";
-    std::string outFileName = "/Users/noprom/Documents/Dev/C++/Complier/java_complier/java_complier/scanner_output.txt";
-    
-    if (argc > 2) {
-        fileName = argv[1];
-        outFileName = argv[2];
-    } else {
-//        std::cout << "Usage: lexer <input filename> <output filename>" << std::endl;
-//        exit(1);
-    }
+    std::string fileName;
+    std::string outFileName = "scanner_output.txt";
+	
+	std::cout << "Please input a filename:" << std::endl;
+	std::cin >> fileName;
     
     if (NO_PARSE) {
         /* 开始词法分析 */
@@ -44,23 +39,23 @@ int main(int argc, const char * argv[]) {
             token = lexer.getToken();
         }
         /* 关闭文件 */
-        lexer.ifstream.close();
+        //lexer.ifs->close();
         
         /* 输出到文件 */
-        FILE *fp = fopen(outFileName.c_str(), "w");
+        //FILE *fp = fopen(outFileName.c_str(), "w");
         
         /* 输出统计结果 */
         printf("Total tokens: %d\n", lexer.TOKEN_NUM);
-        fprintf(fp, "Total tokens: %d\n", lexer.TOKEN_NUM);
+        //fprintf(fp, "Total tokens: %d\n", lexer.TOKEN_NUM);
         for (std::map<int, int>::iterator it = lexer.lineTokenSumMap.begin();
              it != lexer.lineTokenSumMap.end(); ++it) {
             std::pair<int, int> pair = *it;
             if (pair.second > 1) {
                 printf("%5d:%5d\t tokens\n", pair.first, pair.second);
-                fprintf(fp, "%5d:%5d\t tokens\n", pair.first, pair.second);
+                //fprintf(fp, "%5d:%5d\t tokens\n", pair.first, pair.second);
             } else {
                 printf("%5d:%5d\t token\n", pair.first, pair.second);
-                fprintf(fp, "%5d:%5d\t token\n", pair.first, pair.second);
+                //fprintf(fp, "%5d:%5d\t token\n", pair.first, pair.second);
             }
         }
         
@@ -76,20 +71,21 @@ int main(int argc, const char * argv[]) {
              it != lexer.tokenList.end(); ++it) {
             Token token = *it;
             printf("%4d: %15s \t %15s \t %10s\n", token.lineNumber, token.value.c_str(), token.typeName.c_str(), token.attr.c_str());
-            fprintf(fp, "%4d: %15s \t %15s \t %10s\n", token.lineNumber, token.value.c_str(), token.typeName.c_str(), token.attr.c_str());
+            //fprintf(fp, "%4d: %15s \t %15s \t %10s\n", token.lineNumber, token.value.c_str(), token.typeName.c_str(), token.attr.c_str());
         }
         
         /* 输出错误信息列表 */
         for (std::vector<TokenErrorInfo>::iterator it = lexer.errList.begin();
-             it != lexer.errList.end(); ++it) {
+            it != lexer.errList.end(); ++it) {
             TokenErrorInfo err = *it;
             printf("Error line: %4d, %s", err.lineNumber, err.lineBuf.c_str());
             printf("Error position: %d, error token: %s\n", err.errorPos, err.errorToken.c_str());
-            fprintf(fp, "Error line: %4d, %s", err.lineNumber, err.lineBuf.c_str());
-            fprintf(fp, "Error position: %d, error token: %s\n", err.errorPos, err.errorToken.c_str());
+            //fprintf(fp, "Error line: %4d, %s", err.lineNumber, err.lineBuf.c_str());
+            //fprintf(fp, "Error position: %d, error token: %s\n", err.errorPos, err.errorToken.c_str());
         }
         
-        fclose(fp);
+        //fclose(fp);
     }
     return 0;
-}
+};
+

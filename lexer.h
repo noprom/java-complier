@@ -1,4 +1,4 @@
-//
+﻿//
 //  lexer.h
 //  java_complier
 //
@@ -11,6 +11,7 @@
 
 #include "globals.h"
 #include "util.h"
+
 
 /* DFA的状态 */
 typedef enum {
@@ -62,9 +63,11 @@ public:
     
     /* 总单词个数 */
     static int TOKEN_NUM;
-    
+	
+	FILE* inFile;
+
     /* 输入文件流 */
-    std::ifstream ifstream;
+    std::ifstream* ifs;
     
     /* 每行单词个数统计 */
     std::map<int, int> lineTokenSumMap;
@@ -82,6 +85,9 @@ public:
      */
     Lexer(std::string fileName);
     
+
+	~Lexer();
+
     /**
      * 获得单词的token
      *
@@ -105,7 +111,7 @@ protected:
     /* 单词属性及其对应Token的关系 */
     std::map<TokenType, std::pair<std::string, std::string> > tokenMap;
 private:
-    
+
     /* 读入的每一行字符流 */
     std::string lineBuf;
     

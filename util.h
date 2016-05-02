@@ -1,4 +1,4 @@
-//
+﻿//
 //  util.h
 //  java_complier
 //
@@ -10,6 +10,18 @@
 #define _UTIL_H
 
 #include "globals.h"
+
+/**
+* 判断字符是否是字母
+* @return 是:true, 否:false
+*/
+bool isAlpha(char c);
+
+/**
+* 判断字符是否是数字
+* @return 是:true, 否:false
+*/
+bool idDigit(char c);
 
 /**
  * 判断字符是否是标识符号
