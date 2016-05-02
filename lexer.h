@@ -106,9 +106,6 @@ protected:
     std::map<TokenType, std::pair<std::string, std::string> > tokenMap;
 private:
     
-    /* 输出文件流 */
-    std::ofstream ofstream;
-    
     /* 读入的每一行字符流 */
     std::string lineBuf;
     

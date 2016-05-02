@@ -7,7 +7,7 @@
 //
 
 #include "globals.h"
-
+#define _CRT_SECURE_NO_WARNINGS
 /* 
  * NO_PARSE = TRUE
  * 则只是一个词法分析器
