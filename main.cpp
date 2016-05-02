@@ -12,12 +12,10 @@
  * NO_PARSE = TRUE
  * 则只是一个词法分析器
  */
-#define NO_PARSE 1
+//#define NO_PARSE 1
 
 #include "util.h"
-#if NO_PARSE
 #include "lexer.h"
-#endif
 
 /* 输出扫描结果 */
 int TraceScan = 0;
@@ -31,7 +29,7 @@ int main(int argc, const char * argv[]) {
 	std::cout << "Please input a filename:" << std::endl;
 	std::cin >> fileName;
     
-    if (NO_PARSE) {
+//    if (NO_PARSE) {
         /* 开始词法分析 */
         Lexer lexer = Lexer(fileName);
         TokenType token = lexer.getToken();
@@ -42,20 +40,20 @@ int main(int argc, const char * argv[]) {
         //lexer.ifs->close();
         
         /* 输出到文件 */
-        //FILE *fp = fopen(outFileName.c_str(), "w");
-        
+        FILE *fp = fopen(outFileName.c_str(), "w");
+    
         /* 输出统计结果 */
         printf("Total tokens: %d\n", lexer.TOKEN_NUM);
-        //fprintf(fp, "Total tokens: %d\n", lexer.TOKEN_NUM);
+        fprintf(fp, "Total tokens: %d\n", lexer.TOKEN_NUM);
         for (std::map<int, int>::iterator it = lexer.lineTokenSumMap.begin();
              it != lexer.lineTokenSumMap.end(); ++it) {
             std::pair<int, int> pair = *it;
             if (pair.second > 1) {
                 printf("%5d:%5d\t tokens\n", pair.first, pair.second);
-                //fprintf(fp, "%5d:%5d\t tokens\n", pair.first, pair.second);
+                fprintf(fp, "%5d:%5d\t tokens\n", pair.first, pair.second);
             } else {
                 printf("%5d:%5d\t token\n", pair.first, pair.second);
-                //fprintf(fp, "%5d:%5d\t token\n", pair.first, pair.second);
+                fprintf(fp, "%5d:%5d\t token\n", pair.first, pair.second);
             }
         }
         
@@ -71,7 +69,7 @@ int main(int argc, const char * argv[]) {
              it != lexer.tokenList.end(); ++it) {
             Token token = *it;
             printf("%4d: %15s \t %15s \t %10s\n", token.lineNumber, token.value.c_str(), token.typeName.c_str(), token.attr.c_str());
-            //fprintf(fp, "%4d: %15s \t %15s \t %10s\n", token.lineNumber, token.value.c_str(), token.typeName.c_str(), token.attr.c_str());
+            fprintf(fp, "%4d: %15s \t %15s \t %10s\n", token.lineNumber, token.value.c_str(), token.typeName.c_str(), token.attr.c_str());
         }
         
         /* 输出错误信息列表 */
@@ -80,12 +78,12 @@ int main(int argc, const char * argv[]) {
             TokenErrorInfo err = *it;
             printf("Error line: %4d, %s", err.lineNumber, err.lineBuf.c_str());
             printf("Error position: %d, error token: %s\n", err.errorPos, err.errorToken.c_str());
-            //fprintf(fp, "Error line: %4d, %s", err.lineNumber, err.lineBuf.c_str());
-            //fprintf(fp, "Error position: %d, error token: %s\n", err.errorPos, err.errorToken.c_str());
+            fprintf(fp, "Error line: %4d, %s", err.lineNumber, err.lineBuf.c_str());
+            fprintf(fp, "Error position: %d, error token: %s\n", err.errorPos, err.errorToken.c_str());
         }
         
-        //fclose(fp);
-    }
+        fclose(fp);
+//    }
     return 0;
 };
 

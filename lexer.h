@@ -64,8 +64,6 @@ public:
     /* 总单词个数 */
     static int TOKEN_NUM;
 	
-	FILE* inFile;
-
     /* 输入文件流 */
     std::ifstream* ifs;
     

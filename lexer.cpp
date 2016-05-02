@@ -214,19 +214,13 @@ Lexer::Lexer(std::string fileName)
     delimeterMap.insert(std::make_pair(';', SEMICOLON));
     
     /* 打开文件 */
-	if ((inFile = fopen(fileName.c_str(), "r")) == NULL) {
-		printf("can not open the file : %s\n", fileName.c_str());
-		exit(1);
-	} else {
-		getOneLine();
-	}
-   // if (!ifs->is_open()) {
-   //     printf("can not open the file : %s\n", fileName.c_str());
-   //	exit(1);
-   //     scanError();
-   // } else {
-   //     getOneLine();
-   // }
+    if (!ifs->is_open()) {
+        printf("can not open the file : %s\n", fileName.c_str());
+        scanError();
+        exit(1);
+    } else {
+        getOneLine();
+    }
 }
 
 Lexer::~Lexer(){
@@ -234,7 +228,6 @@ Lexer::~Lexer(){
 		delete ifs;
 	}
 	catch (std::exception e){
-		//TODO error case
 		return;
 	}
 	return;
@@ -249,24 +242,16 @@ void Lexer::scanError() {
 void Lexer::getOneLine() {
     /* 初始化每行统计变量 */
     lineBuf = "";
-	char line[2048];
-	if (!feof(inFile)) {
-		fgets(line, 2048, inFile);
-		lineBuf = line;
-	} else {
-		EOF_flag = 1;
-	}
-	
-//    if (!ifs->eof()) {
-//        if (!getline(*ifs, lineBuf)) {
-//            std::cout << "Error: file end with illegal ending" << std::endl;
-//            Lexer::LEXER_ERROR = 1;
-//        }
-//    } else {
-//       EOF_flag = 1;
-//    }
+    if (!ifs->eof()) {
+        if (!getline(*ifs, lineBuf)) {
+            std::cout << "Error: file end with illegal ending" << std::endl;
+            Lexer::LEXER_ERROR = 1;
+        }
+    } else {
+       EOF_flag = 1;
+    }
     
-  //  lineBuf += "\n";
+    lineBuf += "\n";
     if (TraceSource) {
 		printf("%4d: %s\n", lineNumber, lineBuf.c_str());
     }
