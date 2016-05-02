@@ -10,14 +10,16 @@ fi
 option=$1
 if [ ${option} == '1' ];
     then
+    	cp ${xcode_path}/App.java ${vs_path}
     	cp ${xcode_path}/globals.h ${vs_path}
 		cp ${xcode_path}/util.h ${vs_path}
 		cp ${xcode_path}/util.cpp ${vs_path}
 		cp ${xcode_path}/lexer.h ${vs_path}
 		cp ${xcode_path}/lexer.cpp ${vs_path}
 		cp ${xcode_path}/main.cpp ${vs_path}
-elif [ ${action} == '2' ]
+elif [ ${option} == '2' ]
 	then
+		cp ${vs_path}/App.java ${xcode_path}
 		cp ${vs_path}/globals.h ${xcode_path}
 		cp ${vs_path}/util.h ${xcode_path}
 		cp ${vs_path}/util.cpp ${xcode_path}
