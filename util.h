@@ -24,18 +24,18 @@ bool isAlpha(char c);
 bool idDigit(char c);
 
 /**
- * 判断字符是否是标识符号
- * @return 是:true, 否:false
- */
+* 判断字符是否是标识符号
+* @return 是:true, 否:false
+*/
 bool isIdentifier(char c);
 
 /**
- * 判断字符是否是数值运算符
- */
+* 判断字符是否是数值运算符
+*/
 bool isArithmeticOp(char c);
 
 /**
- * 判断字符是否是转义字符
- */
+* 判断字符是否是转义字符
+*/
 bool isESC(char c);
 #endif

@@ -27,25 +27,25 @@ bool idDigit(char c) {
 /* 判断否个字符是否是标识符 */
 bool isIdentifier(char c) {
 	if (isAlpha(c) || c == '_' || c == '$') {
-        return true;
-    }
-    return false;
+		return true;
+	}
+	return false;
 }
 
 /* 判断字符是否是数值运算符 */
 bool isArithmeticOp(char c) {
-    if (c == '+' || c == '-' || c == '*' || c == '/' ||
-        c == '&' || c == '|' || c == '^') {
-        return true;
-    }
-    return false;
+	if (c == '+' || c == '-' || c == '*' || c == '/' ||
+		c == '&' || c == '|' || c == '^') {
+		return true;
+	}
+	return false;
 }
 
 /* 判断字符是否是转义字符 */
 bool isESC(char c) {
-    if (c == '\'' || c == '\\' || c == 'r' || c == 'n' ||
-        c == 'f' || c == 't' || c == 'b' || c == 'u') {
-        return true;
-    }
-    return false;
+	if (c == '\'' || c == '\\' || c == 'r' || c == 'n' ||
+		c == 'f' || c == 't' || c == 'b' || c == 'u') {
+		return true;
+	}
+	return false;
 }
