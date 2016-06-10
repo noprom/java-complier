@@ -18,6 +18,7 @@
 #include <map>
 #include <vector>
 #include <string>
+#include <list>
 
 /* 单词类型 */
 typedef enum {

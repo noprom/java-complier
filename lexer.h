@@ -77,20 +77,20 @@ public:
 	std::vector<TokenErrorInfo> errList;
 
 	/**
-	* 构造函数
-	*
-	* @fileName 文件名
-	*/
+	 * 构造函数
+	 *
+	 * @fileName 文件名
+	 */
 	Lexer(std::string fileName);
 
 
 	~Lexer();
 
 	/**
-	* 获得单词的token
-	*
-	* @return token状态
-	*/
+	 * 获得单词的token
+	 *
+	 * @return token状态
+	 */
 	virtual TokenType getToken();
 
 protected:
@@ -122,64 +122,64 @@ private:
 	/* 界限符与对应Token的关系 */
 	std::map<char, TokenType> delimeterMap;
 
-	/**
-	* 读取一行内容并存入lineBuf
-	* @return void
-	*/
+    /**
+	 * 读取一行内容并存入lineBuf
+	 * @return void
+	 */
 	void getOneLine();
 
 	/**
-	* 获得下一个字符
-	*
-	* @return 下一个字符
-	*/
+	 * 获得下一个字符
+	 *
+	 * @return 下一个字符
+	 */
 	char getNextChar();
 
 	/**
-	* 回退一个字符
-	*
-	* @return void
-	*/
+	 * 回退一个字符
+	 *
+	 * @return void
+	 */
 	void ungetNextChar();
 
 	/**
-	* 扫描错误
-	*
-	* @return void
-	*/
+	 * 扫描错误
+	 *
+	 * @return void
+	 */
 	void scanError();
 
 	/**
-	* 打印token的信息
-	*
-	* @param token token类型
-	* @param tokenString token 保存字符串
-	*/
+	 * 打印token的信息
+	 *
+	 * @param token token类型
+	 * @param tokenString token 保存字符串
+	 */
 	void printToken(TokenType token, std::string tokenString);
 
 	/**
-	* 创建一个token
-	*
-	* @param type token类型
-	* @param tokenString token 保存的字符串
-	* @return 新的token
-	*/
+	 * 创建一个token
+	 *
+	 * @param type token类型
+	 * @param tokenString token 保存的字符串
+	 * @return 新的token
+	 */
 	Token createToken(TokenType type, std::string tokenString);
 
 	/**
-	* 创建一个token出错的错误信息
-	*
-	* @param errorToken 错误的单词
-	* @return 错误信息节点
-	*/
+	 * 创建一个token出错的错误信息
+	 *
+	 * @param errorToken 错误的单词
+	 * @return 错误信息节点
+	 */
 	TokenErrorInfo createTokenErrorInfo(std::string errorToken);
 
 	/**
-	* 获得一个token的类型名称
-	*
-	* @param type token 类型
-	* @param tokenString token的值
-	*/
+	 * 获得一个token的类型名称
+	 *
+	 * @param type token 类型
+	 * @param tokenString token的值
+	 */
 	std::string getTokenTypeName(TokenType type, std::string tokenString);
 };
 #endif
