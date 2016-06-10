@@ -122,7 +122,7 @@ private:
     void deleteTreeNode(TreeNode* root);
     
     /* token缓冲区 */
-    std::list<TokenType> tokenList;
+    std::list<CompTokenType> tokenList;
     
     /* 当前token */
     TokenType token;
