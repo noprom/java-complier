@@ -100,6 +100,48 @@ typedef enum {
 
 } TokenType;
 
+/* 语法树节点类型 */
+typedef enum {
+    STMTK, EXPK
+} NodeKind;
+
+/* 语句类型 */
+typedef enum {
+    ASSIGNK, IFK, WHILEK
+} StmtKind;
+
+/* 表达式类型 */
+typedef enum {
+    OPK, NUMK, IDK
+} ExpK;
+
+/* 语法树节点 */
+struct TreeNode {
+public:
+    TreeNode() {
+        sibling = NULL;
+        child.clear();
+    }
+    /* 孩子节点 */
+    std::vector<TreeNode*> child;
+    /* 兄弟节点 */
+    TreeNode* sibling;
+    /* 所在行号 */
+    int lineno;
+    /* 节点类型 */
+    NodeKind nodeKind;
+    /* 语句类型 */
+    union {StmtKind stmtKind; ExpK expK;};
+    /* 节点属性 */
+    union {
+        /* 操作符 */
+        TokenType op;
+        /* 整型常数 */
+        int num;
+        /* 标志符名称 */
+        std::string id;
+    };
+};
 
 /**
 * TraceSource = 1则输出源代码
@@ -107,8 +149,8 @@ typedef enum {
 extern int TraceSource;
 
 /**
-* TraceScan = 1则输出扫描结果
-*/
+ * TraceScan = 1则输出扫描结果
+ */
 extern int TraceScan;
 
 #endif

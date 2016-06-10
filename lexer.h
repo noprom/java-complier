@@ -11,7 +11,7 @@
 
 #include "globals.h"
 #include "util.h"
-#include<memory>
+#include <memory>
 
 /* DFA的状态 */
 typedef enum {
