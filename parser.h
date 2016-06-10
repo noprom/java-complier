@@ -16,7 +16,7 @@ typedef struct {
     std::string str;
 } CompTokenType;
 
-class Parser {
+class Parser : public Lexer {
 public:
     
     /**
@@ -24,7 +24,8 @@ public:
      *
      * @param fileName 扫描文件名
      */
-    Parser(std::string fileName);
+    Parser(std::string fileName):
+        Lexer(fileName), tokenList({}), assignStart(false), treeRoot(NULL){};
     
     /* 析构函数 */
     ~Parser();
@@ -42,49 +43,49 @@ private:
      *
      * @return 树的根节点
      */
-    TreeNode* programStmt();
+    TreeNode * programStmt();
     
     /**
      * 多重语句构建的树
      *
      * @return 树的根节点
      */
-    TreeNode* mulSentenceStmt();
+    TreeNode * mulSentenceStmt();
     
     /**
      * 单条语句构建的树
      *
      * @return 树的根节点
      */
-    TreeNode* sentenceStmt();
+    TreeNode * sentenceStmt();
     
     /**
      * 赋值语句构建的树
      *
      * @return 树的根节点
      */
-    TreeNode* assignStmt();
+    TreeNode * assignStmt();
     
     /**
      * while语句构建的树
      *
      * @return 树的根节点
      */
-    TreeNode* whileStmt();
+    TreeNode * whileStmt();
     
     /**
      * 多项式语句构建的树
      *
      * @return 树的根节点
      */
-    TreeNode* expStmt();
+    TreeNode * expStmt();
     
     /*
      * 构造简单多项式（无比较符号）语句树
      *
      * @return 树的根节点
      */
-    TreeNode* simpleExpStmt(std::list<CompTokenType>::iterator &begin,
+    TreeNode * simpleExpStmt(std::list<CompTokenType>::iterator &begin,
                             std::list<CompTokenType>::iterator end);
     
     /*
@@ -92,14 +93,14 @@ private:
      *
      * @return 树的根节点
      */
-    TreeNode* termStmt(std::list<CompTokenType>::iterator &begin);
+    TreeNode * termStmt(std::list<CompTokenType>::iterator &begin);
     
     /*
      * 构造运算单元树
      *
      * @return 树的根节点
      */
-    TreeNode* factorStmt(std::list<CompTokenType>::iterator &begin);
+    TreeNode * factorStmt(std::list<CompTokenType>::iterator &begin);
     
     /*
      * 构造语句树时出错的错误处理
