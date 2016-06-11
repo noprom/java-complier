@@ -149,3 +149,42 @@ TreeNode * Parser::whileStmt() {
     // TODO: handle error
     return treeNode;
 }
+
+/* 表达式语句 */
+TreeNode * Parser::expStmt() {
+    // TODO: handle error
+    while (token == ID || token == CONST_INT || token == CONST_INT8 || token == CONST_INT16 ||
+           token == ADD || token == MINUS || token == MUL || token == DIV || token == MOD ||
+           token == GT || token == LT || token == GE || token == LE || token == NE || token == EQU) {
+        Parser::tokenList.push_back({token, tokenString});
+        token = getToken();
+    }
+    // 遍历表达式语句中的节点
+    std::list<CompTokenType>::iterator iter = Parser::tokenList.begin();
+    std::list<CompTokenType>::iterator begin = Parser::tokenList.begin();
+    std::list<CompTokenType>::iterator end = Parser::tokenList.end();
+    // 遍历到比较符号结束
+    while (iter != end && iter->type != GT && iter->type != LT &&
+           iter->type != GE && iter->type != LE && iter->type != NE && iter->type != EQU) {
+        iter++;
+    }
+    /* 不是比较语句 */
+    if (iter == tokenList.end()) {
+        return simpleExpStmt(begin, end);
+    } else {
+        TreeNode * treeNode = new TreeNode;
+        TreeNode & thisNode = * treeNode;
+        /* 初始化该节点 */
+        thisNode.lineno = lineNumber;
+        thisNode.nodeKind = EXPK;
+        thisNode.expK = OPK;
+        thisNode.op = iter->type;
+        /* 将左右两个子树作为该节点的孩子节点 */
+        thisNode.child.clear();
+        thisNode.child.push_back(simpleExpStmt(begin, iter));
+        iter++;
+        thisNode.child.push_back(simpleExpStmt(iter, end));
+        // TODO: handle error
+        return treeNode;
+    }
+}
