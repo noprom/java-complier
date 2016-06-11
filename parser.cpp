@@ -218,3 +218,26 @@ TreeNode * Parser::simpleExpStmt(std::list<CompTokenType>::iterator &begin, std:
     // TODO: handle error
     return term;
 }
+
+/* 单项式语句 */
+TreeNode * Parser::termStmt(std::list<CompTokenType>::iterator &begin) {
+    // TODO: handle error
+    TreeNode * factor = factorStmt(begin);
+    while (begin != tokenList.end() && (begin->type == MUL || begin->type == DIV || begin->type == MOD)) {
+        TreeNode * treeNode = new TreeNode;
+        TreeNode & thisNode = * treeNode;
+        /* 初始化节点信息 */
+        thisNode.lineno = lineNumber;
+        thisNode.nodeKind = EXPK;
+        thisNode.expK = OPK;
+        thisNode.op = begin->type;
+        thisNode.child.clear();
+        thisNode.child.push_back(factor);
+        begin++;
+        thisNode.child.push_back(factorStmt(begin));
+        factor = treeNode;
+    }
+    // TODO: handle error
+    return factor;
+}
+
