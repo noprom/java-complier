@@ -125,3 +125,27 @@ TreeNode * Parser::assignStmt() {
     // TODO: handle error
     return treeNode;
 }
+
+/* While语句 */
+TreeNode * Parser::whileStmt() {
+    // TODO: handle error
+    TreeNode * treeNode = new TreeNode;
+    TreeNode & thisNode = *treeNode;
+    thisNode.lineno = lineNumber;
+    thisNode.nodeKind = STMTK;
+    thisNode.stmtKind = WHILEK;
+    thisNode.child.clear();
+    // 匹配while语句
+    token = getToken();
+    match(BRACKET_SL);
+    token = getToken();
+    // ()中的表达式语句
+    Parser::tokenList.clear();
+    thisNode.child.push_back(expStmt());
+    match(BRACKET_SR);
+    token = getToken();
+    // 暂时处理单个赋值语句
+    thisNode.child.push_back(assignStmt());
+    // TODO: handle error
+    return treeNode;
+}
