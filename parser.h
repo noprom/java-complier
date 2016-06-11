@@ -10,12 +10,6 @@
 #define _PARSER_H
 #include "lexer.h"
 
-/* 组合token */
-typedef struct {
-    TokenType type;
-    std::string str;
-} CompTokenType;
-
 class Parser : public Lexer {
 public:
     

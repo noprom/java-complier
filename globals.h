@@ -116,6 +116,12 @@ typedef enum {
     OPK, NUMK, IDK
 } ExpK;
 
+/* 组合token */
+typedef struct {
+    TokenType type;
+    std::string str;
+} CompTokenType;
+
 /* 语法树节点 */
 struct TreeNode {
 public:
@@ -139,9 +145,9 @@ public:
         TokenType op;
         /* 整型常数 */
         int num;
-        /* 标志符名称 */
-        std::string id;
     };
+    /* 标志符名称 */
+    std::string id;
 };
 
 /**

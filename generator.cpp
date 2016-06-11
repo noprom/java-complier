@@ -7,3 +7,14 @@
 //
 
 #include "generator.h"
+
+/* 由语法树生成符号表 */
+void Generator::genSymTable(TreeNode *tree) {
+    if (tree != NULL) {
+        if (tree->nodeKind == EXPK) {
+            if (tree->expK == OPK) {
+                
+            }
+        }
+    }
+}
