@@ -241,3 +241,74 @@ TreeNode * Parser::termStmt(std::list<CompTokenType>::iterator &begin) {
     return factor;
 }
 
+/* 单个因子 */
+TreeNode * Parser::factorStmt(std::list<CompTokenType>::iterator &begin) {
+    // TODO: handle error
+    if (begin->type == ID || begin->type == CONST_INT || begin->type == CONST_INT8 || begin->type == CONST_INT16) {
+        TreeNode * treeNode = new TreeNode;
+        TreeNode & thisNode = * treeNode;
+        thisNode.lineno = lineNumber;
+        thisNode.nodeKind = EXPK;
+        if (begin->type == ID) {
+            thisNode.expK = IDK;
+            thisNode.id = begin->str;
+        } else if (begin->type == CONST_INT || begin->type == CONST_INT8 || begin->type == CONST_INT16) {
+            thisNode.expK = NUMK;
+            thisNode.num = atoi((begin->str).c_str());
+        }
+        // TODO: handle error
+        return treeNode;
+    /* 运算中带有括号 */
+    } else if (begin->type == BRACKET_SL) {
+        begin++;
+        std::list<CompTokenType>::iterator iter = begin;
+        /* 左括号的个数 */
+        int brackNum = 1;
+        /* 扫描到最里面的括号的运算 */
+        while (iter != tokenList.end()
+               && (iter->type == ID || iter->type == CONST_INT || iter->type == CONST_INT8 || iter->type == CONST_INT16 ||
+                   iter->type == ADD || iter->type == MINUS || iter->type == MUL || iter->type == DIV || iter->type == MOD ||
+                   iter->type == BRACKET_SL || iter->type == BRACKET_SR)
+               && brackNum != 0) {
+            if (iter->type == BRACKET_SL) {
+                brackNum++;
+            } else if (iter->type == BRACKET_SR) {
+                brackNum--;
+            }
+            iter++;
+        }
+        /* 扫描结束之后如果 brackNum!=0 则括号错误 */
+        if (brackNum != 0) {
+            // TODO: handle error
+            return NULL;
+        }
+        iter--;
+        TreeNode * factor = simpleExpStmt(begin, iter);
+        begin++;
+        // TODO: handle error
+        return factor;
+    } else {
+        // TODO: handle error
+        begin++;
+        return NULL;
+    }
+}
+
+/* 匹配单词 */
+void Parser::match(TokenType token) {
+    if (Parser::token != token) {
+        // TODO: handle error
+    }
+}
+
+/* 删除节点 */
+void Parser::deleteTreeNode(TreeNode *root) {
+    if (root != NULL) {
+        size_t childNum = root->child.size();
+        for (int i = 0; i < childNum; i++) {
+            deleteTreeNode(root->child[i]);
+        }
+        deleteTreeNode(root->sibling);
+        delete(root);
+    }
+}
