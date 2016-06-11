@@ -188,3 +188,33 @@ TreeNode * Parser::expStmt() {
         return treeNode;
     }
 }
+
+/* 简单表达式语句 */
+TreeNode * Parser::simpleExpStmt(std::list<CompTokenType>::iterator &begin, std::list<CompTokenType>::iterator end) {
+    // TODO: handle error
+    /* TermStmt匹配到的节点的末尾 */
+    TreeNode * term = termStmt(begin);
+    while (begin != end) {
+        if (begin->type == ADD || begin->type == MINUS) {
+            TreeNode * treeNode = new TreeNode;
+            TreeNode & thisNode = * treeNode;
+            /* 初始化节点信息 */
+            thisNode.lineno = lineNumber;
+            thisNode.nodeKind = EXPK;
+            thisNode.expK = OPK;
+            thisNode.op = begin->type;
+            thisNode.child.clear();
+            thisNode.child.push_back(term);
+            begin++;
+            TreeNode * termTmp = termStmt(begin);
+            thisNode.child.push_back(termTmp);
+            term = treeNode;
+        } else {
+            // TODO: handle error
+            begin++;
+            return NULL;
+        }
+    }
+    // TODO: handle error
+    return term;
+}
