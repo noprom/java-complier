@@ -87,7 +87,7 @@ int main(int argc, const char * argv[]) {
         Parser parser = Parser(fileName);
         syntaxTree = parser.parse();
         // TODO 语义分析
-        /* 生成汇编代码 */
+        /* 生成四元式 */
     }
 	return 0;
 };

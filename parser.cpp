@@ -40,7 +40,8 @@ TreeNode * Parser::mulSentenceStmt() {
     TreeNode * str = NULL;
     TreeNode * end = NULL;
     TreeNode * next = NULL;
-    while (token == WHILE || token == SEMICOLON || token == BRACKET_LL || token == BRACKET_LR) {
+    while (token == INT || token == CONST_INT8 || token == CONST_INT16 || token == ID ||
+           token == WHILE || token == SEMICOLON || token == BRACKET_LL || token == BRACKET_LR) {
         next = sentenceStmt();
         /* 第一条语句 */
         if (str == NULL || end == NULL) {
@@ -59,10 +60,13 @@ TreeNode * Parser::sentenceStmt() {
     Parser::tokenList.clear();
     switch (token) {
         case WHILE:
-            whileStmt();
+            return whileStmt();
             break;
+        case INT:
+        case CONST_INT8:
+        case CONST_INT16:
         case ID:
-            assignStart = true;
+            assignStart = false;
             return assignStmt();
             break;
         // TODO: handle error
@@ -75,6 +79,10 @@ TreeNode * Parser::sentenceStmt() {
 
 /* 赋值语句 */
 TreeNode * Parser::assignStmt() {
+    /* 过滤掉类型 */
+    if (token == INT || token == CONST_INT8 || token == CONST_INT16) {
+        token = getToken();
+    }
     Parser::tokenList.clear();
     // TODO: handle error
     TreeNode *treeNode = new TreeNode;
