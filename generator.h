@@ -11,6 +11,7 @@
 
 #include "globals.h"
 #include "util.h"
+#include "lexer.h"
 
 /* 四元式结构 */
 typedef struct {

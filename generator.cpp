@@ -77,7 +77,53 @@ void Generator::assignGen(TreeNode *syntaxTree) {
 
 /* 表达式语句 */
 void Generator::expGen(TreeNode *syntaxTree) {
-    
+    /* 操作符节点 */
+    Tuple4 tuple;
+    std::string arg1;
+    std::string arg2;
+    if (syntaxTree->expK == OPK) {
+        switch (syntaxTree->op) {
+            case ADD:
+            case MINUS:
+                /* 运算符优先级, 先考虑第一个孩子节点的优先级别是否大于该节点 */
+                if (syntaxTree->child[1]->expK == OPK &&
+                    (syntaxTree->child[1]->op == MUL || syntaxTree->child[1]->op == DIV || syntaxTree->child[1]->op == MOD)) {
+                    expGen(syntaxTree->child[1]);
+                }
+            case MUL:
+            case DIV:
+                /* 四元式中的第一个参数 */
+                if (syntaxTree->child[0]->expK == NUMK) {
+                    arg1 = syntaxTree->child[0]->num;
+                } else if (syntaxTree->child[0]->expK == IDK) {
+                    arg1 = syntaxTree->child[0]->id;
+                } else {
+                    expGen(syntaxTree->child[0]);
+                }
+                /* 四元式中的第二个参数 */
+                if (syntaxTree->child[1]->expK == NUMK) {
+                    arg2 = syntaxTree->child[1]->num;
+                } else if (syntaxTree->child[1]->expK == IDK) {
+                    arg2 = syntaxTree->child[1]->id;
+                } else {
+                    expGen(syntaxTree->child[1]);
+                }
+
+                /* 生成新的四元组 */
+                tuple = newTuple4(number++, Lexer::tokenMap[syntaxTree->op].first, arg1, arg2, "op number", 0);
+                tuple4List.push_back(tuple);
+                break;
+            default:
+                // TODO: handle error
+                break;
+        }
+    /* 变量名节点 */
+    } else if (syntaxTree->expK == IDK) {
+    /* 整数的值 */
+    } else if (syntaxTree->expK == NUMK) {
+    } else {
+        // TODO: handle error
+    }
 }
 
 /* 创建一个四元组 */

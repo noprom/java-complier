@@ -76,6 +76,9 @@ public:
 	/* 错误信息列表 */
 	std::vector<TokenErrorInfo> errList;
 
+    /* 单词属性及其对应Token的关系 */
+    static std::map<TokenType, std::pair<std::string, std::string> > tokenMap;
+    
 	/**
 	 * 构造函数
 	 *
@@ -106,8 +109,6 @@ protected:
 	/* 提取出来的单词 */
 	static std::string tokenString;
 
-	/* 单词属性及其对应Token的关系 */
-	std::map<TokenType, std::pair<std::string, std::string> > tokenMap;
 private:
 
 	/* 读入的每一行字符流 */
