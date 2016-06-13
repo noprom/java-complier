@@ -49,7 +49,15 @@ void Generator::sentenceGen(TreeNode *syntaxTree) {
 
 /* while语句 */
 void Generator::whileGen(TreeNode *syntaxTree) {
-    
+    /* 首先是括号之内的判断表达式 */
+    expGen(syntaxTree);
+    /* 接着是判断结果之后的跳转, 看其是否跳转到while语句的下一条语句 */
+    int backNo = number;
+    Tuple4 tuple = newTuple4(number++, "JF", "last exp val no", "", "next sentence no", 0);
+    tuple4List.push_back(tuple);
+    /* 最后是循环执行, 返回到条件判断部分 */
+    tuple = newTuple4(number++, "", "", "", "", backNo);
+    tuple4List.push_back(tuple);
 }
 
 /* 赋值语句 */
