@@ -1,3 +1,5 @@
+sum = sum + numA * numB;
+
 while (sum < 10000)
 	sum = sum + numA * numB;
 int numA = 100;

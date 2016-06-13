@@ -265,6 +265,7 @@ TreeNode * Parser::factorStmt(std::list<CompTokenType>::iterator &begin) {
             thisNode.id = begin->str;
             thisNode.num = atoi((begin->str).c_str());
         }
+        begin++;
         // TODO: handle error
         return treeNode;
     /* 运算中带有括号 */
