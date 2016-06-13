@@ -58,21 +58,22 @@ TreeNode * Parser::mulSentenceStmt() {
 /* 单个语句 */
 TreeNode * Parser::sentenceStmt() {
     Parser::tokenList.clear();
-    switch (token) {
-        case WHILE:
-            return whileStmt();
-            break;
-        case INT:
-        case CONST_INT8:
-        case CONST_INT16:
-        case ID:
-            assignStart = false;
-            return assignStmt();
-            break;
-        // TODO: handle error
-        default:
-            return NULL;
-            break;
+    if (tokenString == "while") {
+        return whileStmt();
+    } else {
+        switch (token) {
+            case INT:
+            case CONST_INT8:
+            case CONST_INT16:
+            case ID:
+                assignStart = false;
+                return assignStmt();
+                break;
+                // TODO: handle error
+            default:
+                return NULL;
+                break;
+        }
     }
     return NULL;
 }

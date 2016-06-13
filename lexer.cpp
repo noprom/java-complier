@@ -399,6 +399,14 @@ TokenType Lexer::getToken() {
         tokenString.push_back(curChar);
         currentState = DONE;
         currentToken = SEMICOLON;
+    } else if (curChar == '(') {
+        tokenString.push_back(curChar);
+        currentState = DONE;
+        currentToken = BRACKET_SL;
+    } else if (curChar == ')') {
+        tokenString.push_back(curChar);
+        currentState = DONE;
+        currentToken = BRACKET_SR;
     }
 	else if (delimeterMap.find(curChar) != delimeterMap.end()) {
 		tokenString.push_back(curChar);
