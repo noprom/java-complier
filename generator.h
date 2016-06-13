@@ -40,6 +40,12 @@ private:
     /* 用于记录四元式结果项的下标 */
     int resultIndex;
     
+    /* 用于记录四元式结果项 */
+    std::string result;
+    
+    /* 最后一个四元式标记 */
+    std::string lastResult;
+    
     /**
      * 多个语句块
      *
@@ -92,7 +98,14 @@ private:
      *
      * @param op 操作符
      */
-    void updateTrsultNumber(TokenType op);
+    void updateResultNumber(TokenType op);
+    
+    /**
+     * 更新结果字符串表示形式
+     *
+     * @param op 操作符
+     */
+    void updateResultLabel(TokenType op);
 public:
     
     /* 四元组列表 */

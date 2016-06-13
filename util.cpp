@@ -49,3 +49,11 @@ bool isESC(char c) {
 	}
 	return false;
 }
+
+/* 数字转化为字符串 */
+std::string int2str(int val) {
+    char s[20];
+    std::string str = "";
+    sprintf(s, "%d", val);
+    return str + s;
+}

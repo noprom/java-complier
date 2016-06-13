@@ -12,6 +12,8 @@
 Generator::Generator() {
     /* 初始化成员变量 */
     number = 1;
+    resultIndex = 1;
+    lastResult = "LAST-RESLUT-LABEL";
     tuple4List.clear();
 }
 
@@ -40,6 +42,7 @@ void Generator::sentenceGen(TreeNode *syntaxTree) {
             break;
         case WHILEK:
             whileGen(syntaxTree);
+            // TODO: update label
             break;
         default:
             // TODO: handle error
@@ -50,13 +53,19 @@ void Generator::sentenceGen(TreeNode *syntaxTree) {
 /* while语句 */
 void Generator::whileGen(TreeNode *syntaxTree) {
     /* 首先是括号之内的判断表达式 */
-    expGen(syntaxTree);
+    expGen(syntaxTree->child[0]);
     /* 接着是判断结果之后的跳转, 看其是否跳转到while语句的下一条语句 */
     int backNo = number;
-    Tuple4 tuple = newTuple4(number++, "JF", "last exp val no", "", "next sentence no", 0);
+    Tuple4 tuple = newTuple4(number++, "jT", result, "", int2str(number + 1), 0);
     tuple4List.push_back(tuple);
+    tuple = newTuple4(number++, "j", "", "", lastResult, 0);
+    tuple4List.push_back(tuple);
+    
+    /* 然后执行循环体 */
+    assignGen(syntaxTree->child[1]);
+    
     /* 最后是循环执行, 返回到条件判断部分 */
-    tuple = newTuple4(number++, "", "", "", "", backNo);
+    tuple = newTuple4(number++, "j", "", "", "", backNo);
     tuple4List.push_back(tuple);
 }
 
@@ -80,6 +89,8 @@ void Generator::assignGen(TreeNode *syntaxTree) {
                 return;
             } else {
                 expGen(syntaxTree->child[0]);
+                /* 最后的赋值语句 */
+                tuple = newTuple4(number++, "=", result, "", syntaxTree->id, 0);
             }
         }
     }
@@ -93,7 +104,31 @@ void Generator::expGen(TreeNode *syntaxTree) {
     std::string arg1;
     std::string arg2;
     if (syntaxTree->expK == OPK) {
+        /* 四元式中的第一个参数 */
+        if (syntaxTree->child[0]->expK == NUMK || syntaxTree->child[0]->expK == IDK) {
+            arg1 = syntaxTree->child[0]->id;
+        } else {
+            expGen(syntaxTree->child[0]);
+        }
+        /* 四元式中的第二个参数 */
+        if (syntaxTree->child[1]->expK == NUMK || syntaxTree->child[1]->expK == IDK) {
+            arg2 = syntaxTree->child[1]->id;
+        } else {
+            expGen(syntaxTree->child[1]);
+        }
         switch (syntaxTree->op) {
+            case EQU:
+            case NE:
+            case GT:
+            case LT:
+            case GE:
+            case LE:
+                /* 更新结果 */
+                updateResultLabel(syntaxTree->op);
+                /* 生成新的四元组 */
+                tuple = newTuple4(number++, lexer.tokenMap[syntaxTree->op].first, arg1, arg2, result, 0);
+                tuple4List.push_back(tuple);
+                break;
             case ADD:
             case MINUS:
                 /* 运算符优先级, 先考虑第一个孩子节点的优先级别是否大于该节点 */
@@ -103,22 +138,6 @@ void Generator::expGen(TreeNode *syntaxTree) {
                 }
             case MUL:
             case DIV:
-                /* 四元式中的第一个参数 */
-                if (syntaxTree->child[0]->expK == NUMK) {
-                    arg1 = syntaxTree->child[0]->num;
-                } else if (syntaxTree->child[0]->expK == IDK) {
-                    arg1 = syntaxTree->child[0]->id;
-                } else {
-                    expGen(syntaxTree->child[0]);
-                }
-                /* 四元式中的第二个参数 */
-                if (syntaxTree->child[1]->expK == NUMK) {
-                    arg2 = syntaxTree->child[1]->num;
-                } else if (syntaxTree->child[1]->expK == IDK) {
-                    arg2 = syntaxTree->child[1]->id;
-                } else {
-                    expGen(syntaxTree->child[1]);
-                }
 
                 /* 生成新的四元组 */
                 tuple = newTuple4(number++, lexer.tokenMap[syntaxTree->op].first, arg1, arg2, "op number", 0);
@@ -150,8 +169,18 @@ Tuple4 Generator::newTuple4(int no, std::string op, std::string arg1, std::strin
 }
 
 /* 更新结果项的下标 */
-void Generator::updateTrsultNumber(TokenType op) {
+void Generator::updateResultNumber(TokenType op) {
     if (op == ADD || op == MINUS || op == MUL || op == DIV ) {
         resultIndex++;
     }
+}
+
+/* 更新结果项 */
+void Generator::updateResultLabel(TokenType op) {
+    updateResultNumber(op);
+    std::string res = "T";
+    char str[10];
+    sprintf(str, "%d", resultIndex);
+    res += str;
+    result = res;
 }

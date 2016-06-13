@@ -38,4 +38,9 @@ bool isArithmeticOp(char c);
 * 判断字符是否是转义字符
 */
 bool isESC(char c);
+
+/**
+ * 将数字转化为字符串
+ */
+std::string int2str(int val);
 #endif
