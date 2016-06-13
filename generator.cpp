@@ -8,6 +8,13 @@
 
 #include "generator.h"
 
+/* 构造函数 */
+Generator::Generator() {
+    /* 初始化成员变量 */
+    number = 0;
+    tuple4List.clear();
+}
+
 /* 多个语句 */
 void Generator::mulGen(TreeNode *syntaxTree) {
     while (syntaxTree != NULL) {
@@ -48,4 +55,15 @@ void Generator::assignGen(TreeNode *syntaxTree) {
 /* 表达式语句 */
 void Generator::expGen(TreeNode *syntaxTree) {
     
+}
+
+/* 创建一个四元组 */
+Tuple4 Generator::newTuple4(int no, std::string op, std::string arg1, std::string arg2, std::string result) {
+    Tuple4 * tuple4 = new Tuple4;
+    tuple4->no = no;
+    tuple4->op = op;
+    tuple4->arg1 = arg1;
+    tuple4->arg2 = arg2;
+    tuple4->result = result;
+    return *tuple4;
 }

@@ -63,9 +63,27 @@ private:
      * @param syntaxTree 语法树
      */
     void expGen(TreeNode * syntaxTree);
+    
+    /**
+     * 创建一个四元组
+     *
+     * @param no 编号
+     * @param op 运算符号
+     * @param arg1 参数1
+     * @param arg2 参数2
+     * @param result 结果
+     */
+    Tuple4 newTuple4(int no, std::string op, std::string arg1, std::string arg2, std::string result);
 public:
+    
+    /* 用于记录四元式列表中的标号 */
+    int number;
+    
     /* 四元组列表 */
     std::vector<Tuple4> tuple4List;
+    
+    /* 构造函数 */
+    Generator();
     
     /**
      * 生成中间代码
