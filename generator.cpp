@@ -63,15 +63,17 @@ void Generator::whileGen(TreeNode *syntaxTree) {
 /* 赋值语句 */
 void Generator::assignGen(TreeNode *syntaxTree) {
     /* 赋值语句 */
-    if (syntaxTree->child[0]->nodeKind == STMTK && syntaxTree->child[0]->stmtKind == ASSIGNK) {
-        /* 首先执行等号右边的表达式 */
-        expGen(syntaxTree->child[0]);
-        /* 然后生成最后一个赋值语句 */
-        Tuple4 tuple = newTuple4(number++, "=", "last exe val no in assign", "", syntaxTree->id, 0);
-        tuple4List.push_back(tuple);
-    /* 表达式 */
-    } else if (syntaxTree->child[0]->nodeKind == EXPK) {
-        expGen(syntaxTree->child[0]);
+    if (syntaxTree != NULL && syntaxTree->child.size() > 0) {
+        if (syntaxTree->child[0]->nodeKind == STMTK && syntaxTree->child[0]->stmtKind == ASSIGNK) {
+            /* 首先执行等号右边的表达式 */
+            expGen(syntaxTree->child[0]);
+            /* 然后生成最后一个赋值语句 */
+            Tuple4 tuple = newTuple4(number++, "=", "last exe val no in assign", "", syntaxTree->id, 0);
+            tuple4List.push_back(tuple);
+            /* 表达式 */
+        } else if (syntaxTree->child[0]->nodeKind == EXPK) {
+            expGen(syntaxTree->child[0]);
+        }
     }
 }
 
@@ -79,6 +81,7 @@ void Generator::assignGen(TreeNode *syntaxTree) {
 void Generator::expGen(TreeNode *syntaxTree) {
     /* 操作符节点 */
     Tuple4 tuple;
+    Lexer lexer = Lexer();
     std::string arg1;
     std::string arg2;
     if (syntaxTree->expK == OPK) {
@@ -110,7 +113,7 @@ void Generator::expGen(TreeNode *syntaxTree) {
                 }
 
                 /* 生成新的四元组 */
-                tuple = newTuple4(number++, Lexer::tokenMap[syntaxTree->op].first, arg1, arg2, "op number", 0);
+                tuple = newTuple4(number++, lexer.tokenMap[syntaxTree->op].first, arg1, arg2, "op number", 0);
                 tuple4List.push_back(tuple);
                 break;
             default:

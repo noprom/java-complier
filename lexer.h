@@ -77,7 +77,7 @@ public:
 	std::vector<TokenErrorInfo> errList;
 
     /* 单词属性及其对应Token的关系 */
-    static std::map<TokenType, std::pair<std::string, std::string> > tokenMap;
+    std::map<TokenType, std::pair<std::string, std::string> > tokenMap;
     
 	/**
 	 * 构造函数
@@ -85,7 +85,9 @@ public:
 	 * @fileName 文件名
 	 */
 	Lexer(std::string fileName);
-
+    
+    /* 重载构造函数 */
+    Lexer();
 
 	~Lexer();
 

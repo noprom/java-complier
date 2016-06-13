@@ -19,199 +19,203 @@ int Lexer::lineTokenNum = 0;
 int Lexer::linePos = 0;
 std::string Lexer::tokenString = "";
 
+Lexer::Lexer() {
+    /* 清空用于统计的容器 */
+    lineTokenSumMap.clear();
+    tokenList.clear();
+    errList.clear();
+    
+    /**
+     * 初始化关键字
+     * 关键字: 0x103
+     */
+    keyWords.clear();
+    keyWords.insert(std::make_pair("abstract", std::make_pair(ABSTRACT, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("boolean", std::make_pair(BOOLEAN, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("break", std::make_pair(BREAK, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("byte", std::make_pair(BYTE, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("case", std::make_pair(CASE, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("catch", std::make_pair(CATCH, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("char", std::make_pair(CHAR, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("class", std::make_pair(CLASS, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("const", std::make_pair(CONST, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("continue", std::make_pair(CONTINUE, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("default", std::make_pair(DEFAULT, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("do", std::make_pair(DO, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("double", std::make_pair(DOUBLE, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("else", std::make_pair(ELSE, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("extends", std::make_pair(EXTENDS, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("false", std::make_pair(JAVA_FALSE, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("final", std::make_pair(FINAL, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("finally", std::make_pair(FINALLY, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("float", std::make_pair(FLOAT, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("for", std::make_pair(FOR, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("goto", std::make_pair(GOTO, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("if", std::make_pair(IF, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("implements", std::make_pair(IMPLEMENTES, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("import", std::make_pair(IMPORT, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("instanceof", std::make_pair(INSTANCEOF, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("int", std::make_pair(INT, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("interface", std::make_pair(INTERFACE, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("long", std::make_pair(LONG, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("native", std::make_pair(NATIVE, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("new", std::make_pair(NEW, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("null", std::make_pair(JAVA_NULL, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("package", std::make_pair(PACKAGE, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("private", std::make_pair(PRIVATE, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("protected", std::make_pair(PROTECTED, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("public", std::make_pair(PUBLIC, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("return", std::make_pair(RETURN, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("short", std::make_pair(SHORT, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("static", std::make_pair(STATIC, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("super", std::make_pair(SUPER, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("switch", std::make_pair(SWITCH, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("synchronized", std::make_pair(SYNCHRONIZED, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("this", std::make_pair(THIS, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("throw", std::make_pair(THROW, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("throws", std::make_pair(THROWS, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("transient", std::make_pair(TRANSIENT, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("true", std::make_pair(JAVA_TRUE, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("try", std::make_pair(TRY, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("void", std::make_pair(VOID, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("volatile", std::make_pair(VOLATILE, KEYWORDS_ID)));
+    keyWords.insert(std::make_pair("while", std::make_pair(WHILE, KEYWORDS_ID)));
+    
+    /**
+     * 初始化tokenMap
+     */
+    tokenMap.clear();
+    tokenMap.insert(std::make_pair(ENDFILE, std::make_pair("end of file", "0x000")));
+    
+    /**
+     * 错误的单词: 0x100
+     * 注释:      0x101
+     * 空格:      0x102
+     */
+    tokenMap.insert(std::make_pair(TOKEN_ERROR, std::make_pair("token error", "0x100")));
+    tokenMap.insert(std::make_pair(COMMENT, std::make_pair("comment", "0x101")));
+    tokenMap.insert(std::make_pair(SPACE, std::make_pair("white space", "0x102")));
+    
+    /**
+     * 标志符: 0x104
+     * 布尔型: 0x105
+     * 字符型: 0x106
+     * 整型:   0x107
+     * 浮点型: 0x108
+     * 字符串: 0x109
+     */
+    tokenMap.insert(std::make_pair(ID, std::make_pair("identifier", "0x104")));
+    tokenMap.insert(std::make_pair(CONST_BOOL, std::make_pair("bool const", "0x105")));
+    tokenMap.insert(std::make_pair(CONST_CHAR, std::make_pair("char const", "0x106")));
+    tokenMap.insert(std::make_pair(CONST_INT, std::make_pair("int const", "0x107")));
+    tokenMap.insert(std::make_pair(CONST_INT8, std::make_pair("int8 const", "0x107")));
+    tokenMap.insert(std::make_pair(CONST_INT16, std::make_pair("int16 const", "0x107")));
+    tokenMap.insert(std::make_pair(CONST_FLOAT, std::make_pair("float const", "0x108")));
+    tokenMap.insert(std::make_pair(CONST_STR, std::make_pair("string const", "0x109")));
+    
+    /**
+     * 赋值运算符号: 0x110
+     * = += -= *= /= %= &=
+     * ^= |= >>= <<= >>>=
+     */
+    tokenMap.insert(std::make_pair(ASSIGN, std::make_pair("=", "0x110")));
+    tokenMap.insert(std::make_pair(ADD_ASSIGN, std::make_pair("+=", "0x110")));
+    tokenMap.insert(std::make_pair(MINUS_ASSIGN, std::make_pair("-=", "0x110")));
+    tokenMap.insert(std::make_pair(MUL_ASSIGN, std::make_pair("*=", "0x110")));
+    tokenMap.insert(std::make_pair(DIV_ASSIGN, std::make_pair("/=", "0x110")));
+    tokenMap.insert(std::make_pair(MOD_ASSIGN, std::make_pair("%=", "0x110")));
+    tokenMap.insert(std::make_pair(AND_ASSIGN, std::make_pair("&=", "0x110")));
+    tokenMap.insert(std::make_pair(XOR_ASSIGN, std::make_pair("^=", "0x110")));
+    tokenMap.insert(std::make_pair(OR_ASSIGN, std::make_pair("|=", "0x110")));
+    tokenMap.insert(std::make_pair(RIGHT_SHIFT_ASSIGN, std::make_pair(">>=", "0x110")));
+    tokenMap.insert(std::make_pair(LEFT_SHIFT_ASSIGN, std::make_pair("<<=", "0x110")));
+    tokenMap.insert(std::make_pair(ZERO_FILL_RIGHT_SHIRT_ASSIGN, std::make_pair(">>>=", "0x110")));
+    
+    /**
+     * 关系运算符号
+     * ?:   0x111
+     * ||:  0x112
+     * &&:  0x113
+     * | :  0x114
+     * ^ :  0x115
+     * & :  0x116
+     */
+    tokenMap.insert(std::make_pair(TRIPLE_CMP, std::make_pair("?:", "0x111")));
+    tokenMap.insert(std::make_pair(OR, std::make_pair("||", "0x112")));
+    tokenMap.insert(std::make_pair(AND, std::make_pair("&&", "0x113")));
+    tokenMap.insert(std::make_pair(OR_BIT, std::make_pair("|", "0x114")));
+    tokenMap.insert(std::make_pair(XOR, std::make_pair("^", "0x115")));
+    tokenMap.insert(std::make_pair(AND_BIT, std::make_pair("&", "0x116")));
+    
+    /**
+     * 比较运算符|移位运算符
+     * == !=        : 0x117
+     * < > <= >=    : 0x118
+     * << >> >>>    : 0x119
+     */
+    tokenMap.insert(std::make_pair(EQU, std::make_pair("==", "0x117")));
+    tokenMap.insert(std::make_pair(NE, std::make_pair("!=", "0x117")));
+    tokenMap.insert(std::make_pair(LT, std::make_pair("<", "0x118")));
+    tokenMap.insert(std::make_pair(GT, std::make_pair(">", "0x118")));
+    tokenMap.insert(std::make_pair(LE, std::make_pair("<=", "0x118")));
+    tokenMap.insert(std::make_pair(GE, std::make_pair(">=", "0x118")));
+    tokenMap.insert(std::make_pair(LEFT_SHIFT, std::make_pair("<<", "0x119")));
+    tokenMap.insert(std::make_pair(RIGHT_SHIFT, std::make_pair(">>", "0x119")));
+    tokenMap.insert(std::make_pair(ZERO_FILL_RIGHT_SHIRT, std::make_pair(">>>", "0x119")));
+    
+    /**
+     * 数值计算符号
+     * + -                      : 0x11a
+     * * / %                    : 0x11b
+     * ++ -- +(正) –(负) ! ~     : 0x11c
+     */
+    tokenMap.insert(std::make_pair(ADD, std::make_pair("+", "0x11a")));
+    tokenMap.insert(std::make_pair(MINUS, std::make_pair("-", "0x11a")));
+    tokenMap.insert(std::make_pair(MUL, std::make_pair("*", "0x11b")));
+    tokenMap.insert(std::make_pair(DIV, std::make_pair("/", "0x11b")));
+    tokenMap.insert(std::make_pair(MOD, std::make_pair("%", "0x11b")));
+    tokenMap.insert(std::make_pair(INC, std::make_pair("++", "0x11c")));
+    tokenMap.insert(std::make_pair(DEC, std::make_pair("--", "0x11c")));
+    tokenMap.insert(std::make_pair(POSITIVE, std::make_pair("+", "0x11c")));
+    tokenMap.insert(std::make_pair(NEGATIVE, std::make_pair("-", "0x11c")));
+    tokenMap.insert(std::make_pair(NOT, std::make_pair("!", "0x11c")));
+    tokenMap.insert(std::make_pair(NOT_BIT, std::make_pair("~", "0x11c")));
+    
+    /**
+     * 界限符
+     * [] () .                  : 0x11d
+     * ,                        : 0x120
+     * {}                       : 0x121
+     * ;                        : 0x122
+     */
+    tokenMap.insert(std::make_pair(BRACKET_ML, std::make_pair("[", "0x11d")));
+    tokenMap.insert(std::make_pair(BRACKET_MR, std::make_pair("]", "0x11d")));
+    tokenMap.insert(std::make_pair(BRACKET_SL, std::make_pair("(", "0x11d")));
+    tokenMap.insert(std::make_pair(BRACKET_SR, std::make_pair(")", "0x11d")));
+    tokenMap.insert(std::make_pair(DOT, std::make_pair(".", "0x11d")));
+    tokenMap.insert(std::make_pair(COMMA, std::make_pair(",", "0x120")));
+    tokenMap.insert(std::make_pair(BRACKET_LL, std::make_pair("{", "0x121")));
+    tokenMap.insert(std::make_pair(BRACKET_LR, std::make_pair("}", "0x121")));
+    tokenMap.insert(std::make_pair(SEMICOLON, std::make_pair(";", "0x122")));
+    
+    delimeterMap.clear();
+    delimeterMap.insert(std::make_pair('[', BRACKET_ML));
+    delimeterMap.insert(std::make_pair(']', BRACKET_MR));
+    delimeterMap.insert(std::make_pair('(', BRACKET_SL));
+    delimeterMap.insert(std::make_pair(')', BRACKET_SR));
+    delimeterMap.insert(std::make_pair('.', DOT));
+    delimeterMap.insert(std::make_pair(',', COMMA));
+    delimeterMap.insert(std::make_pair('{', BRACKET_LL));
+    delimeterMap.insert(std::make_pair('}', BRACKET_LR));
+    delimeterMap.insert(std::make_pair(';', SEMICOLON));
+}
+
 /* 实现构造函数 */
 Lexer::Lexer(std::string fileName)
 {
 	ifs = std::make_shared<std::ifstream>(fileName);
 
-	/* 清空用于统计的容器 */
-	lineTokenSumMap.clear();
-	tokenList.clear();
-	errList.clear();
-
-	/**
-	* 初始化关键字
-	* 关键字: 0x103
-	*/
-	keyWords.clear();
-	keyWords.insert(std::make_pair("abstract", std::make_pair(ABSTRACT, KEYWORDS_ID)));
-	keyWords.insert(std::make_pair("boolean", std::make_pair(BOOLEAN, KEYWORDS_ID)));
-	keyWords.insert(std::make_pair("break", std::make_pair(BREAK, KEYWORDS_ID)));
-	keyWords.insert(std::make_pair("byte", std::make_pair(BYTE, KEYWORDS_ID)));
-	keyWords.insert(std::make_pair("case", std::make_pair(CASE, KEYWORDS_ID)));
-	keyWords.insert(std::make_pair("catch", std::make_pair(CATCH, KEYWORDS_ID)));
-	keyWords.insert(std::make_pair("char", std::make_pair(CHAR, KEYWORDS_ID)));
-	keyWords.insert(std::make_pair("class", std::make_pair(CLASS, KEYWORDS_ID)));
-	keyWords.insert(std::make_pair("const", std::make_pair(CONST, KEYWORDS_ID)));
-	keyWords.insert(std::make_pair("continue", std::make_pair(CONTINUE, KEYWORDS_ID)));
-	keyWords.insert(std::make_pair("default", std::make_pair(DEFAULT, KEYWORDS_ID)));
-	keyWords.insert(std::make_pair("do", std::make_pair(DO, KEYWORDS_ID)));
-	keyWords.insert(std::make_pair("double", std::make_pair(DOUBLE, KEYWORDS_ID)));
-	keyWords.insert(std::make_pair("else", std::make_pair(ELSE, KEYWORDS_ID)));
-	keyWords.insert(std::make_pair("extends", std::make_pair(EXTENDS, KEYWORDS_ID)));
-	keyWords.insert(std::make_pair("false", std::make_pair(JAVA_FALSE, KEYWORDS_ID)));
-	keyWords.insert(std::make_pair("final", std::make_pair(FINAL, KEYWORDS_ID)));
-	keyWords.insert(std::make_pair("finally", std::make_pair(FINALLY, KEYWORDS_ID)));
-	keyWords.insert(std::make_pair("float", std::make_pair(FLOAT, KEYWORDS_ID)));
-	keyWords.insert(std::make_pair("for", std::make_pair(FOR, KEYWORDS_ID)));
-	keyWords.insert(std::make_pair("goto", std::make_pair(GOTO, KEYWORDS_ID)));
-	keyWords.insert(std::make_pair("if", std::make_pair(IF, KEYWORDS_ID)));
-	keyWords.insert(std::make_pair("implements", std::make_pair(IMPLEMENTES, KEYWORDS_ID)));
-	keyWords.insert(std::make_pair("import", std::make_pair(IMPORT, KEYWORDS_ID)));
-	keyWords.insert(std::make_pair("instanceof", std::make_pair(INSTANCEOF, KEYWORDS_ID)));
-	keyWords.insert(std::make_pair("int", std::make_pair(INT, KEYWORDS_ID)));
-	keyWords.insert(std::make_pair("interface", std::make_pair(INTERFACE, KEYWORDS_ID)));
-	keyWords.insert(std::make_pair("long", std::make_pair(LONG, KEYWORDS_ID)));
-	keyWords.insert(std::make_pair("native", std::make_pair(NATIVE, KEYWORDS_ID)));
-	keyWords.insert(std::make_pair("new", std::make_pair(NEW, KEYWORDS_ID)));
-	keyWords.insert(std::make_pair("null", std::make_pair(JAVA_NULL, KEYWORDS_ID)));
-	keyWords.insert(std::make_pair("package", std::make_pair(PACKAGE, KEYWORDS_ID)));
-	keyWords.insert(std::make_pair("private", std::make_pair(PRIVATE, KEYWORDS_ID)));
-	keyWords.insert(std::make_pair("protected", std::make_pair(PROTECTED, KEYWORDS_ID)));
-	keyWords.insert(std::make_pair("public", std::make_pair(PUBLIC, KEYWORDS_ID)));
-	keyWords.insert(std::make_pair("return", std::make_pair(RETURN, KEYWORDS_ID)));
-	keyWords.insert(std::make_pair("short", std::make_pair(SHORT, KEYWORDS_ID)));
-	keyWords.insert(std::make_pair("static", std::make_pair(STATIC, KEYWORDS_ID)));
-	keyWords.insert(std::make_pair("super", std::make_pair(SUPER, KEYWORDS_ID)));
-	keyWords.insert(std::make_pair("switch", std::make_pair(SWITCH, KEYWORDS_ID)));
-	keyWords.insert(std::make_pair("synchronized", std::make_pair(SYNCHRONIZED, KEYWORDS_ID)));
-	keyWords.insert(std::make_pair("this", std::make_pair(THIS, KEYWORDS_ID)));
-	keyWords.insert(std::make_pair("throw", std::make_pair(THROW, KEYWORDS_ID)));
-	keyWords.insert(std::make_pair("throws", std::make_pair(THROWS, KEYWORDS_ID)));
-	keyWords.insert(std::make_pair("transient", std::make_pair(TRANSIENT, KEYWORDS_ID)));
-	keyWords.insert(std::make_pair("true", std::make_pair(JAVA_TRUE, KEYWORDS_ID)));
-	keyWords.insert(std::make_pair("try", std::make_pair(TRY, KEYWORDS_ID)));
-	keyWords.insert(std::make_pair("void", std::make_pair(VOID, KEYWORDS_ID)));
-	keyWords.insert(std::make_pair("volatile", std::make_pair(VOLATILE, KEYWORDS_ID)));
-	keyWords.insert(std::make_pair("while", std::make_pair(WHILE, KEYWORDS_ID)));
-
-	/**
-	* 初始化tokenMap
-	*/
-	tokenMap.clear();
-	tokenMap.insert(std::make_pair(ENDFILE, std::make_pair("end of file", "0x000")));
-
-	/**
-	* 错误的单词: 0x100
-	* 注释:      0x101
-	* 空格:      0x102
-	*/
-	tokenMap.insert(std::make_pair(TOKEN_ERROR, std::make_pair("token error", "0x100")));
-	tokenMap.insert(std::make_pair(COMMENT, std::make_pair("comment", "0x101")));
-	tokenMap.insert(std::make_pair(SPACE, std::make_pair("white space", "0x102")));
-
-	/**
-	* 标志符: 0x104
-	* 布尔型: 0x105
-	* 字符型: 0x106
-	* 整型:   0x107
-	* 浮点型: 0x108
-	* 字符串: 0x109
-	*/
-	tokenMap.insert(std::make_pair(ID, std::make_pair("identifier", "0x104")));
-	tokenMap.insert(std::make_pair(CONST_BOOL, std::make_pair("bool const", "0x105")));
-	tokenMap.insert(std::make_pair(CONST_CHAR, std::make_pair("char const", "0x106")));
-	tokenMap.insert(std::make_pair(CONST_INT, std::make_pair("int const", "0x107")));
-	tokenMap.insert(std::make_pair(CONST_INT8, std::make_pair("int8 const", "0x107")));
-	tokenMap.insert(std::make_pair(CONST_INT16, std::make_pair("int16 const", "0x107")));
-	tokenMap.insert(std::make_pair(CONST_FLOAT, std::make_pair("float const", "0x108")));
-	tokenMap.insert(std::make_pair(CONST_STR, std::make_pair("string const", "0x109")));
-
-	/**
-	* 赋值运算符号: 0x110
-	* = += -= *= /= %= &=
-	* ^= |= >>= <<= >>>=
-	*/
-	tokenMap.insert(std::make_pair(ASSIGN, std::make_pair("=", "0x110")));
-	tokenMap.insert(std::make_pair(ADD_ASSIGN, std::make_pair("+=", "0x110")));
-	tokenMap.insert(std::make_pair(MINUS_ASSIGN, std::make_pair("-=", "0x110")));
-	tokenMap.insert(std::make_pair(MUL_ASSIGN, std::make_pair("*=", "0x110")));
-	tokenMap.insert(std::make_pair(DIV_ASSIGN, std::make_pair("/=", "0x110")));
-	tokenMap.insert(std::make_pair(MOD_ASSIGN, std::make_pair("%=", "0x110")));
-	tokenMap.insert(std::make_pair(AND_ASSIGN, std::make_pair("&=", "0x110")));
-	tokenMap.insert(std::make_pair(XOR_ASSIGN, std::make_pair("^=", "0x110")));
-	tokenMap.insert(std::make_pair(OR_ASSIGN, std::make_pair("|=", "0x110")));
-	tokenMap.insert(std::make_pair(RIGHT_SHIFT_ASSIGN, std::make_pair(">>=", "0x110")));
-	tokenMap.insert(std::make_pair(LEFT_SHIFT_ASSIGN, std::make_pair("<<=", "0x110")));
-	tokenMap.insert(std::make_pair(ZERO_FILL_RIGHT_SHIRT_ASSIGN, std::make_pair(">>>=", "0x110")));
-
-	/**
-	* 关系运算符号
-	* ?:   0x111
-	* ||:  0x112
-	* &&:  0x113
-	* | :  0x114
-	* ^ :  0x115
-	* & :  0x116
-	*/
-	tokenMap.insert(std::make_pair(TRIPLE_CMP, std::make_pair("?:", "0x111")));
-	tokenMap.insert(std::make_pair(OR, std::make_pair("||", "0x112")));
-	tokenMap.insert(std::make_pair(AND, std::make_pair("&&", "0x113")));
-	tokenMap.insert(std::make_pair(OR_BIT, std::make_pair("|", "0x114")));
-	tokenMap.insert(std::make_pair(XOR, std::make_pair("^", "0x115")));
-	tokenMap.insert(std::make_pair(AND_BIT, std::make_pair("&", "0x116")));
-
-	/**
-	* 比较运算符|移位运算符
-	* == !=        : 0x117
-	* < > <= >=    : 0x118
-	* << >> >>>    : 0x119
-	*/
-	tokenMap.insert(std::make_pair(EQU, std::make_pair("==", "0x117")));
-	tokenMap.insert(std::make_pair(NE, std::make_pair("!=", "0x117")));
-	tokenMap.insert(std::make_pair(LT, std::make_pair("<", "0x118")));
-	tokenMap.insert(std::make_pair(GT, std::make_pair(">", "0x118")));
-	tokenMap.insert(std::make_pair(LE, std::make_pair("<=", "0x118")));
-	tokenMap.insert(std::make_pair(GE, std::make_pair(">=", "0x118")));
-	tokenMap.insert(std::make_pair(LEFT_SHIFT, std::make_pair("<<", "0x119")));
-	tokenMap.insert(std::make_pair(RIGHT_SHIFT, std::make_pair(">>", "0x119")));
-	tokenMap.insert(std::make_pair(ZERO_FILL_RIGHT_SHIRT, std::make_pair(">>>", "0x119")));
-
-	/**
-	* 数值计算符号
-	* + -                      : 0x11a
-	* * / %                    : 0x11b
-	* ++ -- +(正) –(负) ! ~     : 0x11c
-	*/
-	tokenMap.insert(std::make_pair(ADD, std::make_pair("+", "0x11a")));
-	tokenMap.insert(std::make_pair(MINUS, std::make_pair("-", "0x11a")));
-	tokenMap.insert(std::make_pair(MUL, std::make_pair("*", "0x11b")));
-	tokenMap.insert(std::make_pair(DIV, std::make_pair("/", "0x11b")));
-	tokenMap.insert(std::make_pair(MOD, std::make_pair("%", "0x11b")));
-	tokenMap.insert(std::make_pair(INC, std::make_pair("++", "0x11c")));
-	tokenMap.insert(std::make_pair(DEC, std::make_pair("--", "0x11c")));
-	tokenMap.insert(std::make_pair(POSITIVE, std::make_pair("+", "0x11c")));
-	tokenMap.insert(std::make_pair(NEGATIVE, std::make_pair("-", "0x11c")));
-	tokenMap.insert(std::make_pair(NOT, std::make_pair("!", "0x11c")));
-	tokenMap.insert(std::make_pair(NOT_BIT, std::make_pair("~", "0x11c")));
-
-	/**
-	* 界限符
-	* [] () .                  : 0x11d
-	* ,                        : 0x120
-	* {}                       : 0x121
-	* ;                        : 0x122
-	*/
-	tokenMap.insert(std::make_pair(BRACKET_ML, std::make_pair("[", "0x11d")));
-	tokenMap.insert(std::make_pair(BRACKET_MR, std::make_pair("]", "0x11d")));
-	tokenMap.insert(std::make_pair(BRACKET_SL, std::make_pair("(", "0x11d")));
-	tokenMap.insert(std::make_pair(BRACKET_SR, std::make_pair(")", "0x11d")));
-	tokenMap.insert(std::make_pair(DOT, std::make_pair(".", "0x11d")));
-	tokenMap.insert(std::make_pair(COMMA, std::make_pair(",", "0x120")));
-	tokenMap.insert(std::make_pair(BRACKET_LL, std::make_pair("{", "0x121")));
-	tokenMap.insert(std::make_pair(BRACKET_LR, std::make_pair("}", "0x121")));
-	tokenMap.insert(std::make_pair(SEMICOLON, std::make_pair(";", "0x122")));
-
-	delimeterMap.clear();
-	delimeterMap.insert(std::make_pair('[', BRACKET_ML));
-	delimeterMap.insert(std::make_pair(']', BRACKET_MR));
-	delimeterMap.insert(std::make_pair('(', BRACKET_SL));
-	delimeterMap.insert(std::make_pair(')', BRACKET_SR));
-	delimeterMap.insert(std::make_pair('.', DOT));
-	delimeterMap.insert(std::make_pair(',', COMMA));
-	delimeterMap.insert(std::make_pair('{', BRACKET_LL));
-	delimeterMap.insert(std::make_pair('}', BRACKET_LR));
-	delimeterMap.insert(std::make_pair(';', SEMICOLON));
+    Lexer::Lexer();
 
 	/* 打开文件 */
 	if (!ifs->is_open()) {
@@ -391,7 +395,11 @@ TokenType Lexer::getToken() {
 		currentState = DONE;
 		currentToken = NOT_BIT;
 		/* 界限符 */
-	}
+    } else if (curChar == ';') {
+        tokenString.push_back(curChar);
+        currentState = DONE;
+        currentToken = SEMICOLON;
+    }
 	else if (delimeterMap.find(curChar) != delimeterMap.end()) {
 		tokenString.push_back(curChar);
 		currentState = DONE;

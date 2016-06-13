@@ -80,7 +80,7 @@ TreeNode * Parser::sentenceStmt() {
 /* 赋值语句 */
 TreeNode * Parser::assignStmt() {
     /* 过滤掉类型 */
-    if (token == INT || token == CONST_INT8 || token == CONST_INT16) {
+    if (tokenString == "int") {
         token = getToken();
     }
     Parser::tokenList.clear();
@@ -111,7 +111,7 @@ TreeNode * Parser::assignStmt() {
         /* 开始连等运算 */
         Parser::tokenList.push_back({token, tokenString});
         thisNode.id = tokenString;
-        token = getToken();
+//        token = getToken();
         /* 如果连等继续 */
         if (token == ASSIGN && (tokenList.back().type == ID)) {
             tokenList.clear();
@@ -134,7 +134,7 @@ TreeNode * Parser::assignStmt() {
     return treeNode;
 }
 
-/* While语句 */
+/* while语句 */
 TreeNode * Parser::whileStmt() {
     // TODO: handle error
     TreeNode * treeNode = new TreeNode;
@@ -220,7 +220,6 @@ TreeNode * Parser::simpleExpStmt(std::list<CompTokenType>::iterator &begin, std:
         } else {
             // TODO: handle error
             begin++;
-            return NULL;
         }
     }
     // TODO: handle error
@@ -262,6 +261,7 @@ TreeNode * Parser::factorStmt(std::list<CompTokenType>::iterator &begin) {
             thisNode.id = begin->str;
         } else if (begin->type == CONST_INT || begin->type == CONST_INT8 || begin->type == CONST_INT16) {
             thisNode.expK = NUMK;
+            thisNode.id = begin->str;
             thisNode.num = atoi((begin->str).c_str());
         }
         // TODO: handle error
