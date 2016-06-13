@@ -8,13 +8,44 @@
 
 #include "generator.h"
 
-/* 由语法树生成符号表 */
-void Generator::genSymTable(TreeNode *tree) {
-    if (tree != NULL) {
-        if (tree->nodeKind == EXPK) {
-            if (tree->expK == OPK) {
-                
-            }
-        }
+/* 多个语句 */
+void Generator::mulGen(TreeNode *syntaxTree) {
+    while (syntaxTree != NULL) {
+        sentenceGen(syntaxTree);
+        syntaxTree = syntaxTree->sibling;
     }
+}
+
+/* 单个语句 */
+void Generator::sentenceGen(TreeNode *syntaxTree) {
+    if (syntaxTree->nodeKind != STMTK) {
+        // TODO: handle error
+        return;
+    }
+    switch (syntaxTree->stmtKind) {
+        case ASSIGNK:
+            assignGen(syntaxTree);
+            break;
+        case WHILEK:
+            whileGen(syntaxTree);
+            break;
+        default:
+            // TODO: handle error
+            break;
+    }
+}
+
+/* while语句 */
+void Generator::whileGen(TreeNode *syntaxTree) {
+    
+}
+
+/* 赋值语句 */
+void Generator::assignGen(TreeNode *syntaxTree) {
+    
+}
+
+/* 表达式语句 */
+void Generator::expGen(TreeNode *syntaxTree) {
+    
 }
