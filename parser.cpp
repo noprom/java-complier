@@ -58,8 +58,8 @@ TreeNode * Parser::mulSentenceStmt() {
 /* 单个语句 */
 TreeNode * Parser::sentenceStmt() {
     Parser::tokenList.clear();
+    assignStart = false;
     if (tokenString == "while") {
-        assignStart = false;
         return whileStmt();
     } else {
         switch (token) {
@@ -67,7 +67,6 @@ TreeNode * Parser::sentenceStmt() {
             case CONST_INT8:
             case CONST_INT16:
             case ID:
-                assignStart = false;
                 return assignStmt();
                 break;
                 // TODO: handle error
