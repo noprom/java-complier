@@ -15,6 +15,11 @@ Generator::Generator() {
     tuple4List.clear();
 }
 
+/* 生成四元式中间代码 */
+void Generator::codeGen(TreeNode *syntaxTree) {
+    mulGen(syntaxTree);
+}
+
 /* 多个语句 */
 void Generator::mulGen(TreeNode *syntaxTree) {
     while (syntaxTree != NULL) {
@@ -58,12 +63,13 @@ void Generator::expGen(TreeNode *syntaxTree) {
 }
 
 /* 创建一个四元组 */
-Tuple4 Generator::newTuple4(int no, std::string op, std::string arg1, std::string arg2, std::string result) {
+Tuple4 Generator::newTuple4(int no, std::string op, std::string arg1, std::string arg2, std::string result, int backNo) {
     Tuple4 * tuple4 = new Tuple4;
     tuple4->no = no;
     tuple4->op = op;
     tuple4->arg1 = arg1;
     tuple4->arg2 = arg2;
     tuple4->result = result;
+    tuple4->backNo = backNo;
     return *tuple4;
 }

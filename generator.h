@@ -24,6 +24,9 @@ typedef struct {
     std::string arg2;
     /* 结果 */
     std::string result;
+    /* 以下均为辅助使用 */
+    /* 需要回填的编号 */
+    int backNo;
 } Tuple4;
 
 /* 中间代码生成类 */
@@ -72,8 +75,9 @@ private:
      * @param arg1 参数1
      * @param arg2 参数2
      * @param result 结果
+     * @param backNo 需要回填的编号
      */
-    Tuple4 newTuple4(int no, std::string op, std::string arg1, std::string arg2, std::string result);
+    Tuple4 newTuple4(int no, std::string op, std::string arg1, std::string arg2, std::string result, int backNo);
 public:
     
     /* 用于记录四元式列表中的标号 */
