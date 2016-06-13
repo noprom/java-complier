@@ -59,6 +59,7 @@ TreeNode * Parser::mulSentenceStmt() {
 TreeNode * Parser::sentenceStmt() {
     Parser::tokenList.clear();
     if (tokenString == "while") {
+        assignStart = false;
         return whileStmt();
     } else {
         switch (token) {
