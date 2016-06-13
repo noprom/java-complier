@@ -62,7 +62,17 @@ void Generator::whileGen(TreeNode *syntaxTree) {
 
 /* 赋值语句 */
 void Generator::assignGen(TreeNode *syntaxTree) {
-    
+    /* 赋值语句 */
+    if (syntaxTree->child[0]->nodeKind == STMTK && syntaxTree->child[0]->stmtKind == ASSIGNK) {
+        /* 首先执行等号右边的表达式 */
+        expGen(syntaxTree->child[0]);
+        /* 然后生成最后一个赋值语句 */
+        Tuple4 tuple = newTuple4(number++, "=", "last exe val no in assign", "", syntaxTree->id, 0);
+        tuple4List.push_back(tuple);
+    /* 表达式 */
+    } else if (syntaxTree->child[0]->nodeKind == EXPK) {
+        expGen(syntaxTree->child[0]);
+    }
 }
 
 /* 表达式语句 */
