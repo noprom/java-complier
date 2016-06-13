@@ -382,7 +382,7 @@ TokenType Lexer::getToken() {
 	}
 	/* 1.首先获得第一个状态 */
 	/* 空格 */
-	if (curChar == ' ' || curChar == '\r' || curChar == '\n') {
+	if (curChar == ' ' || curChar == '\r' || curChar == '\n' || curChar == '\t') {
 		return getToken();
 		/* 注释 */
 	}
