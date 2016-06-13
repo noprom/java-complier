@@ -14,6 +14,7 @@
 #include "util.h"
 #include "lexer.h"
 #include "parser.h"
+#include "generator.h"
 
 /* 输出扫描结果 */
 int TraceScan = 0;
@@ -88,6 +89,14 @@ int main(int argc, const char * argv[]) {
         syntaxTree = parser.parse();
         // TODO 语义分析
         /* 生成四元式 */
+        Generator generator = Generator();
+        generator.codeGen(syntaxTree);
+        /* 打印出四元式列表 */
+        printf("NO\tOP\tARG1\tARG2\tRESULT\n");
+        for (std::vector<Tuple4>::iterator it = generator.tuple4List.begin(); it != generator.tuple4List.end(); it++) {
+            Tuple4 item = *it;
+            printf("%4d:(%2s,%4s,%4s,%2s)\n", item.no, item.op.c_str(), item.arg1.c_str(), item.arg2.c_str(), item.result.c_str());
+        }
     }
 	return 0;
 };

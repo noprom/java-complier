@@ -12,32 +12,63 @@
 #include "globals.h"
 #include "util.h"
 
-/* 符号表结构 */
+/* 四元式结构 */
 typedef struct {
-    /* 符号名称 */
-    std::string name;
-    /* 符号出现的行号 */
-    std::vector<int> lineNumbers;
-    /* 初始化的值 */
-    int initVal;
-} SymbolTable;
+    /* 编号 */
+    int no;
+    /* 操作符 */
+    std::string op;
+    /* 参数1 */
+    std::string arg1;
+    /* 参数2 */
+    std::string arg2;
+    /* 结果 */
+    std::string result;
+} Tuple4;
 
-/* 汇编代码生成类 */
+/* 中间代码生成类 */
 class Generator {
 private:
-    /* 符号表 */
-    std::vector<SymbolTable> symTable;
-public:
-
     /**
-     * 由所给的语法树生成符号表
-     * 
+     * 多个语句块
+     *
      * @param syntaxTree 语法树
      */
-    void genSymTable(TreeNode * syntaxTree);
+    void mulGen(TreeNode * syntaxTree);
     
     /**
-     * 生成汇编代码
+     * 单个语句
+     *
+     * @param syntaxTree 语法树
+     */
+    void sentenceGen(TreeNode * syntaxTree);
+    
+    /**
+     * while语句
+     *
+     * @param syntaxTree 语法树
+     */
+    void whileGen(TreeNode * syntaxTree);
+    
+    /**
+     * 赋值语句
+     *
+     * @param syntaxTree 语法树
+     */
+    void assignGen(TreeNode * syntaxTree);
+    
+    /**
+     * 表达式语句
+     *
+     * @param syntaxTree 语法树
+     */
+    void expGen(TreeNode * syntaxTree);
+public:
+    /* 四元组列表 */
+    std::vector<Tuple4> tuple4List;
+    
+    /**
+     * 生成中间代码
      * 
      * @param syntaxTree 语法树
      */
