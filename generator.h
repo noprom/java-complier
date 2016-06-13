@@ -33,6 +33,13 @@ typedef struct {
 /* 中间代码生成类 */
 class Generator {
 private:
+    
+    /* 用于记录四元式列表中的标号 */
+    int number;
+    
+    /* 用于记录四元式结果项的下标 */
+    int resultIndex;
+    
     /**
      * 多个语句块
      *
@@ -79,10 +86,14 @@ private:
      * @param backNo 需要回填的编号
      */
     Tuple4 newTuple4(int no, std::string op, std::string arg1, std::string arg2, std::string result, int backNo);
-public:
     
-    /* 用于记录四元式列表中的标号 */
-    int number;
+    /**
+     * 更新结果的数量的下标
+     *
+     * @param op 操作符
+     */
+    void updateTrsultNumber(TokenType op);
+public:
     
     /* 四元组列表 */
     std::vector<Tuple4> tuple4List;

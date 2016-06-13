@@ -80,7 +80,6 @@ int main(int argc, const char * argv[]) {
             fprintf(fp, "Error line: %4d, %s", err.lineNumber, err.lineBuf.c_str());
             fprintf(fp, "Error position: %d, error token: %s\n", err.errorPos, err.errorToken.c_str());
         }
-        
         fclose(fp);
     } else {
         /* 开始语法分析 */
@@ -92,12 +91,11 @@ int main(int argc, const char * argv[]) {
         Generator generator = Generator();
         generator.codeGen(syntaxTree);
         /* 打印出四元式列表 */
-        printf("NO\tOP\tARG1\tARG2\tRESULT\n");
+//        printf("NO\tOP\tARG1\tARG2\tRESULT\n");
         for (std::vector<Tuple4>::iterator it = generator.tuple4List.begin(); it != generator.tuple4List.end(); it++) {
             Tuple4 item = *it;
-            printf("%4d:(%2s,%4s,%4s,%2s)\n", item.no, item.op.c_str(), item.arg1.c_str(), item.arg2.c_str(), item.result.c_str());
+            printf("%2d:(%2s,%4s,%4s,%4s)\n", item.no, item.op.c_str(), item.arg1.c_str(), item.arg2.c_str(), item.result.c_str());
         }
     }
 	return 0;
-};
-
+}

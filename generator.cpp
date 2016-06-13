@@ -11,7 +11,7 @@
 /* 构造函数 */
 Generator::Generator() {
     /* 初始化成员变量 */
-    number = 0;
+    number = 1;
     tuple4List.clear();
 }
 
@@ -63,6 +63,7 @@ void Generator::whileGen(TreeNode *syntaxTree) {
 /* 赋值语句 */
 void Generator::assignGen(TreeNode *syntaxTree) {
     /* 赋值语句 */
+    Tuple4 tuple;
     if (syntaxTree != NULL && syntaxTree->child.size() > 0) {
         if (syntaxTree->child[0]->nodeKind == STMTK && syntaxTree->child[0]->stmtKind == ASSIGNK) {
             /* 首先执行等号右边的表达式 */
@@ -72,7 +73,14 @@ void Generator::assignGen(TreeNode *syntaxTree) {
             tuple4List.push_back(tuple);
             /* 表达式 */
         } else if (syntaxTree->child[0]->nodeKind == EXPK) {
-            expGen(syntaxTree->child[0]);
+            /* 后面直接跟着数字或者标志符 */
+            if (syntaxTree->child[0]->stmtKind == NUMK || syntaxTree->child[0]->stmtKind == IDK) {
+                tuple = newTuple4(number++, "=", syntaxTree->child[0]->id, "", syntaxTree->id, 0);
+                tuple4List.push_back(tuple);
+                return;
+            } else {
+                expGen(syntaxTree->child[0]);
+            }
         }
     }
 }
@@ -139,4 +147,11 @@ Tuple4 Generator::newTuple4(int no, std::string op, std::string arg1, std::strin
     tuple4->result = result;
     tuple4->backNo = backNo;
     return *tuple4;
+}
+
+/* 更新结果项的下标 */
+void Generator::updateTrsultNumber(TokenType op) {
+    if (op == ADD || op == MINUS || op == MUL || op == DIV ) {
+        resultIndex++;
+    }
 }
