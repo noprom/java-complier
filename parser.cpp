@@ -29,7 +29,7 @@ TreeNode * Parser::parse() {
 /* 整个程序语句 */
 TreeNode * Parser::programStmt() {
     /* 这里简化为直接在main函数里面执行 */
-    token = Lexer::getToken();
+    token = getToken();
     TreeNode * tempNode = mulSentenceStmt();
     // TODO: handle error
     return tempNode;
