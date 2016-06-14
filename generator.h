@@ -126,5 +126,13 @@ public:
      * @param syntaxTree 语法树
      */
     void codeGen(TreeNode * syntaxTree);
+    
+    /**
+     * 运行代码生成器
+     *
+     * @param fileName 要分析的文件
+     * @param codeFile 生成目标代码的文件
+     */
+    static void runGenerator(TreeNode * syntaxTree, std::string fileName, std::string codeFile);
 };
 #endif
