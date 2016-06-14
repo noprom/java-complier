@@ -22,9 +22,12 @@ int TraceSource = 0;
 
 int main(int argc, const char * argv[]) {
 
+    /* 输入的分析文件名称 */
 	std::string fileName;
+    /* 词法分析器扫描结果文件 */
 	std::string outFileName = "scanner_output.txt";
-    std::string asmFileName = "asm_code.txt";
+    /* 中间代码生成文件 */
+    std::string codeFileName = "tuple4_code.txt";
 
 	std::cout << "Please input a filename:" << std::endl;
 	std::cin >> fileName;
@@ -33,21 +36,11 @@ int main(int argc, const char * argv[]) {
         Lexer::runLexer(fileName, outFileName);
     } else {
         /* 开始语法分析 */
-        TreeNode * syntaxTree;
         Parser parser = Parser(fileName);
-        syntaxTree = parser.parse();
-        // TODO 语义分析
+        TreeNode * syntaxTree = parser.parse();
+        
         /* 生成四元式 */
-        Generator generator = Generator();
-        generator.codeGen(syntaxTree);
-        /* 打印出四元式列表 */
-        // printf("NO\tOP\tARG1\tARG2\tRESULT\n");
-        for (std::vector<Tuple4>::iterator it = generator.tuple4List.begin(); it != generator.tuple4List.end(); it++) {
-            Tuple4 item = *it;
-            printf("%2d:(%2s,%4s,%4s,%4s)\n", item.no, item.op.c_str(), item.arg1.c_str(), item.arg2.c_str(), item.result.c_str());
-        }
-        /* 下一条语句 */
-        printf("%2d:...\n", generator.number);
+        Generator::runGenerator(syntaxTree, fileName, codeFileName);
     }
 	return 0;
 }
