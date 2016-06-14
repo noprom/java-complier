@@ -106,6 +106,12 @@ private:
      * @param op 操作符
      */
     void updateResultLabel(TokenType op);
+    
+    /**
+     * 具有判断性质的语句执行完成之后
+     * 更新跳转到下一条语句的标号
+     */
+    void updateTuple4();
 public:
     
     /* 四元组列表 */

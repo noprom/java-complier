@@ -42,7 +42,7 @@ void Generator::sentenceGen(TreeNode *syntaxTree) {
             break;
         case WHILEK:
             whileGen(syntaxTree);
-            // TODO: update label
+            updateTuple4();
             break;
         default:
             // TODO: handle error
@@ -55,7 +55,7 @@ void Generator::whileGen(TreeNode *syntaxTree) {
     /* 首先是括号之内的判断表达式 */
     expGen(syntaxTree->child[0]);
     /* 接着是判断结果之后的跳转, 看其是否跳转到while语句的下一条语句 */
-    int backNo = number;
+    int backNo = number - 1;
     Tuple4 tuple = newTuple4(number++, "jT", result, "", int2str(number + 1), 0);
     tuple4List.push_back(tuple);
     tuple = newTuple4(number++, "j", "", "", lastResult, 0);
@@ -65,7 +65,7 @@ void Generator::whileGen(TreeNode *syntaxTree) {
     assignGen(syntaxTree->child[1]);
     
     /* 最后是循环执行, 返回到条件判断部分 */
-    tuple = newTuple4(number++, "j", "", "", "", backNo);
+    tuple = newTuple4(number++, "j", "", "", int2str(backNo), backNo);
     tuple4List.push_back(tuple);
 }
 
@@ -91,6 +91,7 @@ void Generator::assignGen(TreeNode *syntaxTree) {
                 expGen(syntaxTree->child[0]);
                 /* 最后的赋值语句 */
                 tuple = newTuple4(number++, "=", result, "", syntaxTree->id, 0);
+                tuple4List.push_back(tuple);
             }
         }
     }
@@ -109,12 +110,14 @@ void Generator::expGen(TreeNode *syntaxTree) {
             arg1 = syntaxTree->child[0]->id;
         } else {
             expGen(syntaxTree->child[0]);
+            arg1 = result;
         }
         /* 四元式中的第二个参数 */
         if (syntaxTree->child[1]->expK == NUMK || syntaxTree->child[1]->expK == IDK) {
             arg2 = syntaxTree->child[1]->id;
         } else {
             expGen(syntaxTree->child[1]);
+            arg2 = result;
         }
         switch (syntaxTree->op) {
             case EQU:
@@ -132,15 +135,15 @@ void Generator::expGen(TreeNode *syntaxTree) {
             case ADD:
             case MINUS:
                 /* 运算符优先级, 先考虑第一个孩子节点的优先级别是否大于该节点 */
-                if (syntaxTree->child[1]->expK == OPK &&
-                    (syntaxTree->child[1]->op == MUL || syntaxTree->child[1]->op == DIV || syntaxTree->child[1]->op == MOD)) {
-                    expGen(syntaxTree->child[1]);
-                }
+//                if (syntaxTree->child[1]->expK == OPK &&
+//                    (syntaxTree->child[1]->op == MUL || syntaxTree->child[1]->op == DIV || syntaxTree->child[1]->op == MOD)) {
+//                    expGen(syntaxTree->child[1]);
+//                }
             case MUL:
             case DIV:
-
+                updateResultLabel(syntaxTree->op);
                 /* 生成新的四元组 */
-                tuple = newTuple4(number++, lexer.tokenMap[syntaxTree->op].first, arg1, arg2, "op number", 0);
+                tuple = newTuple4(number++, lexer.tokenMap[syntaxTree->op].first, arg1, arg2, result, 0);
                 tuple4List.push_back(tuple);
                 break;
             default:
@@ -183,4 +186,15 @@ void Generator::updateResultLabel(TokenType op) {
     sprintf(str, "%d", resultIndex);
     res += str;
     result = res;
+}
+
+/* 具有判断性质的语句执行完成之后
+ * 更新跳转到下一条语句的标号 */
+void Generator::updateTuple4() {
+    for (std::vector<Tuple4>::iterator it = tuple4List.begin(); it != tuple4List.end(); it++) {
+        Tuple4 item = *it;
+        if (item.result == lastResult) {
+            it->result = int2str(number);
+        }
+    }
 }
