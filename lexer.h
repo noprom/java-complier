@@ -97,7 +97,14 @@ public:
 	 * @return token状态
 	 */
 	virtual TokenType getToken();
-
+    
+    /**
+     * 运行词法分析器
+     *
+     * @param fileName 源代码文件
+     * @param outFilename 词法分析结果输出文件
+     */
+    static void runLexer(std::string fileName, std::string outFileName);
 protected:
 	/* 扫描到的行数 */
 	static int lineNumber;

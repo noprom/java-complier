@@ -1306,3 +1306,58 @@ TokenType Lexer::getToken() {
 	lineTokenNum++;
 	return currentToken;
 }
+
+/* 运行词法分析器 */
+void Lexer::runLexer(std::string fileName, std::string outFileName) {
+    /* 开始词法分析 */
+    Lexer lexer = Lexer(fileName);
+    TokenType token = lexer.getToken();
+    while (token != ENDFILE) {
+        token = lexer.getToken();
+    }
+    
+    /* 输出到文件 */
+    FILE *fp = fopen(outFileName.c_str(), "w");
+    
+    /* 输出统计结果 */
+    printf("Total tokens: %d\n", lexer.TOKEN_NUM);
+    fprintf(fp, "Total tokens: %d\n", lexer.TOKEN_NUM);
+    for (std::map<int, int>::iterator it = lexer.lineTokenSumMap.begin();
+         it != lexer.lineTokenSumMap.end(); ++it) {
+        std::pair<int, int> pair = *it;
+        if (pair.second > 1) {
+            printf("%5d:%5d\t tokens\n", pair.first, pair.second);
+            fprintf(fp, "%5d:%5d\t tokens\n", pair.first, pair.second);
+        }
+        else {
+            printf("%5d:%5d\t token\n", pair.first, pair.second);
+            fprintf(fp, "%5d:%5d\t token\n", pair.first, pair.second);
+        }
+    }
+    
+    /* 输出提示字符串 */
+    printf("\n\n");
+    printf("+++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
+    printf("+                      Scan Result                  +\n");
+    printf("+++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
+    printf("\n\n");
+    
+    /* 输出扫描结果 */
+    for (std::vector<Token>::iterator it = lexer.tokenList.begin();
+         it != lexer.tokenList.end(); ++it) {
+        Token token = *it;
+        printf("%4d: %15s \t %15s \t %10s\n", token.lineNumber, token.value.c_str(), token.typeName.c_str(), token.attr.c_str());
+        fprintf(fp, "%4d: %15s \t %15s \t %10s\n", token.lineNumber, token.value.c_str(), token.typeName.c_str(), token.attr.c_str());
+    }
+    
+    /* 输出错误信息列表 */
+    for (std::vector<TokenErrorInfo>::iterator it = lexer.errList.begin();
+         it != lexer.errList.end(); ++it) {
+        TokenErrorInfo err = *it;
+        printf("Error line: %4d, %s", err.lineNumber, err.lineBuf.c_str());
+        printf("Error position: %d, error token: %s\n", err.errorPos, err.errorToken.c_str());
+        fprintf(fp, "Error line: %4d, %s", err.lineNumber, err.lineBuf.c_str());
+        fprintf(fp, "Error position: %d, error token: %s\n", err.errorPos, err.errorToken.c_str());
+    }
+    fclose(fp);
+}
