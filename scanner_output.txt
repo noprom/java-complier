@@ -1,35 +1,35 @@
 Total tokens: 29
-    1:    5	 tokens
-    2:    5	 tokens
-    3:    5	 tokens
-    4:    6	 tokens
-    5:    8	 tokens
-   1:             int 	        keywords 	      0x103
-   1:            numA 	      identifier 	      0x104
-   1:               = 	        operator 	      0x110
-   1:               1 	       int const 	      0x107
-   1:               ; 	       delimeter 	      0x122
-   2:             int 	        keywords 	      0x103
-   2:            numB 	      identifier 	      0x104
-   2:               = 	        operator 	      0x110
-   2:               2 	       int const 	      0x107
-   2:               ; 	       delimeter 	      0x122
-   3:             int 	        keywords 	      0x103
-   3:             sum 	      identifier 	      0x104
-   3:               = 	        operator 	      0x110
-   3:               0 	       int const 	      0x107
-   3:               ; 	       delimeter 	      0x122
-   4:           while 	        keywords 	      0x103
-   4:               ( 	       delimeter 	      0x11d
-   4:             sum 	      identifier 	      0x104
-   4:               < 	        operator 	      0x118
-   4:             100 	       int const 	      0x107
-   4:               ) 	       delimeter 	      0x11d
-   5:             sum 	      identifier 	      0x104
-   5:               = 	        operator 	      0x110
-   5:             sum 	      identifier 	      0x104
-   5:               + 	        operator 	      0x11a
-   5:            numA 	      identifier 	      0x104
-   5:               * 	        operator 	      0x11b
-   5:            numB 	      identifier 	      0x104
-   5:               ; 	       delimeter 	      0x122
+   87:3146469	 tokens
+   88:    5	 tokens
+   89:    5	 tokens
+   90:    6	 tokens
+   91:    8	 tokens
+  87:             int 	        keywords 	      0x103
+  87:            numA 	      identifier 	      0x104
+  87:               = 	        operator 	      0x110
+  87:               1 	       int const 	      0x107
+  87:               ; 	       delimeter 	      0x122
+  88:             int 	        keywords 	      0x103
+  88:            numB 	      identifier 	      0x104
+  88:               = 	        operator 	      0x110
+  88:               2 	       int const 	      0x107
+  88:               ; 	       delimeter 	      0x122
+  89:             int 	        keywords 	      0x103
+  89:             sum 	      identifier 	      0x104
+  89:               = 	        operator 	      0x110
+  89:               0 	       int const 	      0x107
+  89:               ; 	       delimeter 	      0x122
+  90:           while 	        keywords 	      0x103
+  90:               ( 	       delimeter 	      0x11d
+  90:             sum 	      identifier 	      0x104
+  90:               < 	        operator 	      0x118
+  90:             100 	       int const 	      0x107
+  90:               ) 	       delimeter 	      0x11d
+  91:             sum 	      identifier 	      0x104
+  91:               = 	        operator 	      0x110
+  91:             sum 	      identifier 	      0x104
+  91:               + 	        operator 	      0x11a
+  91:            numA 	      identifier 	      0x104
+  91:               * 	        operator 	      0x11b
+  91:            numB 	      identifier 	      0x104
+  91:               ; 	       delimeter 	      0x122

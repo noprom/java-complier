@@ -56,16 +56,16 @@ class Lexer {
 
 public:
 	/* 词法分析阶段程序错误标志 */
-	static int LEXER_ERROR;
+	int LEXER_ERROR;
 
 	/* EOF结束标志 */
-	static int EOF_flag;
+    int EOF_flag;
 
 	/* 总单词个数 */
-	static int TOKEN_NUM;
+	int TOKEN_NUM;
 
 	/* 输入文件流 */
-	std::shared_ptr<std::ifstream> ifs;
+	std::ifstream ifs;
 
 	/* 每行单词个数统计 */
 	std::map<int, int> lineTokenSumMap;
@@ -91,6 +91,10 @@ public:
 
 	~Lexer();
 
+    
+    Lexer(const Lexer &) = delete;
+    Lexer& operator=(const Lexer &) = delete;
+    
 	/**
 	 * 获得单词的token
 	 *
@@ -107,16 +111,16 @@ public:
     static void runLexer(std::string fileName, std::string outFileName);
 protected:
 	/* 扫描到的行数 */
-	static int lineNumber;
+	int lineNumber;
 
 	/* 扫描到某行的位置 */
-	static int linePos;
+    int linePos;
 
 	/* 每行单词的个数 */
-	static int lineTokenNum;
+    int lineTokenNum;
 
 	/* 提取出来的单词 */
-	static std::string tokenString;
+    std::string tokenString;
 
 private:
 

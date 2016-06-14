@@ -10,16 +10,17 @@
 
 #define KEYWORDS_ID "0x103"
 
-/* 初始化词法分析器里面的静态变量 */
-int Lexer::LEXER_ERROR = 0;
-int Lexer::EOF_flag = 0;
-int Lexer::TOKEN_NUM = 0;
-int Lexer::lineNumber = 1;
-int Lexer::lineTokenNum = 0;
-int Lexer::linePos = 0;
-std::string Lexer::tokenString = "";
-
 Lexer::Lexer() {
+
+    /* 初始化词法分析器里面的变量 */
+    LEXER_ERROR = 0;
+    EOF_flag = 0;
+    TOKEN_NUM = 0;
+    lineNumber = 1;
+    lineTokenNum = 0;
+    linePos = 0;
+    tokenString = "";
+
     /* 清空用于统计的容器 */
     lineTokenSumMap.clear();
     tokenList.clear();
@@ -402,9 +403,9 @@ Lexer::Lexer(std::string fileName)
     delimeterMap.insert(std::make_pair('}', BRACKET_LR));
     delimeterMap.insert(std::make_pair(';', SEMICOLON));
     
-	ifs = std::make_shared<std::ifstream>(fileName);
+	ifs.open(fileName);
 	/* 打开文件 */
-	if (!ifs->is_open()) {
+	if (!ifs.is_open()) {
 		printf("can not open the file : %s\n", fileName.c_str());
 		scanError();
 		exit(1);
@@ -428,7 +429,7 @@ void Lexer::getOneLine() {
 	/* 初始化每行统计变量 */
 	lineBuf = "";
 	//if (!ifs->eof()) {
-		if (!getline(*ifs, lineBuf)) {
+		if (!getline(ifs, lineBuf)) {
 			// std::cout << "Error: file end with illegal ending" << std::endl;
 			Lexer::LEXER_ERROR = 1;
 			EOF_flag = 1;
@@ -1496,7 +1497,7 @@ TokenType Lexer::getToken() {
 /* 运行词法分析器 */
 void Lexer::runLexer(std::string fileName, std::string outFileName) {
     /* 开始词法分析 */
-    Lexer lexer = Lexer(fileName);
+    Lexer lexer(fileName);
     TokenType token = lexer.getToken();
     while (token != ENDFILE) {
         token = lexer.getToken();
@@ -1546,6 +1547,6 @@ void Lexer::runLexer(std::string fileName, std::string outFileName) {
         fprintf(fp, "Error position: %d, error token: %s\n", err.errorPos, err.errorToken.c_str());
     }
     /* 关闭打开的文件 */
-    lexer.ifs->close();
+    lexer.ifs.close();
     fclose(fp);
 }

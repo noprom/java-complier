@@ -39,7 +39,7 @@ int main(int argc, const char * argv[]) {
     } else {
         Lexer::runLexer(fileName, outFileName);
         /* 开始语法分析 */
-        Parser parser = Parser(fileName);
+        Parser parser(fileName);
         TreeNode * syntaxTree = parser.parse();
         /* 生成四元式 */
         Generator::runGenerator(syntaxTree, codeFileName);

@@ -101,7 +101,7 @@ void Generator::assignGen(TreeNode *syntaxTree) {
 void Generator::expGen(TreeNode *syntaxTree) {
     /* 操作符节点 */
     Tuple4 tuple;
-    Lexer lexer = Lexer();
+    Lexer lexer;
     std::string arg1;
     std::string arg2;
     if (syntaxTree->expK == OPK) {
