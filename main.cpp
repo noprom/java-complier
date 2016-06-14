@@ -91,11 +91,13 @@ int main(int argc, const char * argv[]) {
         Generator generator = Generator();
         generator.codeGen(syntaxTree);
         /* 打印出四元式列表 */
-//        printf("NO\tOP\tARG1\tARG2\tRESULT\n");
+        // printf("NO\tOP\tARG1\tARG2\tRESULT\n");
         for (std::vector<Tuple4>::iterator it = generator.tuple4List.begin(); it != generator.tuple4List.end(); it++) {
             Tuple4 item = *it;
             printf("%2d:(%2s,%4s,%4s,%4s)\n", item.no, item.op.c_str(), item.arg1.c_str(), item.arg2.c_str(), item.result.c_str());
         }
+        /* 下一条语句 */
+        printf("%2d:...\n", generator.number);
     }
 	return 0;
 }

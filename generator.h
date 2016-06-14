@@ -34,9 +34,6 @@ typedef struct {
 class Generator {
 private:
     
-    /* 用于记录四元式列表中的标号 */
-    int number;
-    
     /* 用于记录四元式结果项的下标 */
     int resultIndex;
     
@@ -113,6 +110,9 @@ private:
      */
     void updateTuple4();
 public:
+    
+    /* 用于记录四元式列表中的标号 */
+    int number;
     
     /* 四元组列表 */
     std::vector<Tuple4> tuple4List;
