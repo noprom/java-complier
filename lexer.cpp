@@ -243,7 +243,7 @@ void Lexer::getOneLine() {
 	lineBuf = "";
 	//if (!ifs->eof()) {
 		if (!getline(*ifs, lineBuf)) {
-			std::cout << "Error: file end with illegal ending" << std::endl;
+			// std::cout << "Error: file end with illegal ending" << std::endl;
 			Lexer::LEXER_ERROR = 1;
 			EOF_flag = 1;
 		}
