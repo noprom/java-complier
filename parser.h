@@ -19,7 +19,7 @@ public:
      * @param fileName 扫描文件名
      */
     Parser(std::string fileName):
-        Lexer(fileName), tokenList({}), assignStart(false), treeRoot(NULL){};
+        Lexer(fileName), ptokenList({}), assignStart(false), treeRoot(NULL){};
     
     /* 析构函数 */
     ~Parser();
@@ -116,7 +116,7 @@ private:
     void deleteTreeNode(TreeNode* root);
     
     /* token缓冲区 */
-    std::list<CompTokenType> tokenList;
+    std::list<CompTokenType> ptokenList;
     
     /* 当前token */
     TokenType token;

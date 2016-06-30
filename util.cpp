@@ -5,7 +5,7 @@
 //  Created by noprom on 4/28/16.
 //  Copyright © 2016 tyee.noprom@qq.com. All rights reserved.
 //
-
+#define _CRT_SECURE_NO_WARNINGS
 #include "util.h"
 
 /* 判断字符是否是字母 */

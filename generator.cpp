@@ -5,7 +5,7 @@
 //  Created by noprom on 6/11/16.
 //  Copyright © 2016 tyee.noprom@qq.com. All rights reserved.
 //
-
+#define _CRT_SECURE_NO_WARNINGS
 #include "generator.h"
 
 /* 构造函数 */
@@ -134,11 +134,6 @@ void Generator::expGen(TreeNode *syntaxTree) {
                 break;
             case ADD:
             case MINUS:
-                /* 运算符优先级, 先考虑第一个孩子节点的优先级别是否大于该节点 */
-//                if (syntaxTree->child[1]->expK == OPK &&
-//                    (syntaxTree->child[1]->op == MUL || syntaxTree->child[1]->op == DIV || syntaxTree->child[1]->op == MOD)) {
-//                    expGen(syntaxTree->child[1]);
-//                }
             case MUL:
             case DIV:
                 updateResultLabel(syntaxTree->op);
@@ -147,15 +142,8 @@ void Generator::expGen(TreeNode *syntaxTree) {
                 tuple4List.push_back(tuple);
                 break;
             default:
-                // TODO: handle error
                 break;
         }
-    /* 变量名节点 */
-    } else if (syntaxTree->expK == IDK) {
-    /* 整数的值 */
-    } else if (syntaxTree->expK == NUMK) {
-    } else {
-        // TODO: handle error
     }
 }
 

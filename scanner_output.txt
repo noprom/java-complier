@@ -7,7 +7,7 @@ Total tokens: 29
    1:             int 	        keywords 	      0x103
    1:            numA 	      identifier 	      0x104
    1:               = 	        operator 	      0x110
-   1:               1 	       int const 	      0x107
+   1:             100 	       int const 	      0x107
    1:               ; 	       delimeter 	      0x122
    2:             int 	        keywords 	      0x103
    2:            numB 	      identifier 	      0x104
@@ -23,7 +23,7 @@ Total tokens: 29
    4:               ( 	       delimeter 	      0x11d
    4:             sum 	      identifier 	      0x104
    4:               < 	        operator 	      0x118
-   4:             100 	       int const 	      0x107
+   4:           10000 	       int const 	      0x107
    4:               ) 	       delimeter 	      0x11d
    5:             sum 	      identifier 	      0x104
    5:               = 	        operator 	      0x110

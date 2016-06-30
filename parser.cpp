@@ -5,15 +5,8 @@
 //  Created by noprom on 6/10/16.
 //  Copyright © 2016 tyee.noprom@qq.com. All rights reserved.
 //
-
+#define _CRT_SECURE_NO_WARNINGS
 #include "parser.h"
-
-/* 构造函数 */
-//Parser::Parser(std::string fileName) {
-//    tokenList.clear();
-//    assignStart = false;
-//    treeRoot = NULL;
-//}
 
 /* 析构函数 */
 Parser::~Parser() {
@@ -57,7 +50,7 @@ TreeNode * Parser::mulSentenceStmt() {
 
 /* 单个语句 */
 TreeNode * Parser::sentenceStmt() {
-    Parser::tokenList.clear();
+    Parser::ptokenList.clear();
     assignStart = false;
     if (tokenString == "while") {
         return whileStmt();
@@ -84,7 +77,7 @@ TreeNode * Parser::assignStmt() {
     if (tokenString == "int") {
         token = getToken();
     }
-    Parser::tokenList.clear();
+    Parser::ptokenList.clear();
     // TODO: handle error
     TreeNode *treeNode = new TreeNode;
     TreeNode &thisNode = *treeNode;
@@ -110,12 +103,11 @@ TreeNode * Parser::assignStmt() {
         }
     } else {
         /* 开始连等运算 */
-        Parser::tokenList.push_back({token, tokenString});
+        Parser::ptokenList.push_back({token, tokenString});
         thisNode.id = tokenString;
-//        token = getToken();
         /* 如果连等继续 */
-        if (token == ASSIGN && (tokenList.back().type == ID)) {
-            tokenList.clear();
+        if (token == ASSIGN && (ptokenList.back().type == ID)) {
+            ptokenList.clear();
             token = getToken();
             thisNode.nodeKind = STMTK;
             thisNode.stmtKind = ASSIGNK;
@@ -149,7 +141,7 @@ TreeNode * Parser::whileStmt() {
     match(BRACKET_SL);
     token = getToken();
     // ()中的表达式语句
-    Parser::tokenList.clear();
+    Parser::ptokenList.clear();
     thisNode.child.push_back(expStmt());
     match(BRACKET_SR);
     token = getToken();
@@ -165,20 +157,20 @@ TreeNode * Parser::expStmt() {
     while (token == ID || token == CONST_INT || token == CONST_INT8 || token == CONST_INT16 ||
            token == ADD || token == MINUS || token == MUL || token == DIV || token == MOD ||
            token == GT || token == LT || token == GE || token == LE || token == NE || token == EQU) {
-        Parser::tokenList.push_back({token, tokenString});
+        Parser::ptokenList.push_back({token, tokenString});
         token = getToken();
     }
     // 遍历表达式语句中的节点
-    std::list<CompTokenType>::iterator iter = Parser::tokenList.begin();
-    std::list<CompTokenType>::iterator begin = Parser::tokenList.begin();
-    std::list<CompTokenType>::iterator end = Parser::tokenList.end();
+    auto iter = ptokenList.begin();
+    auto begin = ptokenList.begin();
+    auto end = ptokenList.end();
     // 遍历到比较符号结束
     while (iter != end && iter->type != GT && iter->type != LT &&
            iter->type != GE && iter->type != LE && iter->type != NE && iter->type != EQU) {
         iter++;
     }
     /* 不是比较语句 */
-    if (iter == tokenList.end()) {
+    if (iter == ptokenList.end()) {
         return simpleExpStmt(begin, end);
     } else {
         TreeNode * treeNode = new TreeNode;
@@ -231,7 +223,7 @@ TreeNode * Parser::simpleExpStmt(std::list<CompTokenType>::iterator &begin, std:
 TreeNode * Parser::termStmt(std::list<CompTokenType>::iterator &begin) {
     // TODO: handle error
     TreeNode * factor = factorStmt(begin);
-    while (begin != tokenList.end() && (begin->type == MUL || begin->type == DIV || begin->type == MOD)) {
+    while (begin != ptokenList.end() && (begin->type == MUL || begin->type == DIV || begin->type == MOD)) {
         TreeNode * treeNode = new TreeNode;
         TreeNode & thisNode = * treeNode;
         /* 初始化节点信息 */
@@ -275,7 +267,7 @@ TreeNode * Parser::factorStmt(std::list<CompTokenType>::iterator &begin) {
         /* 左括号的个数 */
         int brackNum = 1;
         /* 扫描到最里面的括号的运算 */
-        while (iter != tokenList.end()
+        while (iter != ptokenList.end()
                && (iter->type == ID || iter->type == CONST_INT || iter->type == CONST_INT8 || iter->type == CONST_INT16 ||
                    iter->type == ADD || iter->type == MINUS || iter->type == MUL || iter->type == DIV || iter->type == MOD ||
                    iter->type == BRACKET_SL || iter->type == BRACKET_SR)

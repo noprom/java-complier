@@ -1,8 +1,8 @@
 NO  OP ARG1 ARG2 RESULT
- 1:( =,   1,    ,numA)
+ 1:( =, 100,    ,numA)
  2:( =,   2,    ,numB)
  3:( =,   0,    , sum)
- 4:( <, sum, 100,  T1)
+ 4:( <, sum,10000,  T1)
  5:(jT,  T1,    ,   7)
  6:( j,    ,    ,  11)
  7:( *,numA,numB,  T2)
